@@ -1474,7 +1474,7 @@ const AdhesiveCalculator=()=>{
     color:'var(--navy)',display:'block',marginBottom:'8px',opacity:0.6};
   return(
     <div>
-      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:'16px',marginBottom:'16px'}} className="grid-3">
+      <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'16px',marginBottom:'16px'}} className="grid-3">
         <div><label style={lbl}>Area to Tile (sq.ft)</label><input style={inp} type="number" placeholder="200" value={v.area} onChange={set('area')}/></div>
         <div><label style={lbl}>Tile Size</label><select style={inp} value={v.tileSize} onChange={set('tileSize')}><option value="30">30×30 cm</option><option value="60">60×60 cm</option><option value="80">80×80 cm</option><option value="120">120×60 cm</option></select></div>
         <div><label style={lbl}>Tile Type</label><select style={inp} value={v.type} onChange={set('type')}><option value="ceramic">Ceramic</option><option value="vitrified">Vitrified</option><option value="marble">Marble / Stone</option></select></div>
@@ -1561,8 +1561,31 @@ const ToolsPage=()=>{
     <div style={{background:'var(--cream)',minHeight:'100vh'}}>
       <PageHero tag="Professional Tools" title={"Industry Tools\nfor Smarter Projects."}
         sub="Free estimation tools designed for architects, contractors, and homeowners."/>
-      <div style={{padding:'56px var(--px) 80px'}}>
-        <div style={{display:'grid',gridTemplateColumns:'280px 1fr',gap:'32px',alignItems:'start'}} className="grid-2">
+      {/* Mobile horizontal tab bar */}
+      <div className="show-mobile" style={{
+        display:'none',flexDirection:'column',overflowX:'auto',padding:'24px var(--px) 0',
+        gap:'8px',WebkitOverflowScrolling:'touch',
+        scrollbarWidth:'none',
+      }}>
+        <div style={{display:'flex',gap:'8px',paddingBottom:'4px',minWidth:'max-content'}}>
+          {tools.map((t,i)=>(
+            <button key={i} onClick={()=>setActive(i)} style={{
+              background:active===i?'var(--navy)':'var(--white)',
+              border:`1px solid ${active===i?'var(--navy)':'var(--border)'}`,
+              borderRadius:'100px',padding:'10px 18px',cursor:'pointer',
+              display:'flex',alignItems:'center',gap:'8px',whiteSpace:'nowrap',
+              fontFamily:'DM Sans,sans-serif',transition:'all 0.2s',flexShrink:0,
+            }}>
+              <span style={{fontSize:'14px'}}>{t.icon}</span>
+              <span style={{fontSize:'12px',fontWeight:'600',color:active===i?'var(--gold)':'var(--navy)'}}>{t.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div style={{padding:'32px var(--px) 80px'}}>
+        {/* Desktop: sidebar + panel */}
+        <div className="hide-mobile" style={{display:'grid',gridTemplateColumns:'260px 1fr',gap:'32px',alignItems:'start'}}>
           <div style={{position:'sticky',top:'100px'}}>
             {tools.map((t,i)=>(
               <div key={i} onClick={()=>setActive(i)} className="card-hover"
@@ -1603,6 +1626,30 @@ const ToolsPage=()=>{
             </div>
             <GoldLine my={20}/>
             {tools[active].comp}
+          </div>
+        </div>
+
+        {/* Mobile: full-width panel only */}
+        <div className="show-mobile" style={{display:'none',flexDirection:'column',gap:'16px'}}>
+          <div style={{background:'var(--white)',border:'1px solid var(--border)',borderRadius:'20px',padding:'28px 20px'}}>
+            <div style={{marginBottom:'20px'}}>
+              <span style={{fontSize:'11px',fontWeight:'600',letterSpacing:'2px',textTransform:'uppercase',color:'var(--gold)',display:'block',marginBottom:'6px'}}>
+                {tools[active].icon} {tools[active].name}
+              </span>
+              <p style={{fontSize:'13px',color:'var(--txt3)'}}>{tools[active].desc}</p>
+            </div>
+            <GoldLine my={16}/>
+            {tools[active].comp}
+          </div>
+          <div style={{background:'linear-gradient(135deg,var(--gold) 0%,var(--gold3) 100%)',
+            borderRadius:'14px',padding:'24px',marginTop:'16px',textAlign:'center'}}>
+            <div style={{fontSize:'13px',fontWeight:'700',color:'var(--navy)',marginBottom:'8px'}}>Need Expert Help?</div>
+            <div style={{fontSize:'12px',color:'rgba(13,27,62,0.65)',lineHeight:'1.5',marginBottom:'14px'}}>Our team can verify your estimates.</div>
+            <a href="https://wa.me/919216866671" target="_blank" style={{
+              display:'block',background:'var(--navy)',color:'var(--gold)',
+              padding:'11px',borderRadius:'8px',fontWeight:'700',fontSize:'12px',
+              letterSpacing:'1px',textDecoration:'none',textTransform:'uppercase',
+            }}>💬 Ask an Expert</a>
           </div>
         </div>
       </div>
