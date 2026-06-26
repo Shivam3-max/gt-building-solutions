@@ -377,6 +377,7 @@ const BrandMarquee=()=>{
 const Nav=({page,go})=>{
   const [sc,setSc]=useState(false);
   const [pct,setPct]=useState(0);
+  const [mOpen,setMOpen]=useState(false);
   useEffect(()=>{
     const fn=()=>{
       setSc(window.scrollY>60);
@@ -386,16 +387,16 @@ const Nav=({page,go})=>{
     window.addEventListener('scroll',fn);
     return()=>window.removeEventListener('scroll',fn);
   },[]);
-  const links=['Home','Products','Brands','Tools','About','Contact'];
+  const links=['Home','Products','Gallery','Brands','Tools','About','Contact'];
+  const nav=(key)=>{go(key);setMOpen(false);};
   return(
     <nav style={{
       position:'fixed',top:0,left:0,right:0,zIndex:1000,
-      padding:sc?'12px 64px':'22px 64px',
-      background:sc?'rgba(250,248,243,0.97)':'transparent',
-      backdropFilter:sc?'blur(20px)':'none',
-      borderBottom:sc?'1px solid var(--border)':'none',
+      padding:sc?'12px var(--px)':'22px var(--px)',
+      background:sc||mOpen?'rgba(250,248,243,0.97)':'transparent',
+      backdropFilter:sc||mOpen?'blur(20px)':'none',
+      borderBottom:sc||mOpen?'1px solid var(--border)':'none',
       transition:'all 0.35s ease',
-      display:'flex',alignItems:'center',justifyContent:'space-between',
     }}>
       {/* scroll progress bar */}
       <div style={{
@@ -406,50 +407,97 @@ const Nav=({page,go})=>{
         opacity:sc?1:0,
       }}/>
 
-      <div onClick={()=>go('home')} style={{display:'flex',alignItems:'center',gap:'12px',cursor:'pointer'}}>
-        <div style={{
-          width:'42px',height:'42px',
-          background:'linear-gradient(140deg,var(--navy) 0%,var(--navy3) 100%)',
-          borderRadius:'8px',display:'flex',alignItems:'center',justifyContent:'center',
-          fontFamily:'Cormorant Garamond,serif',fontSize:'17px',fontWeight:'700',
-          color:'var(--gold)',flexShrink:0,transition:'transform 0.2s',
-        }}
-        onMouseEnter={e=>e.currentTarget.style.transform='scale(1.06)'}
-        onMouseLeave={e=>e.currentTarget.style.transform='scale(1)'}>GT</div>
-        <div>
-          <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:'15px',fontWeight:'700',
-            color:sc?'var(--navy)':'#ffffff',lineHeight:'1.1',letterSpacing:'0.5px',transition:'color 0.3s'}}>
-            GARG TRADING CO.
-          </div>
-          <div style={{fontSize:'9px',fontWeight:'600',color:'var(--gold)',letterSpacing:'2.5px',textTransform:'uppercase'}}>
-            Building Solutions
+      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+        <div onClick={()=>nav('home')} style={{display:'flex',alignItems:'center',gap:'12px',cursor:'pointer'}}>
+          <div style={{
+            width:'42px',height:'42px',
+            background:'linear-gradient(140deg,var(--navy) 0%,var(--navy3) 100%)',
+            borderRadius:'8px',display:'flex',alignItems:'center',justifyContent:'center',
+            fontFamily:'Cormorant Garamond,serif',fontSize:'17px',fontWeight:'700',
+            color:'var(--gold)',flexShrink:0,transition:'transform 0.2s',
+          }}
+          onMouseEnter={e=>e.currentTarget.style.transform='scale(1.06)'}
+          onMouseLeave={e=>e.currentTarget.style.transform='scale(1)'}>GT</div>
+          <div>
+            <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:'15px',fontWeight:'700',
+              color:sc||mOpen?'var(--navy)':'#ffffff',lineHeight:'1.1',letterSpacing:'0.5px',transition:'color 0.3s'}}>
+              GARG TRADING CO.
+            </div>
+            <div style={{fontSize:'9px',fontWeight:'600',color:'var(--gold)',letterSpacing:'2.5px',textTransform:'uppercase'}}>
+              Building Solutions
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="hide-mobile" style={{display:'flex',alignItems:'center',gap:'4px'}}>
-        {links.map(l=>{
-          const key=l.toLowerCase();
-          const active=page===key||(key==='products'&&page.startsWith('cat-'));
-          return(
-            <button key={l} onClick={()=>go(key)} style={{
-              background:'none',border:'none',cursor:'pointer',
-              padding:'8px 15px',fontSize:'12px',fontWeight:'500',
-              fontFamily:'DM Sans,sans-serif',letterSpacing:'0.8px',
-              textTransform:'uppercase',
-              color:active?'var(--gold)':sc?'var(--navy)':'rgba(255,255,255,0.85)',
-              borderBottom:active?'2px solid var(--gold)':'2px solid transparent',
-              transition:'all 0.2s',
-            }}
-            onMouseEnter={e=>{if(!active)e.currentTarget.style.color=sc?'var(--navy)':'#fff'}}
-            onMouseLeave={e=>{if(!active)e.currentTarget.style.color=sc?'var(--navy)':'rgba(255,255,255,0.85)'}}
-            >{l}</button>
-          );
-        })}
-        <button onClick={()=>go('contact')} className="btn-gold" style={{padding:'10px 22px',fontSize:'11px',marginLeft:'16px'}}>
-          Get Quote
+        <div className="hide-mobile" style={{display:'flex',alignItems:'center',gap:'4px'}}>
+          {links.map(l=>{
+            const key=l.toLowerCase();
+            const active=page===key||(key==='products'&&page.startsWith('cat-'));
+            return(
+              <button key={l} onClick={()=>nav(key)} style={{
+                background:'none',border:'none',cursor:'pointer',
+                padding:'8px 13px',fontSize:'12px',fontWeight:'500',
+                fontFamily:'DM Sans,sans-serif',letterSpacing:'0.8px',
+                textTransform:'uppercase',
+                color:active?'var(--gold)':sc?'var(--navy)':'rgba(255,255,255,0.85)',
+                borderBottom:active?'2px solid var(--gold)':'2px solid transparent',
+                transition:'all 0.2s',
+              }}
+              onMouseEnter={e=>{if(!active)e.currentTarget.style.color=sc?'var(--navy)':'#fff'}}
+              onMouseLeave={e=>{if(!active)e.currentTarget.style.color=sc?'var(--navy)':'rgba(255,255,255,0.85)'}}
+              >{l}</button>
+            );
+          })}
+          <button onClick={()=>nav('contact')} className="btn-gold" style={{padding:'10px 22px',fontSize:'11px',marginLeft:'16px'}}>
+            Get Quote
+          </button>
+        </div>
+
+        {/* Hamburger */}
+        <button className="show-mobile" onClick={()=>setMOpen(o=>!o)} style={{
+          display:'none',background:'none',border:'none',cursor:'pointer',
+          padding:'8px',flexDirection:'column',gap:'5px',
+        }}>
+          {[0,1,2].map(i=>(
+            <span key={i} style={{
+              display:'block',width:'24px',height:'2px',borderRadius:'2px',
+              background:sc||mOpen?'var(--navy)':'#ffffff',
+              transition:'all 0.3s',
+              transform:mOpen&&i===0?'rotate(45deg) translate(5px,5px)':
+                        mOpen&&i===1?'scaleX(0)':
+                        mOpen&&i===2?'rotate(-45deg) translate(5px,-5px)':'none',
+              opacity:mOpen&&i===1?0:1,
+            }}/>
+          ))}
         </button>
       </div>
+
+      {/* Mobile dropdown */}
+      {mOpen&&(
+        <div style={{
+          paddingTop:'16px',paddingBottom:'20px',
+          animation:'mobileMenuIn 0.25s ease both',
+        }}>
+          {links.map(l=>{
+            const key=l.toLowerCase();
+            const active=page===key||(key==='products'&&page.startsWith('cat-'));
+            return(
+              <button key={l} onClick={()=>nav(key)} style={{
+                display:'block',width:'100%',textAlign:'left',
+                background:'none',border:'none',cursor:'pointer',
+                padding:'13px 4px',fontSize:'14px',fontWeight:'500',
+                fontFamily:'DM Sans,sans-serif',letterSpacing:'0.5px',
+                textTransform:'uppercase',
+                color:active?'var(--gold)':'var(--navy)',
+                borderBottom:'1px solid var(--border)',
+              }}>{l}</button>
+            );
+          })}
+          <button onClick={()=>nav('contact')} className="btn-gold" style={{
+            width:'100%',justifyContent:'center',marginTop:'16px',padding:'14px',
+          }}>Get Quote</button>
+        </div>
+      )}
     </nav>
   );
 };
@@ -462,7 +510,7 @@ const GoldLine=({my=32})=>(
 const PageHero=({tag,title,sub})=>(
   <div style={{
     background:'linear-gradient(158deg,#080F22 0%,#0D1B3E 60%,#162347 100%)',
-    padding:'100px 80px 80px',position:'relative',overflow:'hidden',
+    padding:'100px var(--px) 80px',position:'relative',overflow:'hidden',
   }}>
     <div style={{position:'absolute',inset:0,
       backgroundImage:'linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px)',
@@ -470,7 +518,7 @@ const PageHero=({tag,title,sub})=>(
     <div style={{position:'relative',zIndex:2,maxWidth:'800px'}}>
       <span className="section-tag">{tag}</span>
       <h1 style={{fontFamily:'Cormorant Garamond,serif',fontWeight:'300',fontStyle:'italic',
-        fontSize:'clamp(42px,6.5vw,80px)',color:'#ffffff',lineHeight:'1.08',marginBottom:sub?'20px':'0'}}>
+        fontSize:'clamp(36px,6.5vw,80px)',color:'#ffffff',lineHeight:'1.08',marginBottom:sub?'20px':'0'}}>
         {title}
       </h1>
       {sub&&<p style={{fontSize:'17px',color:'rgba(255,255,255,0.5)',lineHeight:'1.7',marginTop:'16px',maxWidth:'560px'}}>{sub}</p>}
@@ -498,7 +546,7 @@ const Hero=({go})=>(
       border:'1px solid rgba(201,168,76,0.04)',borderRadius:'50%',pointerEvents:'none',zIndex:2}}/>
 
     {/* Content */}
-    <div className="hero-pad" style={{position:'relative',zIndex:5,padding:'0 80px 60px',maxWidth:'1200px',margin:'0 auto',width:'100%'}}>
+    <div className="hero-pad" style={{position:'relative',zIndex:5,padding:'0 var(--px) 60px',maxWidth:'1200px',margin:'0 auto',width:'100%'}}>
 
       <HeroTicker go={go}/>
 
@@ -577,7 +625,7 @@ const Hero=({go})=>(
 const Stats=()=>{
   const [ref,inView]=useInView(0.2);
   return(
-    <section style={{padding:'0 80px 80px',background:'var(--cream)'}}>
+    <section style={{padding:'0 var(--px) 80px',background:'var(--cream)'}}>
       <div ref={ref} style={{
         display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'1px',
         background:'var(--border)',border:'1px solid var(--border)',
@@ -739,7 +787,7 @@ const HomePage=({go})=>(
     <Stats/>
 
     {/* CATEGORIES GRID */}
-    <section className="section-pad" style={{padding:'40px 80px 80px',background:'var(--cream)'}}>
+    <section className="section-pad" style={{padding:'40px var(--px) 80px',background:'var(--cream)'}}>
       <Reveal>
         <div style={{marginBottom:'52px'}}>
           <span className="section-tag">What We Offer</span>
@@ -756,7 +804,7 @@ const HomePage=({go})=>(
     </section>
 
     {/* GALLERY STRIP */}
-    <section style={{padding:'0 80px 80px',background:'var(--cream)'}}>
+    <section style={{padding:'0 var(--px) 80px',background:'var(--cream)'}}>
       <Reveal>
         <div style={{display:'grid',gridTemplateColumns:'1.5fr 1fr 1fr',gap:'16px'}} className="grid-3">
           <ImgPlaceholder h={320} label="Showroom Interior"/>
@@ -767,7 +815,7 @@ const HomePage=({go})=>(
     </section>
 
     {/* WHY GT */}
-    <section style={{padding:'80px',background:'var(--navy)',position:'relative',overflow:'hidden'}}>
+    <section style={{padding:'80px var(--px)',background:'var(--navy)',position:'relative',overflow:'hidden'}}>
       <div style={{position:'absolute',inset:0,
         backgroundImage:'linear-gradient(rgba(201,168,76,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.03) 1px,transparent 1px)',
         backgroundSize:'50px 50px',pointerEvents:'none'}}/>
@@ -792,7 +840,7 @@ const HomePage=({go})=>(
     </section>
 
     {/* WHO WE SERVE */}
-    <section className="section-pad" style={{padding:'80px',background:'var(--cream)'}}>
+    <section className="section-pad" style={{padding:'80px var(--px)',background:'var(--cream)'}}>
       <Reveal><div style={{textAlign:'center',marginBottom:'52px'}}>
         <span className="section-tag">Who We Serve</span>
         <h2 className="section-h">Our Ideal Partners</h2>
@@ -833,7 +881,7 @@ const HomePage=({go})=>(
     </section>
 
     {/* DUAL BRAND */}
-    <section style={{padding:'0 80px 80px',background:'var(--cream)'}}>
+    <section style={{padding:'0 var(--px) 80px',background:'var(--cream)'}}>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'20px'}} className="grid-2">
         {[
           {code:'GT',name:'Garg Trading Company',
@@ -874,7 +922,7 @@ const HomePage=({go})=>(
 
     {/* CTA STRIP */}
     <section style={{
-      padding:'80px',
+      padding:'80px var(--px)',
       background:'linear-gradient(135deg,var(--gold) 0%,var(--gold3) 55%,var(--gold) 100%)',
       textAlign:'center',position:'relative',overflow:'hidden',
     }}>
@@ -927,7 +975,7 @@ const HomePage=({go})=>(
 const ProductsPage=({go})=>(
   <div style={{background:'var(--cream)',minHeight:'100vh'}}>
     <PageHero tag="Our Product Range" title={"Complete Building\nSolutions, Curated."} />
-    <div style={{padding:'64px 80px 80px'}}>
+    <div style={{padding:'64px var(--px) 80px'}}>
       {CATS.map((cat,i)=>(
         <Reveal key={cat.id} delay={i*0.05}>
           <div onClick={()=>go('cat-'+cat.id)}
@@ -984,7 +1032,7 @@ const CategoryPage=({cat,go})=>(
   <div style={{background:'var(--cream)',minHeight:'100vh'}}>
     <div style={{
       background:`linear-gradient(158deg,${cat.color}ee 0%,${cat.color} 60%,${cat.color}dd 100%)`,
-      padding:'100px 80px 80px',position:'relative',overflow:'hidden',
+      padding:'100px var(--px) 80px',position:'relative',overflow:'hidden',
     }}>
       <div style={{position:'absolute',inset:0,
         backgroundImage:'linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px)',
@@ -1014,7 +1062,7 @@ const CategoryPage=({cat,go})=>(
       </div>
     </div>
 
-    <div style={{padding:'64px 80px',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'48px',alignItems:'start'}} className="grid-2">
+    <div style={{padding:'64px var(--px)',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'48px',alignItems:'start'}} className="grid-2">
       <div>
         <span className="section-tag">What We Stock</span>
         <h2 style={{fontFamily:'Cormorant Garamond,serif',fontSize:'36px',fontWeight:'600',
@@ -1061,7 +1109,7 @@ const CategoryPage=({cat,go})=>(
       </div>
     </div>
 
-    <div style={{padding:'0 80px 80px'}}>
+    <div style={{padding:'0 var(--px) 80px'}}>
       <span className="section-tag">Gallery</span>
       <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'16px',marginTop:'16px'}} className="grid-3">
         <ImgPlaceholder h={220} label="Product Image 1"/>
@@ -1070,7 +1118,7 @@ const CategoryPage=({cat,go})=>(
       </div>
     </div>
 
-    <div style={{padding:'0 80px 80px'}}>
+    <div style={{padding:'0 var(--px) 80px'}}>
       <div style={{background:'linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%)',
         borderRadius:'20px',padding:'52px',
         display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:'24px'}}>
@@ -1096,6 +1144,124 @@ const CategoryPage=({cat,go})=>(
   </div>
 );
 
+/* ─── GALLERY PAGE ──────────────────────────────────────── */
+const GALLERY_CATS=[
+  {id:'all',label:'All'},
+  {id:'hardware',label:'Hardware'},
+  {id:'adhesives',label:'Adhesives'},
+  {id:'panels',label:'Panels'},
+  {id:'tiles',label:'Tiles'},
+  {id:'paints',label:'Paints'},
+  {id:'tools',label:'Tools'},
+  {id:'pipes',label:'Pipes'},
+];
+const GALLERY_ITEMS=[
+  {cat:'hardware',label:'Kitchen Fittings Display',span:2},
+  {cat:'hardware',label:'Hettich Drawer Systems'},
+  {cat:'hardware',label:'Door Hardware Range'},
+  {cat:'tiles',label:'Kajaria Tile Showroom',span:2},
+  {cat:'tiles',label:'Bathroom Suite Display'},
+  {cat:'tiles',label:'Designer Floor Tiles'},
+  {cat:'paints',label:'Asian Paints Swatches'},
+  {cat:'paints',label:'Birla Opus Collection',span:2},
+  {cat:'adhesives',label:'Fevicol Products'},
+  {cat:'adhesives',label:'Dr. Fixit Waterproofing'},
+  {cat:'panels',label:'Gyproc Ceiling System',span:2},
+  {cat:'panels',label:'Partition Wall Demo'},
+  {cat:'tools',label:'DeWalt Power Tools'},
+  {cat:'tools',label:'CUMI Grinder Range'},
+  {cat:'pipes',label:'CPVC Pipe Range',span:2},
+  {cat:'pipes',label:'Fittings & Valves'},
+];
+
+const GalleryPage=()=>{
+  const [filter,setFilter]=useState('all');
+  const shown=filter==='all'?GALLERY_ITEMS:GALLERY_ITEMS.filter(g=>g.cat===filter);
+  return(
+    <div style={{background:'var(--cream)',minHeight:'100vh'}}>
+      <PageHero tag="Photo Gallery" title={"Our Products\n& Showrooms."}
+        sub="Browse our curated collection of products, installations, and showroom displays."/>
+
+      {/* Filter tabs */}
+      <div style={{padding:'40px var(--px) 0'}}>
+        <div style={{display:'flex',gap:'8px',flexWrap:'wrap'}}>
+          {GALLERY_CATS.map(f=>(
+            <button key={f.id} onClick={()=>setFilter(f.id)} style={{
+              background:filter===f.id?'var(--navy)':'var(--white)',
+              border:`1px solid ${filter===f.id?'var(--navy)':'var(--border)'}`,
+              borderRadius:'100px',padding:'9px 22px',
+              fontSize:'12px',fontWeight:'500',
+              fontFamily:'DM Sans,sans-serif',letterSpacing:'0.3px',
+              color:filter===f.id?'var(--gold)':'var(--navy)',
+              cursor:'pointer',transition:'all 0.2s',
+            }}>{f.label}</button>
+          ))}
+        </div>
+      </div>
+
+      {/* Masonry-style grid */}
+      <div style={{padding:'32px var(--px) 80px'}}>
+        <div style={{
+          display:'grid',
+          gridTemplateColumns:'repeat(3,1fr)',
+          gap:'16px',
+        }} className="grid-3">
+          {shown.map((item,i)=>(
+            <Reveal key={`${filter}-${i}`} delay={i*0.04} style={item.span===2?{gridColumn:'span 2'}:{}}>
+              <div style={{
+                borderRadius:'16px',overflow:'hidden',
+                border:'1px solid var(--border)',
+                background:'var(--white)',
+                transition:'transform 0.28s ease,box-shadow 0.28s ease',
+                cursor:'pointer',
+              }}
+              onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-5px)';e.currentTarget.style.boxShadow='0 20px 48px rgba(13,27,62,0.1)';}}
+              onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow='none';}}>
+                <ImgPlaceholder h={item.span===2?280:220} label={item.label} radius={0}/>
+                <div style={{padding:'16px 18px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                  <span style={{fontSize:'13px',fontWeight:'500',color:'var(--navy)'}}>{item.label}</span>
+                  <span style={{
+                    fontSize:'9px',fontWeight:'600',letterSpacing:'1.5px',textTransform:'uppercase',
+                    color:'var(--gold)',background:'rgba(201,168,76,0.1)',
+                    borderRadius:'100px',padding:'4px 10px',
+                  }}>{item.cat}</span>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+        {shown.length===0&&(
+          <div style={{textAlign:'center',padding:'60px 0',color:'var(--txt3)'}}>
+            No items in this category yet.
+          </div>
+        )}
+
+        {/* Upload CTA */}
+        <Reveal>
+          <div style={{
+            marginTop:'56px',
+            background:'linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%)',
+            borderRadius:'20px',padding:'52px',textAlign:'center',
+          }}>
+            <span className="section-tag" style={{color:'var(--gold)'}}>Coming Soon</span>
+            <h2 style={{fontFamily:'Cormorant Garamond,serif',fontSize:'clamp(26px,4vw,42px)',
+              fontWeight:'600',color:'#ffffff',marginBottom:'16px',lineHeight:'1.2'}}>
+              Real Project Photos Coming Soon
+            </h2>
+            <p style={{fontSize:'15px',color:'rgba(255,255,255,0.5)',lineHeight:'1.7',
+              maxWidth:'480px',margin:'0 auto 32px'}}>
+              We're uploading photos from real installations, showrooms, and completed projects. Check back soon.
+            </p>
+            <a href="https://wa.me/919216866671?text=I'd like to see your product gallery" target="_blank" className="btn-gold">
+              WhatsApp for Photos
+            </a>
+          </div>
+        </Reveal>
+      </div>
+    </div>
+  );
+};
+
 /* ─── BRANDS PAGE ───────────────────────────────────────── */
 const BrandsPage=()=>{
   const [filter,setFilter]=useState('all');
@@ -1117,7 +1283,7 @@ const BrandsPage=()=>{
     <div style={{background:'var(--cream)',minHeight:'100vh'}}>
       <PageHero tag="Our Brand Portfolio" title={"30+ Premium Brands.\nAll Under One Roof."}
         sub="Every product genuine, certified, and stocked at our stores."/>
-      <div style={{padding:'40px 80px 0'}}>
+      <div style={{padding:'40px var(--px) 0'}}>
         <div style={{display:'flex',gap:'8px',flexWrap:'wrap'}}>
           {filters.map(f=>(
             <button key={f.id} onClick={()=>setFilter(f.id)} style={{
@@ -1132,7 +1298,7 @@ const BrandsPage=()=>{
           ))}
         </div>
       </div>
-      <div style={{padding:'32px 80px 80px'}}>
+      <div style={{padding:'32px var(--px) 80px'}}>
         <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'14px'}} className="grid-4">
           {shown.map((b,i)=>(
             <Reveal key={i} delay={i*0.03}>
@@ -1395,7 +1561,7 @@ const ToolsPage=()=>{
     <div style={{background:'var(--cream)',minHeight:'100vh'}}>
       <PageHero tag="Professional Tools" title={"Industry Tools\nfor Smarter Projects."}
         sub="Free estimation tools designed for architects, contractors, and homeowners."/>
-      <div style={{padding:'56px 80px 80px'}}>
+      <div style={{padding:'56px var(--px) 80px'}}>
         <div style={{display:'grid',gridTemplateColumns:'280px 1fr',gap:'32px',alignItems:'start'}} className="grid-2">
           <div style={{position:'sticky',top:'100px'}}>
             {tools.map((t,i)=>(
@@ -1449,7 +1615,7 @@ const AboutPage=()=>(
   <div style={{background:'var(--cream)',minHeight:'100vh'}}>
     <PageHero tag="Our Story" title={"Building Trust,\nBuilding Futures."}
       sub="From a single store to the region's most trusted one-stop building solutions provider."/>
-    <div style={{padding:'72px 80px',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'72px',alignItems:'start'}} className="grid-2">
+    <div style={{padding:'72px var(--px)',display:'grid',gridTemplateColumns:'1fr 1fr',gap:'72px',alignItems:'start'}} className="grid-2">
       <Reveal>
         <div>
           <span className="section-tag">Who We Are</span>
@@ -1475,7 +1641,7 @@ const AboutPage=()=>(
         </div>
       </Reveal>
     </div>
-    <div style={{padding:'0 80px 72px'}}>
+    <div style={{padding:'0 var(--px) 72px'}}>
       {[
         {n:'30+',l:'Premium Brand Partners'},
         {n:'7',l:'Complete Product Categories'},
@@ -1493,7 +1659,7 @@ const AboutPage=()=>(
         </Reveal>
       ))}
     </div>
-    <div style={{padding:'0 80px 72px'}}>
+    <div style={{padding:'0 var(--px) 72px'}}>
       <Reveal><div style={{textAlign:'center',marginBottom:'44px'}}>
         <span className="section-tag">Our Brands</span>
         <h2 className="section-h">Two Entities. One Commitment.</h2>
@@ -1519,7 +1685,7 @@ const AboutPage=()=>(
         ))}
       </div>
     </div>
-    <div style={{padding:'0 80px 80px'}}>
+    <div style={{padding:'0 var(--px) 80px'}}>
       <Reveal><div style={{textAlign:'center',marginBottom:'44px'}}>
         <span className="section-tag">What We Stand For</span>
         <h2 className="section-h">Our Core Values</h2>
@@ -1557,7 +1723,7 @@ const ContactPage=()=>{
   return(
     <div style={{background:'var(--cream)',minHeight:'100vh'}}>
       <PageHero tag="Get In Touch" title={"Let's Build Something\nTogether."}/>
-      <div style={{padding:'64px 80px 80px',display:'grid',gridTemplateColumns:'1fr 1.3fr',gap:'56px',alignItems:'start'}} className="grid-2">
+      <div style={{padding:'64px var(--px) 80px',display:'grid',gridTemplateColumns:'1fr 1.3fr',gap:'56px',alignItems:'start'}} className="grid-2">
         <div>
           {[
             {tag:'Garg Trading Company',name:'Panchkula Store',addr:'Plot No. 1, Industrial Area Phase 1\nPanchkula, Haryana 134109',ph:'+91 92168 66671'},
@@ -1616,7 +1782,7 @@ const ContactPage=()=>{
 
 /* ─── FOOTER ─────────────────────────────────────────────── */
 const Footer=({go})=>(
-  <footer style={{background:'#070D1C',padding:'60px 80px 28px'}}>
+  <footer style={{background:'#070D1C',padding:'60px var(--px) 28px'}}>
     <div style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1.5fr',gap:'48px',marginBottom:'48px'}} className="grid-2">
       <div>
         <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'20px'}}>
@@ -1644,7 +1810,7 @@ const Footer=({go})=>(
       </div>
       <div>
         <div style={{color:'#ffffff',fontSize:'11px',fontWeight:'600',letterSpacing:'2px',textTransform:'uppercase',marginBottom:'20px'}}>Navigate</div>
-        {['home','products','brands','tools','about','contact'].map(p=>(
+        {['home','products','gallery','brands','tools','about','contact'].map(p=>(
           <div key={p} onClick={()=>go(p)} style={{fontSize:'13px',marginBottom:'12px',cursor:'pointer',textTransform:'capitalize',color:'rgba(255,255,255,0.4)',transition:'color 0.2s'}}
           onMouseEnter={e=>e.target.style.color='var(--gold)'}
           onMouseLeave={e=>e.target.style.color='rgba(255,255,255,0.4)'}>{p}</div>
@@ -1698,7 +1864,7 @@ const App=()=>{
   const go=useCallback(p=>{setPage(p);window.scrollTo({top:0,behavior:'smooth'});},[]);
   const catPage=page.startsWith('cat-')?page.slice(4):null;
   const cat=catPage?CATS.find(c=>c.id===catPage):null;
-  const pages={home:<HomePage go={go}/>,products:<ProductsPage go={go}/>,brands:<BrandsPage/>,tools:<ToolsPage/>,about:<AboutPage/>,contact:<ContactPage/>};
+  const pages={home:<HomePage go={go}/>,products:<ProductsPage go={go}/>,gallery:<GalleryPage/>,brands:<BrandsPage/>,tools:<ToolsPage/>,about:<AboutPage/>,contact:<ContactPage/>};
   return(
     <>
       <style>{`

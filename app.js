@@ -623,6 +623,7 @@ const Nav = ({
 }) => {
   const [sc, setSc] = useState(false);
   const [pct, setPct] = useState(0);
+  const [mOpen, setMOpen] = useState(false);
   useEffect(() => {
     const fn = () => {
       setSc(window.scrollY > 60);
@@ -632,7 +633,11 @@ const Nav = ({
     window.addEventListener('scroll', fn);
     return () => window.removeEventListener('scroll', fn);
   }, []);
-  const links = ['Home', 'Products', 'Brands', 'Tools', 'About', 'Contact'];
+  const links = ['Home', 'Products', 'Gallery', 'Brands', 'Tools', 'About', 'Contact'];
+  const nav = key => {
+    go(key);
+    setMOpen(false);
+  };
   return /*#__PURE__*/React.createElement("nav", {
     style: {
       position: 'fixed',
@@ -640,14 +645,11 @@ const Nav = ({
       left: 0,
       right: 0,
       zIndex: 1000,
-      padding: sc ? '12px 64px' : '22px 64px',
-      background: sc ? 'rgba(250,248,243,0.97)' : 'transparent',
-      backdropFilter: sc ? 'blur(20px)' : 'none',
-      borderBottom: sc ? '1px solid var(--border)' : 'none',
-      transition: 'all 0.35s ease',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between'
+      padding: sc ? '12px var(--px)' : '22px var(--px)',
+      background: sc || mOpen ? 'rgba(250,248,243,0.97)' : 'transparent',
+      backdropFilter: sc || mOpen ? 'blur(20px)' : 'none',
+      borderBottom: sc || mOpen ? '1px solid var(--border)' : 'none',
+      transition: 'all 0.35s ease'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -661,7 +663,13 @@ const Nav = ({
       opacity: sc ? 1 : 0
     }
   }), /*#__PURE__*/React.createElement("div", {
-    onClick: () => go('home'),
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    onClick: () => nav('home'),
     style: {
       display: 'flex',
       alignItems: 'center',
@@ -691,7 +699,7 @@ const Nav = ({
       fontFamily: 'Cormorant Garamond,serif',
       fontSize: '15px',
       fontWeight: '700',
-      color: sc ? 'var(--navy)' : '#ffffff',
+      color: sc || mOpen ? 'var(--navy)' : '#ffffff',
       lineHeight: '1.1',
       letterSpacing: '0.5px',
       transition: 'color 0.3s'
@@ -716,12 +724,12 @@ const Nav = ({
     const active = page === key || key === 'products' && page.startsWith('cat-');
     return /*#__PURE__*/React.createElement("button", {
       key: l,
-      onClick: () => go(key),
+      onClick: () => nav(key),
       style: {
         background: 'none',
         border: 'none',
         cursor: 'pointer',
-        padding: '8px 15px',
+        padding: '8px 13px',
         fontSize: '12px',
         fontWeight: '500',
         fontFamily: 'DM Sans,sans-serif',
@@ -739,12 +747,74 @@ const Nav = ({
       }
     }, l);
   }), /*#__PURE__*/React.createElement("button", {
-    onClick: () => go('contact'),
+    onClick: () => nav('contact'),
     className: "btn-gold",
     style: {
       padding: '10px 22px',
       fontSize: '11px',
       marginLeft: '16px'
+    }
+  }, "Get Quote")), /*#__PURE__*/React.createElement("button", {
+    className: "show-mobile",
+    onClick: () => setMOpen(o => !o),
+    style: {
+      display: 'none',
+      background: 'none',
+      border: 'none',
+      cursor: 'pointer',
+      padding: '8px',
+      flexDirection: 'column',
+      gap: '5px'
+    }
+  }, [0, 1, 2].map(i => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    style: {
+      display: 'block',
+      width: '24px',
+      height: '2px',
+      borderRadius: '2px',
+      background: sc || mOpen ? 'var(--navy)' : '#ffffff',
+      transition: 'all 0.3s',
+      transform: mOpen && i === 0 ? 'rotate(45deg) translate(5px,5px)' : mOpen && i === 1 ? 'scaleX(0)' : mOpen && i === 2 ? 'rotate(-45deg) translate(5px,-5px)' : 'none',
+      opacity: mOpen && i === 1 ? 0 : 1
+    }
+  })))), mOpen && /*#__PURE__*/React.createElement("div", {
+    style: {
+      paddingTop: '16px',
+      paddingBottom: '20px',
+      animation: 'mobileMenuIn 0.25s ease both'
+    }
+  }, links.map(l => {
+    const key = l.toLowerCase();
+    const active = page === key || key === 'products' && page.startsWith('cat-');
+    return /*#__PURE__*/React.createElement("button", {
+      key: l,
+      onClick: () => nav(key),
+      style: {
+        display: 'block',
+        width: '100%',
+        textAlign: 'left',
+        background: 'none',
+        border: 'none',
+        cursor: 'pointer',
+        padding: '13px 4px',
+        fontSize: '14px',
+        fontWeight: '500',
+        fontFamily: 'DM Sans,sans-serif',
+        letterSpacing: '0.5px',
+        textTransform: 'uppercase',
+        color: active ? 'var(--gold)' : 'var(--navy)',
+        borderBottom: '1px solid var(--border)'
+      }
+    }, l);
+  }), /*#__PURE__*/React.createElement("button", {
+    onClick: () => nav('contact'),
+    className: "btn-gold",
+    style: {
+      width: '100%',
+      justifyContent: 'center',
+      marginTop: '16px',
+      padding: '14px'
     }
   }, "Get Quote")));
 };
@@ -766,7 +836,7 @@ const PageHero = ({
 }) => /*#__PURE__*/React.createElement("div", {
   style: {
     background: 'linear-gradient(158deg,#080F22 0%,#0D1B3E 60%,#162347 100%)',
-    padding: '100px 80px 80px',
+    padding: '100px var(--px) 80px',
     position: 'relative',
     overflow: 'hidden'
   }
@@ -791,7 +861,7 @@ const PageHero = ({
     fontFamily: 'Cormorant Garamond,serif',
     fontWeight: '300',
     fontStyle: 'italic',
-    fontSize: 'clamp(42px,6.5vw,80px)',
+    fontSize: 'clamp(36px,6.5vw,80px)',
     color: '#ffffff',
     lineHeight: '1.08',
     marginBottom: sub ? '20px' : '0'
@@ -858,7 +928,7 @@ const Hero = ({
   style: {
     position: 'relative',
     zIndex: 5,
-    padding: '0 80px 60px',
+    padding: '0 var(--px) 60px',
     maxWidth: '1200px',
     margin: '0 auto',
     width: '100%'
@@ -1031,7 +1101,7 @@ const Stats = () => {
   const [ref, inView] = useInView(0.2);
   return /*#__PURE__*/React.createElement("section", {
     style: {
-      padding: '0 80px 80px',
+      padding: '0 var(--px) 80px',
       background: 'var(--cream)'
     }
   }, /*#__PURE__*/React.createElement("div", {
@@ -1318,7 +1388,7 @@ const HomePage = ({
 }), /*#__PURE__*/React.createElement(Stats, null), /*#__PURE__*/React.createElement("section", {
   className: "section-pad",
   style: {
-    padding: '40px 80px 80px',
+    padding: '40px var(--px) 80px',
     background: 'var(--cream)'
   }
 }, /*#__PURE__*/React.createElement(Reveal, null, /*#__PURE__*/React.createElement("div", {
@@ -1348,7 +1418,7 @@ const HomePage = ({
   wide: false
 }))))), /*#__PURE__*/React.createElement("section", {
   style: {
-    padding: '0 80px 80px',
+    padding: '0 var(--px) 80px',
     background: 'var(--cream)'
   }
 }, /*#__PURE__*/React.createElement(Reveal, null, /*#__PURE__*/React.createElement("div", {
@@ -1369,7 +1439,7 @@ const HomePage = ({
   label: "Tile Collection"
 })))), /*#__PURE__*/React.createElement("section", {
   style: {
-    padding: '80px',
+    padding: '80px var(--px)',
     background: 'var(--navy)',
     position: 'relative',
     overflow: 'hidden'
@@ -1434,7 +1504,7 @@ const HomePage = ({
 }))))), /*#__PURE__*/React.createElement("section", {
   className: "section-pad",
   style: {
-    padding: '80px',
+    padding: '80px var(--px)',
     background: 'var(--cream)'
   }
 }, /*#__PURE__*/React.createElement(Reveal, null, /*#__PURE__*/React.createElement("div", {
@@ -1517,7 +1587,7 @@ const HomePage = ({
   }, p.desc)));
 }))), /*#__PURE__*/React.createElement("section", {
   style: {
-    padding: '0 80px 80px',
+    padding: '0 var(--px) 80px',
     background: 'var(--cream)'
   }
 }, /*#__PURE__*/React.createElement("div", {
@@ -1613,7 +1683,7 @@ const HomePage = ({
   }
 }, "📞 ", e.ph))))))), /*#__PURE__*/React.createElement("section", {
   style: {
-    padding: '80px',
+    padding: '80px var(--px)',
     background: 'linear-gradient(135deg,var(--gold) 0%,var(--gold3) 55%,var(--gold) 100%)',
     textAlign: 'center',
     position: 'relative',
@@ -1711,7 +1781,7 @@ const ProductsPage = ({
   title: "Complete Building\nSolutions, Curated."
 }), /*#__PURE__*/React.createElement("div", {
   style: {
-    padding: '64px 80px 80px'
+    padding: '64px var(--px) 80px'
   }
 }, CATS.map((cat, i) => /*#__PURE__*/React.createElement(Reveal, {
   key: cat.id,
@@ -1826,7 +1896,7 @@ const CategoryPage = ({
 }, /*#__PURE__*/React.createElement("div", {
   style: {
     background: `linear-gradient(158deg,${cat.color}ee 0%,${cat.color} 60%,${cat.color}dd 100%)`,
-    padding: '100px 80px 80px',
+    padding: '100px var(--px) 80px',
     position: 'relative',
     overflow: 'hidden'
   }
@@ -1909,7 +1979,7 @@ const CategoryPage = ({
   radius: 20
 })))), /*#__PURE__*/React.createElement("div", {
   style: {
-    padding: '64px 80px',
+    padding: '64px var(--px)',
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '48px',
@@ -2026,7 +2096,7 @@ const CategoryPage = ({
   }
 }, "Get a Quote for This Category"))), /*#__PURE__*/React.createElement("div", {
   style: {
-    padding: '0 80px 80px'
+    padding: '0 var(--px) 80px'
   }
 }, /*#__PURE__*/React.createElement("span", {
   className: "section-tag"
@@ -2049,7 +2119,7 @@ const CategoryPage = ({
   label: "Product Image 3"
 }))), /*#__PURE__*/React.createElement("div", {
   style: {
-    padding: '0 80px 80px'
+    padding: '0 var(--px) 80px'
   }
 }, /*#__PURE__*/React.createElement("div", {
   style: {
@@ -2107,6 +2177,229 @@ const CategoryPage = ({
   }
 }, "💬 WhatsApp")))));
 
+/* ─── GALLERY PAGE ──────────────────────────────────────── */
+const GALLERY_CATS = [{
+  id: 'all',
+  label: 'All'
+}, {
+  id: 'hardware',
+  label: 'Hardware'
+}, {
+  id: 'adhesives',
+  label: 'Adhesives'
+}, {
+  id: 'panels',
+  label: 'Panels'
+}, {
+  id: 'tiles',
+  label: 'Tiles'
+}, {
+  id: 'paints',
+  label: 'Paints'
+}, {
+  id: 'tools',
+  label: 'Tools'
+}, {
+  id: 'pipes',
+  label: 'Pipes'
+}];
+const GALLERY_ITEMS = [{
+  cat: 'hardware',
+  label: 'Kitchen Fittings Display',
+  span: 2
+}, {
+  cat: 'hardware',
+  label: 'Hettich Drawer Systems'
+}, {
+  cat: 'hardware',
+  label: 'Door Hardware Range'
+}, {
+  cat: 'tiles',
+  label: 'Kajaria Tile Showroom',
+  span: 2
+}, {
+  cat: 'tiles',
+  label: 'Bathroom Suite Display'
+}, {
+  cat: 'tiles',
+  label: 'Designer Floor Tiles'
+}, {
+  cat: 'paints',
+  label: 'Asian Paints Swatches'
+}, {
+  cat: 'paints',
+  label: 'Birla Opus Collection',
+  span: 2
+}, {
+  cat: 'adhesives',
+  label: 'Fevicol Products'
+}, {
+  cat: 'adhesives',
+  label: 'Dr. Fixit Waterproofing'
+}, {
+  cat: 'panels',
+  label: 'Gyproc Ceiling System',
+  span: 2
+}, {
+  cat: 'panels',
+  label: 'Partition Wall Demo'
+}, {
+  cat: 'tools',
+  label: 'DeWalt Power Tools'
+}, {
+  cat: 'tools',
+  label: 'CUMI Grinder Range'
+}, {
+  cat: 'pipes',
+  label: 'CPVC Pipe Range',
+  span: 2
+}, {
+  cat: 'pipes',
+  label: 'Fittings & Valves'
+}];
+const GalleryPage = () => {
+  const [filter, setFilter] = useState('all');
+  const shown = filter === 'all' ? GALLERY_ITEMS : GALLERY_ITEMS.filter(g => g.cat === filter);
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: 'var(--cream)',
+      minHeight: '100vh'
+    }
+  }, /*#__PURE__*/React.createElement(PageHero, {
+    tag: "Photo Gallery",
+    title: "Our Products\n& Showrooms.",
+    sub: "Browse our curated collection of products, installations, and showroom displays."
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '40px var(--px) 0'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '8px',
+      flexWrap: 'wrap'
+    }
+  }, GALLERY_CATS.map(f => /*#__PURE__*/React.createElement("button", {
+    key: f.id,
+    onClick: () => setFilter(f.id),
+    style: {
+      background: filter === f.id ? 'var(--navy)' : 'var(--white)',
+      border: `1px solid ${filter === f.id ? 'var(--navy)' : 'var(--border)'}`,
+      borderRadius: '100px',
+      padding: '9px 22px',
+      fontSize: '12px',
+      fontWeight: '500',
+      fontFamily: 'DM Sans,sans-serif',
+      letterSpacing: '0.3px',
+      color: filter === f.id ? 'var(--gold)' : 'var(--navy)',
+      cursor: 'pointer',
+      transition: 'all 0.2s'
+    }
+  }, f.label)))), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '32px var(--px) 80px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3,1fr)',
+      gap: '16px'
+    },
+    className: "grid-3"
+  }, shown.map((item, i) => /*#__PURE__*/React.createElement(Reveal, {
+    key: `${filter}-${i}`,
+    delay: i * 0.04,
+    style: item.span === 2 ? {
+      gridColumn: 'span 2'
+    } : {}
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      borderRadius: '16px',
+      overflow: 'hidden',
+      border: '1px solid var(--border)',
+      background: 'var(--white)',
+      transition: 'transform 0.28s ease,box-shadow 0.28s ease',
+      cursor: 'pointer'
+    },
+    onMouseEnter: e => {
+      e.currentTarget.style.transform = 'translateY(-5px)';
+      e.currentTarget.style.boxShadow = '0 20px 48px rgba(13,27,62,0.1)';
+    },
+    onMouseLeave: e => {
+      e.currentTarget.style.transform = 'none';
+      e.currentTarget.style.boxShadow = 'none';
+    }
+  }, /*#__PURE__*/React.createElement(ImgPlaceholder, {
+    h: item.span === 2 ? 280 : 220,
+    label: item.label,
+    radius: 0
+  }), /*#__PURE__*/React.createElement("div", {
+    style: {
+      padding: '16px 18px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '13px',
+      fontWeight: '500',
+      color: 'var(--navy)'
+    }
+  }, item.label), /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: '9px',
+      fontWeight: '600',
+      letterSpacing: '1.5px',
+      textTransform: 'uppercase',
+      color: 'var(--gold)',
+      background: 'rgba(201,168,76,0.1)',
+      borderRadius: '100px',
+      padding: '4px 10px'
+    }
+  }, item.cat)))))), shown.length === 0 && /*#__PURE__*/React.createElement("div", {
+    style: {
+      textAlign: 'center',
+      padding: '60px 0',
+      color: 'var(--txt3)'
+    }
+  }, "No items in this category yet."), /*#__PURE__*/React.createElement(Reveal, null, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginTop: '56px',
+      background: 'linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%)',
+      borderRadius: '20px',
+      padding: '52px',
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "section-tag",
+    style: {
+      color: 'var(--gold)'
+    }
+  }, "Coming Soon"), /*#__PURE__*/React.createElement("h2", {
+    style: {
+      fontFamily: 'Cormorant Garamond,serif',
+      fontSize: 'clamp(26px,4vw,42px)',
+      fontWeight: '600',
+      color: '#ffffff',
+      marginBottom: '16px',
+      lineHeight: '1.2'
+    }
+  }, "Real Project Photos Coming Soon"), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: '15px',
+      color: 'rgba(255,255,255,0.5)',
+      lineHeight: '1.7',
+      maxWidth: '480px',
+      margin: '0 auto 32px'
+    }
+  }, "We're uploading photos from real installations, showrooms, and completed projects. Check back soon."), /*#__PURE__*/React.createElement("a", {
+    href: "https://wa.me/919216866671?text=I'd like to see your product gallery",
+    target: "_blank",
+    className: "btn-gold"
+  }, "WhatsApp for Photos")))));
+};
+
 /* ─── BRANDS PAGE ───────────────────────────────────────── */
 const BrandsPage = () => {
   const [filter, setFilter] = useState('all');
@@ -2156,7 +2449,7 @@ const BrandsPage = () => {
     sub: "Every product genuine, certified, and stocked at our stores."
   }), /*#__PURE__*/React.createElement("div", {
     style: {
-      padding: '40px 80px 0'
+      padding: '40px var(--px) 0'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -2182,7 +2475,7 @@ const BrandsPage = () => {
     }
   }, f.label)))), /*#__PURE__*/React.createElement("div", {
     style: {
-      padding: '32px 80px 80px'
+      padding: '32px var(--px) 80px'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -3022,7 +3315,7 @@ const ToolsPage = () => {
     sub: "Free estimation tools designed for architects, contractors, and homeowners."
   }), /*#__PURE__*/React.createElement("div", {
     style: {
-      padding: '56px 80px 80px'
+      padding: '56px var(--px) 80px'
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
@@ -3169,7 +3462,7 @@ const AboutPage = () => /*#__PURE__*/React.createElement("div", {
   sub: "From a single store to the region's most trusted one-stop building solutions provider."
 }), /*#__PURE__*/React.createElement("div", {
   style: {
-    padding: '72px 80px',
+    padding: '72px var(--px)',
     display: 'grid',
     gridTemplateColumns: '1fr 1fr',
     gap: '72px',
@@ -3227,7 +3520,7 @@ const AboutPage = () => /*#__PURE__*/React.createElement("div", {
   label: "Chandigarh Store"
 })))), /*#__PURE__*/React.createElement("div", {
   style: {
-    padding: '0 80px 72px'
+    padding: '0 var(--px) 72px'
   }
 }, [{
   n: '30+',
@@ -3274,7 +3567,7 @@ const AboutPage = () => /*#__PURE__*/React.createElement("div", {
   }
 }, s.l))))), /*#__PURE__*/React.createElement("div", {
   style: {
-    padding: '0 80px 72px'
+    padding: '0 var(--px) 72px'
   }
 }, /*#__PURE__*/React.createElement(Reveal, null, /*#__PURE__*/React.createElement("div", {
   style: {
@@ -3375,7 +3668,7 @@ const AboutPage = () => /*#__PURE__*/React.createElement("div", {
   }
 }, "📞 ", e.ph))))))), /*#__PURE__*/React.createElement("div", {
   style: {
-    padding: '0 80px 80px'
+    padding: '0 var(--px) 80px'
   }
 }, /*#__PURE__*/React.createElement(Reveal, null, /*#__PURE__*/React.createElement("div", {
   style: {
@@ -3468,7 +3761,7 @@ const ContactPage = () => {
     title: "Let's Build Something\nTogether."
   }), /*#__PURE__*/React.createElement("div", {
     style: {
-      padding: '64px 80px 80px',
+      padding: '64px var(--px) 80px',
       display: 'grid',
       gridTemplateColumns: '1fr 1.3fr',
       gap: '56px',
@@ -3708,7 +4001,7 @@ const Footer = ({
 }) => /*#__PURE__*/React.createElement("footer", {
   style: {
     background: '#070D1C',
-    padding: '60px 80px 28px'
+    padding: '60px var(--px) 28px'
   }
 }, /*#__PURE__*/React.createElement("div", {
   style: {
@@ -3799,7 +4092,7 @@ const Footer = ({
     textTransform: 'uppercase',
     marginBottom: '20px'
   }
-}, "Navigate"), ['home', 'products', 'brands', 'tools', 'about', 'contact'].map(p => /*#__PURE__*/React.createElement("div", {
+}, "Navigate"), ['home', 'products', 'gallery', 'brands', 'tools', 'about', 'contact'].map(p => /*#__PURE__*/React.createElement("div", {
   key: p,
   onClick: () => go(p),
   style: {
@@ -3943,6 +4236,7 @@ const App = () => {
     products: /*#__PURE__*/React.createElement(ProductsPage, {
       go: go
     }),
+    gallery: /*#__PURE__*/React.createElement(GalleryPage, null),
     brands: /*#__PURE__*/React.createElement(BrandsPage, null),
     tools: /*#__PURE__*/React.createElement(ToolsPage, null),
     about: /*#__PURE__*/React.createElement(AboutPage, null),

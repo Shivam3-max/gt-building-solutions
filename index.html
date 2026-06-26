@@ -25,6 +25,7 @@
   --txt2:#4A5070;
   --txt3:#8890AA;
   --border:rgba(201,168,76,0.18);
+  --px:80px;
 }
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--txt);overflow-x:hidden}
@@ -37,21 +38,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--txt);o
 @keyframes marqueeL{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 @keyframes marqueeR{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
 @keyframes pulse{0%,100%{box-shadow:0 6px 28px rgba(37,211,102,0.38)}50%{box-shadow:0 6px 44px rgba(37,211,102,0.65)}}
-@keyframes floatBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
-@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-
-.anim-delay-1{animation-delay:0.1s}
-.anim-delay-2{animation-delay:0.2s}
-.anim-delay-3{animation-delay:0.3s}
-.anim-delay-4{animation-delay:0.4s}
-.anim-delay-5{animation-delay:0.5s}
-.anim-delay-6{animation-delay:0.6s}
+@keyframes scrollDot{0%{transform:translateY(-100%)}100%{transform:translateY(200%)}}
+@keyframes mobileMenuIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 
 .marqueeL{animation:marqueeL 38s linear infinite}
 .marqueeR{animation:marqueeR 44s linear infinite}
-
-.page-in{animation:fadeUp 0.55s cubic-bezier(.22,.68,0,1.1) both}
 
 .card-hover{transition:transform 0.28s ease,box-shadow 0.28s ease,border-color 0.28s ease}
 .card-hover:hover{transform:translateY(-6px);box-shadow:0 24px 56px rgba(13,27,62,0.10);border-color:var(--gold) !important}
@@ -88,23 +79,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--txt);o
 }
 .section-h{
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(34px,4.5vw,58px);
-  font-weight:600;color:var(--navy);
-  line-height:1.1;
+  font-size:clamp(30px,4.5vw,58px);
+  font-weight:600;color:var(--navy);line-height:1.1;
 }
 .section-h-light{
   font-family:'Cormorant Garamond',serif;
-  font-size:clamp(34px,4.5vw,58px);
-  font-weight:400;font-style:italic;color:#ffffff;
-  line-height:1.1;
+  font-size:clamp(30px,4.5vw,58px);
+  font-weight:400;font-style:italic;color:#ffffff;line-height:1.1;
 }
-
 .gold-text{
   background:linear-gradient(135deg,var(--gold) 0%,var(--gold3) 60%,var(--gold) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-
 input,select,textarea{
   width:100%;padding:13px 16px;
   border:1px solid var(--border);border-radius:8px;
@@ -114,11 +100,46 @@ input,select,textarea{
 }
 input:focus,select:focus,textarea:focus{border-color:var(--gold)}
 
-@media(max-width:900px){
-  .hide-mobile{display:none !important}
-  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr !important}
-  .section-pad{padding:60px 24px !important}
-  .hero-pad{padding:80px 24px 60px !important}
+/* ── GRID UTILITIES ── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+
+/* ── PADDING UTILITIES ── */
+.pad-x{padding-left:var(--px);padding-right:var(--px)}
+.pad-section{padding:80px var(--px)}
+.pad-section-sm{padding:40px var(--px)}
+
+/* ── TABLET (max 1100px) ── */
+@media(max-width:1100px){
+  :root{--px:40px}
+  .grid-4{grid-template-columns:repeat(2,1fr)!important}
+  .grid-5{grid-template-columns:repeat(3,1fr)!important}
+}
+
+/* ── MOBILE (max 768px) ── */
+@media(max-width:768px){
+  :root{--px:20px}
+  .hide-mobile{display:none!important}
+  .show-mobile{display:flex!important}
+  .grid-2,.grid-3,.grid-4,.grid-5{grid-template-columns:1fr!important}
+  .grid-2-mob{grid-template-columns:1fr 1fr!important}
+  .pad-section{padding:56px var(--px)!important}
+  .pad-section-sm{padding:32px var(--px)!important}
+  .btn-gold,.btn-ghost{padding:13px 24px!important;font-size:11px!important}
+  .section-h,.section-h-light{font-size:clamp(26px,7vw,40px)!important}
+  .span2-mobile{grid-column:span 1!important}
+  .mob-center{text-align:center!important}
+  .mob-stack{flex-direction:column!important}
+  .mob-full{width:100%!important}
+  .mob-hide{display:none!important}
+}
+
+/* ── SMALL MOBILE (max 480px) ── */
+@media(max-width:480px){
+  :root{--px:16px}
+  .grid-2-mob{grid-template-columns:1fr!important}
 }
 </style>
 </head>
