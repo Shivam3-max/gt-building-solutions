@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "serve -s . -l ${PORT:-3000}",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,5 +15,8 @@
     "@babel/cli": "^8.0.1",
     "@babel/core": "^8.0.1",
     "@babel/preset-react": "^8.0.1"
+  },
+  "dependencies": {
+    "serve": "^14.2.6"
   }
 }
