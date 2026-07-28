@@ -82,6 +82,121 @@ const catColorMap={
   tiles:'#8B6520',paints:'#6A4010',tools:'#4A2010',pipes:'#0E3A22',
 };
 
+const assetPath=(file)=>encodeURI(`/Public/${file}`);
+const brandLogoPath=(file)=>encodeURI(`/Public/brand logo/${file}`);
+const HERO_VIDEOS={
+  desktop:'client/desktop.mp4',
+  mobile:'client/phone.mp4',
+  fallback:'client/hero-poster.jpg',
+};
+
+const BRAND_LOGOS={
+  'Fevicol':'fevicol.jpeg',
+  'Birla Opus':'birla-opus.jpeg',
+  'Asian Paints':'asian-paints.jpeg',
+  '3M':'3m.jpeg',
+  'Nippon Paint':'nippon-paint.jpeg',
+  'Birla White':'birla-white.jpeg',
+  'Havells':'havells.jpeg',
+  'Hindware':'hindware.jpeg',
+  'Kerovit':'kerovit.jpeg',
+  'Roff':'roff.jpeg',
+  'DeWalt':'dewalt.jpeg',
+  'Hettich':'hettich.jpeg',
+  'Tata Agrico':'tata-agrico.jpeg',
+  'ICA':'ica.jpeg',
+  'Gyproc':'gyproc.jpeg',
+  'Godrej':'godrej.jpeg',
+  'Eboo':'eboo.jpeg',
+  'Blaupunkt':'blaupunkt.jpeg',
+  'Pidilite':'pidilite.jpeg',
+  'Dr. Fixit':'dr-fixit.jpeg',
+  'Prince Piping':'prince-piping.jpeg',
+  'Birla HiL':'birla-hil.jpeg',
+  'CUMI':'cumi.jpeg',
+  'JB Plastering':'jb-plastering.jpeg',
+  'Sleek Kitchens':'sleek-kitchens.jpeg',
+  'Kajaria':'kajaria.jpeg',
+  'Chetak':'chetak.jpeg',
+};
+
+const BRAND_LOGO_TWEAKS={
+  '3M':{scale:'78%'},
+  'Asian Paints':{scale:'74%'},
+  'Blaupunkt':{scale:'84%'},
+  'Birla Opus':{scale:'84%'},
+  'Birla White':{scale:'80%'},
+  'Chetak':{scale:'88%'},
+  'DeWalt':{scale:'88%'},
+  'Eboo':{scale:'72%'},
+  'Fevicol':{scale:'84%'},
+  'Gyproc':{scale:'84%'},
+  'Havells':{scale:'66%'},
+  'Hettich':{scale:'90%'},
+  'Hindware':{scale:'74%'},
+  'ICA':{scale:'72%'},
+  'JB Plastering':{scale:'88%'},
+  'Nippon Paint':{scale:'72%'},
+  'Prince Piping':{scale:'82%'},
+  'Roff':{scale:'72%'},
+  'Sleek Kitchens':{scale:'86%'},
+  'Tata Agrico':{scale:'86%'},
+};
+
+const HOME_GALLERY_IMAGES=[
+  {src:'client/gt-storefront-wide-1.jpg',label:'Showroom Exterior'},
+  {src:'client/gt-fittings-display.jpg',label:'Hardware Display'},
+  {src:'client/gt-sanitary-display.jpg',label:'Tile Collection'},
+];
+
+const CATEGORY_HERO_IMAGES={
+  hardware:'hettich.jpg',
+  adhesives:'fevicol.jpg',
+  panels:'generated-panels-showroom.png',
+  tiles:'client/gt-kajaria-facade.jpg',
+  paints:'generated-paints-showroom.png',
+  tools:'generated-tools-showroom.png',
+  pipes:'generated-pipes-showroom.png',
+};
+
+const CATEGORY_GALLERY_IMAGES={
+  hardware:[
+    {src:'client/gt-fittings-display.jpg',label:'Hardware Display'},
+    {src:'hettich.jpg',label:'Hettich Systems'},
+    {src:'door.jpg',label:'Door Hardware'},
+  ],
+  adhesives:[
+    {src:'fevicol.jpg',label:'Fevicol Range'},
+    {src:'dr-fixit.jpg',label:'Dr. Fixit Solutions'},
+    {src:'fittings.jpg',label:'Surface Solutions'},
+  ],
+  panels:[
+    {src:'generated-panels-showroom.png',label:'Panels Showroom'},
+    {src:'gyproc.jpg',label:'Gyproc Boards'},
+    {src:'wall-demo.jpg',label:'Wall Demo'},
+  ],
+  tiles:[
+    {src:'client/gt-kajaria-facade.jpg',label:'Kajaria Collection'},
+    {src:'client/gt-sanitary-display.jpg',label:'Bathroom Display'},
+    {src:'client/gujarat-tiles-signboard.jpg',label:'Designer Tiles'},
+  ],
+  paints:[
+    {src:'generated-paints-showroom.png',label:'Paints Showroom'},
+    {src:'asian-paints.jpg',label:'Asian Paints'},
+    {src:'birla-opus.jpg',label:'Birla Opus'},
+  ],
+  tools:[
+    {src:'generated-tools-showroom.png',label:'Tools Showroom'},
+    {src:'dewalt.jpg',label:'DeWalt Tools'},
+    {src:'cumi.jpg',label:'CUMI Range'},
+  ],
+  pipes:[
+    {src:'generated-pipes-showroom.png',label:'Pipes Showroom'},
+    {src:'cpvc.jpg',label:'CPVC Pipes'},
+    {src:'fittings.jpg',label:'Fittings & Valves'},
+  ],
+};
+
 /* ─── HOOKS ──────────────────────────────────────────────── */
 const useInView=(threshold=0.08)=>{
   const ref=useRef(null);
@@ -155,6 +270,79 @@ const ImgPlaceholder=({h=280,label='Add Your Image Here',radius=16})=>(
       color:'rgba(13,27,62,0.38)'}}>{label}</div>
   </div>
 );
+
+const SiteImage=({src,alt,h=280,radius=16,fit='cover',style={}})=>{
+  const [broken,setBroken]=useState(false);
+  if(!src||broken)return <ImgPlaceholder h={h} label={alt} radius={radius}/>;
+  return(
+    <img
+      src={assetPath(src)}
+      alt={alt}
+      loading="lazy"
+      onError={()=>setBroken(true)}
+      style={{
+        display:'block',
+        width:'100%',
+        height:`${h}px`,
+        objectFit:fit,
+        borderRadius:`${radius}px`,
+        background:'#e8e4dc',
+        ...style,
+      }}
+    />
+  );
+};
+
+const BrandLogo=({name,h=64,radius=14,style={}})=>{
+  const src=BRAND_LOGOS[name];
+  const tweak=BRAND_LOGO_TWEAKS[name]||{};
+  const brand=BRANDS.find(b=>b.name===name);
+  const [broken,setBroken]=useState(false);
+  if(!src||broken){
+    return(
+      <div style={{
+        width:'100%',height:`${h}px`,borderRadius:`${radius}px`,flexShrink:0,
+        background:`linear-gradient(135deg,${catColorMap[brand?.cat]||'var(--navy)'} 0%,${catColorMap[brand?.cat]||'var(--navy)'}bb 100%)`,
+        display:'flex',alignItems:'center',justifyContent:'center',
+        color:'var(--gold)',fontFamily:'Cormorant Garamond,serif',
+        fontSize:'16px',fontWeight:'700',letterSpacing:'0.8px',
+        boxShadow:'inset 0 1px 0 rgba(255,255,255,0.08)',
+        ...style,
+      }}>{name.slice(0,2).toUpperCase()}</div>
+    );
+  }
+  return(
+    <div
+      style={{
+        width:'100%',
+        height:`${h}px`,
+        borderRadius:`${radius}px`,
+        background:'linear-gradient(180deg,#ffffff 0%,#f8f7f3 100%)',
+        border:'1px solid rgba(13,27,62,0.08)',
+        boxShadow:'0 10px 28px rgba(13,27,62,0.06), inset 0 1px 0 rgba(255,255,255,0.8)',
+        display:'flex',
+        alignItems:'center',
+        justifyContent:'center',
+        overflow:'hidden',
+        ...style,
+      }}
+    >
+      <img
+        src={brandLogoPath(src)}
+        alt={name}
+        loading="lazy"
+        onError={()=>setBroken(true)}
+        style={{
+          display:'block',
+          width:tweak.scale||'82%',
+          height:'72%',
+          objectFit:'contain',
+          filter:'drop-shadow(0 1px 1px rgba(13,27,62,0.05))',
+        }}
+      />
+    </div>
+  );
+};
 
 /* ─── HERO CANVAS (mouse-reactive) ───────────────────────── */
 const HeroCanvas=()=>{
@@ -331,6 +519,68 @@ const HeroTicker=({go})=>{
 };
 
 /* ─── BRAND MARQUEE ─────────────────────────────────────── */
+const shouldSkipHeroVideo=()=>{
+  if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return true;
+  const conn=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+  if(conn){
+    if(conn.saveData) return true;
+    if(conn.effectiveType && /2g|3g/.test(conn.effectiveType)) return true;
+  }
+  return false;
+};
+
+const HeroBackgroundVideo=()=>{
+  const [mobile,setMobile]=useState(()=>window.innerWidth<=768);
+  const [ready,setReady]=useState(false);
+  const [skipVideo]=useState(shouldSkipHeroVideo);
+  useEffect(()=>{
+    const media=window.matchMedia('(max-width: 768px)');
+    const sync=event=>setMobile(event.matches);
+    sync(media);
+    if(media.addEventListener){
+      media.addEventListener('change',sync);
+      return()=>media.removeEventListener('change',sync);
+    }
+    media.addListener(sync);
+    return()=>media.removeListener(sync);
+  },[]);
+  const src=mobile?HERO_VIDEOS.mobile:HERO_VIDEOS.desktop;
+  useEffect(()=>setReady(false),[src]);
+  return(
+    <div style={{position:'absolute',inset:0,zIndex:0,overflow:'hidden'}}>
+      <div style={{
+        position:'absolute',inset:0,
+        backgroundImage:`url("${assetPath(HERO_VIDEOS.fallback)}")`,
+        backgroundSize:'cover',backgroundPosition:'center',
+        opacity:ready?0:1,
+        transition:'opacity 0.35s ease',
+      }}/>
+      {!skipVideo&&(
+        <video
+          key={src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={assetPath(HERO_VIDEOS.fallback)}
+          onCanPlay={()=>setReady(true)}
+          style={{
+            width:'100%',height:'100%',objectFit:'cover',
+            opacity:ready?1:0,
+            transition:'opacity 0.35s ease',
+            willChange:'opacity',
+            backfaceVisibility:'hidden',
+            pointerEvents:'none',
+          }}
+        >
+          <source src={assetPath(src)} type="video/mp4"/>
+        </video>
+      )}
+    </div>
+  );
+};
+
 const BrandMarquee=()=>{
   const names=BRANDS.map(b=>b.name);
   const r1=[...names.slice(0,14),...names.slice(0,14)];
@@ -454,7 +704,8 @@ const Nav=({page,go})=>{
         </div>
 
         {/* Hamburger */}
-        <button className="show-mobile" onClick={()=>setMOpen(o=>!o)} style={{
+        <button className="show-mobile" onClick={()=>setMOpen(o=>!o)}
+          aria-label={mOpen?'Close menu':'Open menu'} aria-expanded={mOpen} style={{
           display:'none',background:'none',border:'none',cursor:'pointer',
           padding:'8px',flexDirection:'column',gap:'5px',
         }}>
@@ -781,9 +1032,177 @@ const WhyCard=({item,i})=>{
 };
 
 /* ─── HOME PAGE ─────────────────────────────────────────── */
+const VideoHero=({go})=>(
+  <section style={{
+    minHeight:'100svh',
+    height:'100svh',
+    background:'#060C1C',
+    display:'flex',flexDirection:'column',justifyContent:'center',
+    paddingTop:'88px',paddingBottom:'24px',position:'relative',overflow:'hidden',
+  }}>
+    <HeroBackgroundVideo/>
+    <div style={{position:'absolute',inset:0,
+      background:'linear-gradient(90deg,rgba(6,12,28,0.88) 0%,rgba(6,12,28,0.72) 42%,rgba(6,12,28,0.6) 100%)',
+      zIndex:1}}/>
+    <div style={{position:'absolute',inset:0,
+      background:'linear-gradient(180deg,rgba(6,12,28,0.18) 0%,rgba(6,12,28,0.24) 36%,rgba(6,12,28,0.76) 100%)',
+      zIndex:1}}/>
+    <div style={{position:'absolute',inset:0,
+      backgroundImage:'linear-gradient(rgba(201,168,76,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.03) 1px,transparent 1px)',
+      backgroundSize:'64px 64px',pointerEvents:'none',zIndex:2}}/>
+    <div style={{position:'absolute',top:'12%',right:'-120px',width:'480px',height:'480px',
+      border:'1px solid rgba(201,168,76,0.12)',borderRadius:'50%',pointerEvents:'none',zIndex:2}}/>
+    <div style={{position:'absolute',bottom:'8%',right:'16%',width:'180px',height:'180px',
+      background:'radial-gradient(circle,rgba(201,168,76,0.18) 0%,rgba(201,168,76,0) 70%)',
+      pointerEvents:'none',zIndex:2}}/>
+
+    <div className="hero-pad" style={{position:'relative',zIndex:5,padding:'0 var(--px) 36px',maxWidth:'1280px',margin:'0 auto',width:'100%',flex:'1 1 auto',display:'flex',alignItems:'center'}}>
+      <div className="hero-grid" style={{
+        display:'grid',gridTemplateColumns:'minmax(0,1.12fr) minmax(300px,0.7fr)',
+        gap:'28px',alignItems:'center',
+      }}>
+        <div className="hero-content-copy" style={{maxWidth:'760px'}}>
+          <HeroTicker go={go}/>
+
+          <div style={{fontSize:'11px',fontWeight:'700',letterSpacing:'2.6px',textTransform:'uppercase',
+            color:'rgba(255,255,255,0.72)',marginBottom:'20px',animation:'fadeUp 0.7s 0.08s ease both',opacity:0}}>
+            Panchkula and Chandigarh's trusted material partner
+          </div>
+
+          <h1 style={{fontFamily:'Cormorant Garamond,serif',fontWeight:'300',color:'#ffffff',
+            fontSize:'clamp(38px,5.6vw,78px)',lineHeight:'0.94',marginBottom:'14px',
+            animation:'fadeUp 0.7s 0.16s ease both',opacity:0}}>
+            Build faster with
+            <span style={{display:'block',fontWeight:'700',fontStyle:'italic',
+              background:'linear-gradient(135deg,var(--gold) 0%,#F5E3A8 45%,var(--gold3) 100%)',
+              WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text'}}>
+              one powerful supply partner.
+            </span>
+          </h1>
+
+          <p style={{color:'rgba(255,255,255,0.76)',fontSize:'16px',fontWeight:'300',
+            maxWidth:'560px',lineHeight:'1.6',marginBottom:'20px',
+            animation:'fadeUp 0.7s 0.26s ease both',opacity:0}}>
+            Hardware, tiles, paints, panels, pipes, adhesives, and tools from 30+ premium brands, all sourced through one dependable team for retail, renovation, and large project supply.
+          </p>
+
+          <div style={{display:'flex',gap:'12px',flexWrap:'wrap',marginBottom:'18px',
+            animation:'fadeUp 0.7s 0.34s ease both',opacity:0}}>
+            <button onClick={()=>go('contact')} className="btn-gold">Plan My Requirement</button>
+            <button onClick={()=>go('products')} className="btn-ghost">Browse Categories</button>
+            <button onClick={()=>go('gallery')} style={{
+              display:'inline-flex',alignItems:'center',gap:'10px',
+              background:'rgba(255,255,255,0.08)',color:'#ffffff',
+              border:'1px solid rgba(255,255,255,0.18)',borderRadius:'6px',
+              padding:'14px 28px',fontSize:'12px',fontWeight:'500',
+              fontFamily:'DM Sans,sans-serif',letterSpacing:'1.2px',
+              textTransform:'uppercase',cursor:'pointer',transition:'all 0.25s',
+              backdropFilter:'blur(12px)',
+            }}
+            onMouseEnter={e=>{e.currentTarget.style.background='rgba(201,168,76,0.16)';e.currentTarget.style.borderColor='rgba(201,168,76,0.42)';}}
+            onMouseLeave={e=>{e.currentTarget.style.background='rgba(255,255,255,0.08)';e.currentTarget.style.borderColor='rgba(255,255,255,0.18)';}}>
+              View Showroom
+            </button>
+          </div>
+
+          <div className="hero-proof" style={{display:'flex',gap:'10px',flexWrap:'wrap',
+            animation:'fadeUp 0.7s 0.42s ease both',opacity:0}}>
+            {[
+              'Single point for supply, advice, and delivery',
+              'Premium stock for homes, interiors, and site work',
+              'Support for both walk-in buyers and project teams',
+            ].map((item,i)=>(
+              <div key={i} style={{
+                display:'inline-flex',alignItems:'center',gap:'10px',
+                padding:'9px 14px',borderRadius:'999px',
+                background:'rgba(255,255,255,0.08)',
+                border:'1px solid rgba(255,255,255,0.14)',
+                color:'rgba(255,255,255,0.82)',fontSize:'11px',
+                backdropFilter:'blur(12px)',
+              }}>
+                <span style={{width:'7px',height:'7px',borderRadius:'50%',background:'var(--gold)',flexShrink:0}}/>
+                {item}
+              </div>
+            ))}
+          </div>
+
+          <div className="hero-mobile-stats" style={{display:'none',gap:'20px',marginTop:'18px'}}>
+            {[{n:'30+',l:'Brands'},{n:'7',l:'Categories'},{n:'2',l:'Stores'}].map((s,i)=>(
+              <div key={i}>
+                <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:'22px',fontWeight:'700',
+                  color:'#ffffff',lineHeight:'1'}}>{s.n}</div>
+                <div style={{fontSize:'9px',fontWeight:'600',letterSpacing:'1.2px',
+                  textTransform:'uppercase',color:'rgba(255,255,255,0.54)',marginTop:'3px'}}>{s.l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="hero-panel" style={{
+          justifySelf:'end',width:'100%',maxWidth:'360px',
+          background:'linear-gradient(180deg,rgba(255,255,255,0.14) 0%,rgba(255,255,255,0.08) 100%)',
+          border:'1px solid rgba(255,255,255,0.18)',borderRadius:'28px',
+          padding:'20px',backdropFilter:'blur(18px)',boxShadow:'0 20px 80px rgba(5,10,24,0.35)',
+          animation:'fadeUp 0.7s 0.58s ease both',opacity:0,
+        }}>
+          <div style={{fontSize:'10px',fontWeight:'700',letterSpacing:'2.2px',textTransform:'uppercase',
+            color:'var(--gold)',marginBottom:'14px'}}>
+            What we supply
+          </div>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(2,minmax(0,1fr))',gap:'10px',marginBottom:'20px'}}>
+            {[
+              'Hardware fittings','Designer tiles','Paint systems','Power tools',
+              'Gypsum panels','Adhesives','Pipes and fittings','Sanitary ware',
+            ].map((item,i)=>(
+              <div key={i} style={{
+                padding:'14px 12px',borderRadius:'16px',
+                background:'rgba(8,16,34,0.34)',border:'1px solid rgba(255,255,255,0.08)',
+                color:'#ffffff',fontSize:'12px',lineHeight:'1.4',
+              }}>{item}</div>
+            ))}
+          </div>
+          <div style={{paddingTop:'18px',borderTop:'1px solid rgba(255,255,255,0.14)'}}>
+            <div style={{display:'flex',gap:'18px',flexWrap:'wrap',marginBottom:'16px'}}>
+              {[{n:'30+',l:'Brands'},{n:'7',l:'Categories'},{n:'2',l:'Stores'}].map((s,i)=>(
+                <div key={i}>
+                  <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:'32px',fontWeight:'700',
+                    color:'#ffffff',lineHeight:'1'}}>{s.n}</div>
+                  <div style={{fontSize:'10px',fontWeight:'600',letterSpacing:'1.4px',
+                    textTransform:'uppercase',color:'rgba(255,255,255,0.54)',marginTop:'4px'}}>{s.l}</div>
+                </div>
+              ))}
+            </div>
+            <p style={{fontSize:'13px',lineHeight:'1.7',color:'rgba(255,255,255,0.7)',margin:0}}>
+              Visit our showrooms or share your BOQ and we will help you shortlist, quantify, and source the right mix for your project.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="hero-scroll"><ScrollIndicator/></div>
+  </section>
+);
+
 const HomePage=({go})=>(
   <div>
-    <Hero go={go}/>
+    <VideoHero go={go}/>
+    <section className="hero-brand-band" style={{
+      background:'linear-gradient(180deg,#081024 0%, #0E1830 100%)',
+      padding:'10px 0 18px',
+      position:'relative',
+      overflow:'hidden',
+    }}>
+      <div style={{position:'absolute',inset:0,
+        backgroundImage:'linear-gradient(rgba(201,168,76,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.025) 1px,transparent 1px)',
+        backgroundSize:'54px 54px',pointerEvents:'none'}}/>
+      <div style={{position:'relative',zIndex:1}}>
+        <div style={{textAlign:'center',fontSize:'9px',fontWeight:'600',letterSpacing:'3px',
+          textTransform:'uppercase',color:'rgba(255,255,255,0.34)',marginBottom:'12px'}}>
+          Trusted brand portfolio
+        </div>
+        <BrandMarquee/>
+      </div>
+    </section>
     <Stats/>
 
     {/* CATEGORIES GRID */}
@@ -807,9 +1226,9 @@ const HomePage=({go})=>(
     <section style={{padding:'0 var(--px) 80px',background:'var(--cream)'}}>
       <Reveal>
         <div style={{display:'grid',gridTemplateColumns:'1.5fr 1fr 1fr',gap:'16px'}} className="grid-3">
-          <ImgPlaceholder h={320} label="Showroom Interior"/>
-          <ImgPlaceholder h={320} label="Hardware Display"/>
-          <ImgPlaceholder h={320} label="Tile Collection"/>
+          {HOME_GALLERY_IMAGES.map((item,i)=>(
+            <SiteImage key={i} src={item.src} alt={item.label} h={320}/>
+          ))}
         </div>
       </Reveal>
     </section>
@@ -1058,7 +1477,14 @@ const CategoryPage=({cat,go})=>(
             {cat.longDesc}
           </p>
         </div>
-        <div><ImgPlaceholder h={340} label={`${cat.label} — Add Photo`} radius={20}/></div>
+        <div>
+          <SiteImage
+            src={CATEGORY_HERO_IMAGES[cat.id]}
+            alt={cat.label}
+            h={340}
+            radius={20}
+          />
+        </div>
       </div>
     </div>
 
@@ -1088,11 +1514,9 @@ const CategoryPage=({cat,go})=>(
             <div style={{background:'var(--white)',border:'1px solid var(--border)',
               borderRadius:'16px',padding:'28px 30px',marginBottom:'14px',
               display:'flex',alignItems:'center',gap:'20px'}}>
-              <div style={{width:'52px',height:'52px',borderRadius:'12px',flexShrink:0,
-                background:`linear-gradient(135deg,${cat.color} 0%,${cat.color}bb 100%)`,
-                display:'flex',alignItems:'center',justifyContent:'center',
-                color:'var(--gold)',fontFamily:'Cormorant Garamond,serif',
-                fontSize:'14px',fontWeight:'700'}}>{b.slice(0,2).toUpperCase()}</div>
+              <div style={{width:'82px',flexShrink:0}}>
+                <BrandLogo name={b} h={52} radius={12}/>
+              </div>
               <div>
                 <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:'20px',fontWeight:'600',
                   color:'var(--navy)',marginBottom:'4px'}}>{b}</div>
@@ -1112,9 +1536,9 @@ const CategoryPage=({cat,go})=>(
     <div style={{padding:'0 var(--px) 80px'}}>
       <span className="section-tag">Gallery</span>
       <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'16px',marginTop:'16px'}} className="grid-3">
-        <ImgPlaceholder h={220} label="Product Image 1"/>
-        <ImgPlaceholder h={220} label="Product Image 2"/>
-        <ImgPlaceholder h={220} label="Product Image 3"/>
+        {(CATEGORY_GALLERY_IMAGES[cat.id]||[]).map((item,i)=>(
+          <SiteImage key={i} src={item.src} alt={item.label} h={220}/>
+        ))}
       </div>
     </div>
 
@@ -1156,22 +1580,26 @@ const GALLERY_CATS=[
   {id:'pipes',label:'Pipes'},
 ];
 const GALLERY_ITEMS=[
-  {cat:'hardware',label:'Kitchen Fittings Display',span:2},
-  {cat:'hardware',label:'Hettich Drawer Systems'},
-  {cat:'hardware',label:'Door Hardware Range'},
-  {cat:'tiles',label:'Kajaria Tile Showroom',span:2},
-  {cat:'tiles',label:'Bathroom Suite Display'},
-  {cat:'tiles',label:'Designer Floor Tiles'},
-  {cat:'paints',label:'Asian Paints Swatches'},
-  {cat:'paints',label:'Birla Opus Collection',span:2},
-  {cat:'adhesives',label:'Fevicol Products'},
-  {cat:'adhesives',label:'Dr. Fixit Waterproofing'},
-  {cat:'panels',label:'Gyproc Ceiling System',span:2},
-  {cat:'panels',label:'Partition Wall Demo'},
-  {cat:'tools',label:'DeWalt Power Tools'},
-  {cat:'tools',label:'CUMI Grinder Range'},
-  {cat:'pipes',label:'CPVC Pipe Range',span:2},
-  {cat:'pipes',label:'Fittings & Valves'},
+  {cat:'hardware',label:'Kitchen Fittings Display',span:2,src:'client/gt-fittings-display.jpg'},
+  {cat:'hardware',label:'Hettich Drawer Systems',src:'hettich.jpg'},
+  {cat:'hardware',label:'Door Hardware Range',src:'door.jpg'},
+  {cat:'tiles',label:'Kajaria Tile Showroom',span:2,src:'client/gt-kajaria-facade.jpg'},
+  {cat:'tiles',label:'Bathroom Suite Display',src:'client/gt-sanitary-display.jpg'},
+  {cat:'tiles',label:'Designer Floor Tiles',src:'client/gujarat-tiles-signboard.jpg'},
+  {cat:'paints',label:'Paints Design Studio',span:2,src:'generated-paints-showroom.png'},
+  {cat:'paints',label:'Asian Paints Swatches',src:'asian-paints.jpg'},
+  {cat:'paints',label:'Birla Opus Collection',src:'birla-opus.jpg'},
+  {cat:'adhesives',label:'Fevicol Products',src:'fevicol.jpg'},
+  {cat:'adhesives',label:'Dr. Fixit Waterproofing',src:'dr-fixit.jpg'},
+  {cat:'panels',label:'Panels Showroom',span:2,src:'generated-panels-showroom.png'},
+  {cat:'panels',label:'Gyproc Ceiling System',src:'gyproc.jpg'},
+  {cat:'panels',label:'Partition Wall Demo',src:'wall-demo.jpg'},
+  {cat:'tools',label:'Power Tools Showroom',span:2,src:'generated-tools-showroom.png'},
+  {cat:'tools',label:'DeWalt Power Tools',src:'dewalt.jpg'},
+  {cat:'tools',label:'CUMI Grinder Range',src:'cumi.jpg'},
+  {cat:'pipes',label:'Pipes & Plumbing Display',span:2,src:'generated-pipes-showroom.png'},
+  {cat:'pipes',label:'CPVC Pipe Range',src:'cpvc.jpg'},
+  {cat:'pipes',label:'Fittings & Valves',src:'fittings.jpg'},
 ];
 
 const GalleryPage=()=>{
@@ -1217,7 +1645,7 @@ const GalleryPage=()=>{
               }}
               onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-5px)';e.currentTarget.style.boxShadow='0 20px 48px rgba(13,27,62,0.1)';}}
               onMouseLeave={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow='none';}}>
-                <ImgPlaceholder h={item.span===2?280:220} label={item.label} radius={0}/>
+                <SiteImage src={item.src} alt={item.label} h={item.span===2?280:220} radius={0}/>
                 <div style={{padding:'16px 18px',display:'flex',alignItems:'center',justifyContent:'space-between'}}>
                   <span style={{fontSize:'13px',fontWeight:'500',color:'var(--navy)'}}>{item.label}</span>
                   <span style={{
@@ -1307,13 +1735,9 @@ const BrandsPage=()=>{
                 borderRadius:'16px',padding:'34px 24px',
                 display:'flex',flexDirection:'column',alignItems:'center',gap:'14px',
               }}>
-                <div style={{
-                  width:'62px',height:'62px',borderRadius:'15px',
-                  background:`linear-gradient(135deg,${catColorMap[b.cat]||'var(--navy)'} 0%,${catColorMap[b.cat]||'var(--navy)'}bb 100%)`,
-                  display:'flex',alignItems:'center',justifyContent:'center',
-                  color:'var(--gold)',fontFamily:'Cormorant Garamond,serif',
-                  fontSize:'18px',fontWeight:'700',
-                }}>{b.abbr}</div>
+                <div style={{width:'100%',maxWidth:'150px'}}>
+                  <BrandLogo name={b.name} h={74} radius={15}/>
+                </div>
                 <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:'19px',fontWeight:'600',
                   color:'var(--navy)',textAlign:'center'}}>{b.name}</div>
                 <div style={{fontSize:'10px',fontWeight:'600',letterSpacing:'1.5px',
@@ -1681,10 +2105,10 @@ const AboutPage=()=>(
         </div>
       </Reveal>
       <Reveal delay={0.1}>
-        <ImgPlaceholder h={360} label="Our Store / Team Photo"/>
+        <SiteImage src="client/gt-storefront-wide-1.jpg" alt="Our Store / Team Photo" h={360}/>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'12px',marginTop:'12px'}}>
-          <ImgPlaceholder h={180} label="Panchkula Store"/>
-          <ImgPlaceholder h={180} label="Chandigarh Store"/>
+          <SiteImage src="client/gt-office-wall-logo-1.jpg" alt="Panchkula Store" h={180}/>
+          <SiteImage src="client/gujarat-tiles-signboard.jpg" alt="Chandigarh Store" h={180}/>
         </div>
       </Reveal>
     </div>
@@ -1790,7 +2214,9 @@ const ContactPage=()=>{
               <a href="tel:+919814033573" style={{display:'flex',alignItems:'center',gap:'12px',background:'rgba(201,168,76,0.14)',color:'var(--gold)',padding:'14px 20px',borderRadius:'10px',fontWeight:'600',fontSize:'14px',textDecoration:'none'}}>📞 Call — +91 98140 33573</a>
             </div>
           </div>
-          <div style={{marginTop:'16px'}}><ImgPlaceholder h={200} label="Store / Map Image"/></div>
+          <div style={{marginTop:'16px'}}>
+            <SiteImage src="client/gt-storefront-wide-2.jpg" alt="Store / Map Image" h={200}/>
+          </div>
         </div>
         <div style={{background:'var(--white)',border:'1px solid var(--border)',borderRadius:'20px',padding:'48px 44px'}}>
           <h2 style={{fontFamily:'Cormorant Garamond,serif',fontSize:'32px',fontWeight:'600',color:'var(--navy)',marginBottom:'8px'}}>Send an Enquiry</h2>
@@ -1827,6 +2253,16 @@ const ContactPage=()=>{
   );
 };
 
+/* ─── SOCIAL ICONS ───────────────────────────────────────── */
+const SOCIAL_LINKS=[
+  {id:'facebook',label:'Facebook',href:'#',
+    icon:<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M13.5 21v-7.7h2.6l.4-3h-3v-1.9c0-.87.24-1.46 1.5-1.46h1.6V4.14C15.94 4.1 15.06 4 14.02 4c-2.16 0-3.64 1.32-3.64 3.74V10.3H8v3h2.38V21h3.12z"/></svg>},
+  {id:'instagram',label:'Instagram',href:'#',
+    icon:<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.35" cy="6.65" r="1.1" fill="currentColor" stroke="none"/></svg>},
+  {id:'whatsapp',label:'WhatsApp',href:'https://wa.me/919216866671',
+    icon:<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.45 1.33 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2Zm5.83 14.24c-.24.68-1.4 1.3-1.93 1.37-.5.07-1.13.1-1.82-.12-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.17-4.94-4.36-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.26-.29.58-.36.77-.36h.55c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.14.11.31.02.5-.09.19-.14.31-.28.47-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.72 1.19 1.55 1.93 1.07.95 1.96 1.25 2.24 1.39.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.26.36-.22.6-.13.24.09 1.55.73 1.82.86.26.13.44.19.5.3.07.11.07.62-.17 1.3Z"/></svg>},
+];
+
 /* ─── FOOTER ─────────────────────────────────────────────── */
 const Footer=({go})=>(
   <footer style={{background:'#070D1C',padding:'60px var(--px) 28px'}}>
@@ -1845,13 +2281,13 @@ const Footer=({go})=>(
           Panchkula & Chandigarh's premier one-stop supplier for all building and hardware materials.
         </p>
         <div style={{display:'flex',gap:'8px'}}>
-          {['FB','IG','WA'].map(s=>(
-            <div key={s} style={{width:'34px',height:'34px',border:'1px solid rgba(201,168,76,0.2)',
+          {SOCIAL_LINKS.map(s=>(
+            <a key={s.id} href={s.href} aria-label={s.label} target={s.href==='#'?undefined:'_blank'} rel={s.href==='#'?undefined:'noopener noreferrer'}
+              style={{width:'34px',height:'34px',border:'1px solid rgba(201,168,76,0.2)',
               borderRadius:'8px',display:'flex',alignItems:'center',justifyContent:'center',
-              fontSize:'10px',fontWeight:'700',color:'var(--gold)',cursor:'pointer',
-              transition:'all 0.2s'}}
+              color:'var(--gold)',cursor:'pointer',transition:'all 0.2s'}}
             onMouseEnter={e=>{e.currentTarget.style.background='rgba(201,168,76,0.1)';e.currentTarget.style.borderColor='var(--gold)'}}
-            onMouseLeave={e=>{e.currentTarget.style.background='transparent';e.currentTarget.style.borderColor='rgba(201,168,76,0.2)'}}>{s}</div>
+            onMouseLeave={e=>{e.currentTarget.style.background='transparent';e.currentTarget.style.borderColor='rgba(201,168,76,0.2)'}}>{s.icon}</a>
           ))}
         </div>
       </div>
@@ -1886,7 +2322,7 @@ const Footer=({go})=>(
       </div>
     </div>
     <div style={{borderTop:'1px solid rgba(201,168,76,0.1)',paddingTop:'24px',display:'flex',justifyContent:'space-between',alignItems:'center',fontSize:'11px',color:'rgba(255,255,255,0.25)',flexWrap:'wrap',gap:'10px'}}>
-      <span>© 2025 Garg Trading Company. All rights reserved.</span>
+      <span>© {new Date().getFullYear()} Garg Trading Company. All rights reserved.</span>
       <span style={{color:'rgba(201,168,76,0.5)'}}>One Stop Hardware & Building Solutions</span>
     </div>
   </footer>
@@ -1895,14 +2331,16 @@ const Footer=({go})=>(
 /* ─── WHATSAPP FAB ───────────────────────────────────────── */
 const WAB=()=>(
   <a href="https://wa.me/919216866671?text=Hello%20GT%20Building%20Solutions!%20I%20need%20assistance."
-    target="_blank"
+    target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp"
     style={{position:'fixed',bottom:'28px',right:'28px',zIndex:999,
-      width:'58px',height:'58px',background:'#25D366',borderRadius:'50%',
+      width:'58px',height:'58px',background:'#25D366',borderRadius:'50%',color:'#ffffff',
       display:'flex',alignItems:'center',justifyContent:'center',
-      fontSize:'26px',textDecoration:'none',
+      textDecoration:'none',
       animation:'pulse 2.2s ease-in-out infinite',transition:'transform 0.25s'}}
     onMouseEnter={e=>e.currentTarget.style.transform='scale(1.12)'}
-    onMouseLeave={e=>e.currentTarget.style.transform='scale(1)'}>💬</a>
+    onMouseLeave={e=>e.currentTarget.style.transform='scale(1)'}>
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.45 1.33 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2Zm5.83 14.24c-.24.68-1.4 1.3-1.93 1.37-.5.07-1.13.1-1.82-.12-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.17-4.94-4.36-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.26-.29.58-.36.77-.36h.55c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.14.11.31.02.5-.09.19-.14.31-.28.47-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.72 1.19 1.55 1.93 1.07.95 1.96 1.25 2.24 1.39.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.26.36-.22.6-.13.24.09 1.55.73 1.82.86.26.13.44.19.5.3.07.11.07.62-.17 1.3Z"/></svg>
+  </a>
 );
 
 /* ─── APP ────────────────────────────────────────────────── */
@@ -1924,6 +2362,25 @@ const App=()=>{
         .marqueeR{animation:marqueeR 44s linear infinite}
         .grid-4{display:grid;grid-template-columns:repeat(4,1fr)}
         @media(max-width:900px){.grid-4{grid-template-columns:repeat(2,1fr)!important}}
+        @media(max-width:980px){
+          .hero-grid{grid-template-columns:1fr!important}
+          .hero-panel{justify-self:start!important;max-width:640px!important}
+        }
+        @media(max-width:768px){
+          .hero-pad{padding-bottom:20px!important;align-items:flex-end!important}
+          .hero-content-copy{max-width:none!important}
+          .hero-scroll{display:none!important}
+        }
+        @media(max-height:920px){
+          .hero-proof{display:none!important}
+          .hero-pad{padding-bottom:24px!important}
+        }
+        @media(max-height:820px){
+          .hero-panel{display:none!important}
+          .hero-mobile-stats{display:flex!important}
+          .hero-pad{padding-bottom:16px!important}
+          .hero-scroll{display:none!important}
+        }
       `}</style>
       <Nav page={page} go={go}/>
       <main key={page} style={{animation:'fadeUp 0.5s cubic-bezier(.22,.68,0,1.1) both'}}>

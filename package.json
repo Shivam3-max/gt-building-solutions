@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "serve -s . -l ${PORT:-3000}",
+    "build": "babel app.jsx --out-file app.js --config-file ./.babel-classic.json --no-babelrc",
+    "start": "serve -s . -p 3000 -l",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,6 +18,6 @@
     "@babel/preset-react": "^8.0.1"
   },
   "dependencies": {
-    "serve": "^14.2.6"
+    "serve": "^6.5.8"
   }
 }
