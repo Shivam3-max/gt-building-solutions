@@ -1747,14 +1747,14 @@ const VideoHero = ({
   style: {
     position: 'absolute',
     inset: 0,
-    background: 'linear-gradient(90deg,rgba(6,12,28,0.88) 0%,rgba(6,12,28,0.72) 42%,rgba(6,12,28,0.6) 100%)',
+    background: 'linear-gradient(90deg,rgba(6,12,28,0.55) 0%,rgba(6,12,28,0.4) 42%,rgba(6,12,28,0.28) 100%)',
     zIndex: 1
   }
 }), /*#__PURE__*/React.createElement("div", {
   style: {
     position: 'absolute',
     inset: 0,
-    background: 'linear-gradient(180deg,rgba(6,12,28,0.18) 0%,rgba(6,12,28,0.24) 36%,rgba(6,12,28,0.76) 100%)',
+    background: 'linear-gradient(180deg,rgba(6,12,28,0.1) 0%,rgba(6,12,28,0.14) 36%,rgba(6,12,28,0.5) 100%)',
     zIndex: 1
   }
 }), /*#__PURE__*/React.createElement("div", {
