@@ -4,6 +4,7 @@ const {useState,useEffect,useRef,useCallback,useMemo}=React;
 /* ─── DATA ─────────────────────────────────────────────── */
 const BRANDS=[
   {name:'Fevicol',cat:'adhesives',abbr:'FV'},
+  {name:'Gresbond',cat:'adhesives',abbr:'GB'},
   {name:'Birla Opus',cat:'paints',abbr:'BO'},
   {name:'Asian Paints',cat:'paints',abbr:'AP'},
   {name:'3M',cat:'adhesives',abbr:'3M'},
@@ -28,6 +29,7 @@ const BRANDS=[
   {name:'CUMI',cat:'tools',abbr:'CU'},
   {name:'JB Plastering',cat:'panels',abbr:'JB'},
   {name:'Sleek Kitchens',cat:'hardware',abbr:'SK'},
+  {name:'Tunes',cat:'hardware',abbr:'TU'},
   {name:'Kajaria',cat:'tiles',abbr:'KJ'},
   {name:'Chetak',cat:'panels',abbr:'CK'},
 ];
@@ -36,13 +38,13 @@ const CATS=[
   {id:'hardware',label:'Kitchen, Furniture & Door Hardware',icon:'⚙',
    desc:'World-class hardware for kitchens, furniture, and doors.',
    longDesc:'From precision-engineered drawer slides to elegant door handles, our hardware range covers every fitting need in your home or commercial space.',
-   brands:['Hettich','Godrej','Eboo','Blaupunkt','Sleek Kitchens'],
-   products:['Drawer Slides & Runners','Hinges & Soft-Close Mechanisms','Cabinet Handles & Knobs','Lift Systems & Flap Fittings','Door Closers & Locks','Pull-Out Baskets & Organizers','Modular Kitchen Fittings'],
+   brands:['Hettich','Godrej','Tunes','Eboo','Blaupunkt','Sleek Kitchens'],
+   products:['Drawer Slides & Runners','Hinges & Soft-Close Mechanisms','Cabinet Handles & Knobs','Lift Systems & Flap Fittings','Door Hardware & Security Locks','Pull-Out Baskets & Organizers','Modular Kitchen Fittings'],
    color:'#0D1B3E'},
   {id:'adhesives',label:'Adhesives & Surface Solutions',icon:'◈',
    desc:'Industrial-strength adhesives, waterproofing, tile grouts and surface treatments.',
    longDesc:'Our adhesives and surface solutions range covers everything from construction-grade bonding to precision surface finishing.',
-   brands:['Fevicol','Pidilite','Dr. Fixit','Roff','3M'],
+   brands:['Fevicol','Gresbond','Pidilite','Dr. Fixit','Roff','3M'],
    products:['Tile Adhesives & Grouts','Wood & Laminate Adhesives','Waterproofing Membranes','Sealants & Silicones','Wall Putty & Primers','Construction Chemicals','Floor Levelling Compounds'],
    color:'#1B3A5C'},
   {id:'panels',label:'Panels & Gypsum Boards',icon:'▣',
@@ -92,6 +94,7 @@ const HERO_VIDEOS={
 
 const BRAND_LOGOS={
   'Fevicol':'fevicol.jpeg',
+  'Gresbond':'gresbond.jpg',
   'Birla Opus':'birla-opus.jpeg',
   'Asian Paints':'asian-paints.jpeg',
   '3M':'3m.jpeg',
@@ -116,6 +119,7 @@ const BRAND_LOGOS={
   'CUMI':'cumi.jpeg',
   'JB Plastering':'jb-plastering.jpeg',
   'Sleek Kitchens':'sleek-kitchens.jpeg',
+  'Tunes':'tunes.jpg',
   'Kajaria':'kajaria.jpeg',
   'Chetak':'chetak.jpeg',
 };
@@ -130,6 +134,7 @@ const BRAND_LOGO_TWEAKS={
   'DeWalt':{scale:'88%'},
   'Eboo':{scale:'72%'},
   'Fevicol':{scale:'84%'},
+  'Gresbond':{scale:'82%'},
   'Gyproc':{scale:'84%'},
   'Havells':{scale:'66%'},
   'Hettich':{scale:'90%'},
@@ -141,16 +146,17 @@ const BRAND_LOGO_TWEAKS={
   'Roff':{scale:'72%'},
   'Sleek Kitchens':{scale:'86%'},
   'Tata Agrico':{scale:'86%'},
+  'Tunes':{scale:'76%'},
 };
 
 const HOME_GALLERY_IMAGES=[
   {src:'client/gt-storefront-wide-1.jpg',label:'Showroom Exterior'},
-  {src:'client/gt-fittings-display.jpg',label:'Hardware Display'},
-  {src:'client/gt-sanitary-display.jpg',label:'Tile Collection'},
+  {src:'kitchen-fittings.jpg',label:'Kitchen Hardware Display'},
+  {src:'bathroom.jpg',label:'Bathroom Display'},
 ];
 
 const CATEGORY_HERO_IMAGES={
-  hardware:'hettich.jpg',
+  hardware:'kitchen-fittings.jpg',
   adhesives:'fevicol.jpg',
   panels:'generated-panels-showroom.png',
   tiles:'client/gt-kajaria-facade.jpg',
@@ -161,24 +167,24 @@ const CATEGORY_HERO_IMAGES={
 
 const CATEGORY_GALLERY_IMAGES={
   hardware:[
-    {src:'client/gt-fittings-display.jpg',label:'Hardware Display'},
+    {src:'kitchen-fittings.jpg',label:'Kitchen Hardware Display'},
     {src:'hettich.jpg',label:'Hettich Systems'},
     {src:'door.jpg',label:'Door Hardware'},
   ],
   adhesives:[
     {src:'fevicol.jpg',label:'Fevicol Range'},
+    {src:'adhesives-showroom-generated.png',label:'Gresbond & Tile Adhesives'},
     {src:'dr-fixit.jpg',label:'Dr. Fixit Solutions'},
-    {src:'fittings.jpg',label:'Surface Solutions'},
   ],
   panels:[
     {src:'generated-panels-showroom.png',label:'Panels Showroom'},
     {src:'gyproc.jpg',label:'Gyproc Boards'},
-    {src:'wall-demo.jpg',label:'Wall Demo'},
+    {src:'panels-wall-system-generated.png',label:'Partition Wall System'},
   ],
   tiles:[
     {src:'client/gt-kajaria-facade.jpg',label:'Kajaria Collection'},
-    {src:'client/gt-sanitary-display.jpg',label:'Bathroom Display'},
-    {src:'client/gujarat-tiles-signboard.jpg',label:'Designer Tiles'},
+    {src:'bathroom.jpg',label:'Bathroom Display'},
+    {src:'client/gujarat-tiles-interior-generated.png',label:'Gujarat Tiles Interior Display'},
   ],
   paints:[
     {src:'generated-paints-showroom.png',label:'Paints Showroom'},
@@ -192,7 +198,7 @@ const CATEGORY_GALLERY_IMAGES={
   ],
   pipes:[
     {src:'generated-pipes-showroom.png',label:'Pipes Showroom'},
-    {src:'cpvc.jpg',label:'CPVC Pipes'},
+    {src:'prince-pipes-display-generated.png',label:'Prince CPVC & uPVC Pipes'},
     {src:'fittings.jpg',label:'Fittings & Valves'},
   ],
 };
@@ -241,11 +247,11 @@ const Counter=({target,suffix='',duration=1800})=>{
 };
 
 /* ─── REVEAL WRAPPER ─────────────────────────────────────── */
-const Reveal=({children,delay=0,dir='up',style={}})=>{
+const Reveal=({children,delay=0,dir='up',style={},className=''})=>{
   const [ref,inView]=useInView(0.1);
   const transforms={up:'translateY(40px)',down:'translateY(-40px)',left:'translateX(-40px)',right:'translateX(40px)'};
   return(
-    <div ref={ref} style={{
+    <div ref={ref} className={className} style={{
       opacity:inView?1:0,
       transform:inView?'none':transforms[dir]||transforms.up,
       transition:`opacity 0.7s ${delay}s cubic-bezier(.22,.68,0,1.1), transform 0.7s ${delay}s cubic-bezier(.22,.68,0,1.1)`,
@@ -876,8 +882,8 @@ const Hero=({go})=>(
 const Stats=()=>{
   const [ref,inView]=useInView(0.2);
   return(
-    <section style={{padding:'0 var(--px) 80px',background:'var(--cream)'}}>
-      <div ref={ref} style={{
+    <section className="stats-pad" style={{padding:'40px var(--px) 80px',background:'var(--cream)'}}>
+      <div ref={ref} className="grid-4" style={{
         display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'1px',
         background:'var(--border)',border:'1px solid var(--border)',
         borderRadius:'18px',overflow:'hidden',
@@ -1041,10 +1047,10 @@ const VideoHero=({go})=>(
     paddingTop:'88px',paddingBottom:'24px',position:'relative',overflow:'hidden',
   }}>
     <HeroBackgroundVideo/>
-    <div style={{position:'absolute',inset:0,
+    <div className="hero-scrim-h" style={{position:'absolute',inset:0,
       background:'linear-gradient(90deg,rgba(6,12,28,0.55) 0%,rgba(6,12,28,0.4) 42%,rgba(6,12,28,0.28) 100%)',
       zIndex:1}}/>
-    <div style={{position:'absolute',inset:0,
+    <div className="hero-scrim-v" style={{position:'absolute',inset:0,
       background:'linear-gradient(180deg,rgba(6,12,28,0.1) 0%,rgba(6,12,28,0.14) 36%,rgba(6,12,28,0.5) 100%)',
       zIndex:1}}/>
     <div style={{position:'absolute',inset:0,
@@ -1206,7 +1212,7 @@ const HomePage=({go})=>(
     <Stats/>
 
     {/* CATEGORIES GRID */}
-    <section className="section-pad" style={{padding:'40px var(--px) 80px',background:'var(--cream)'}}>
+    <section className="cats-pad" style={{padding:'40px var(--px) 80px',background:'var(--cream)'}}>
       <Reveal>
         <div style={{marginBottom:'52px'}}>
           <span className="section-tag">What We Offer</span>
@@ -1215,7 +1221,7 @@ const HomePage=({go})=>(
       </Reveal>
       <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'18px'}} className="grid-3">
         {CATS.map((c,i)=>(
-          <Reveal key={c.id} delay={i*0.06} style={i===0?{gridColumn:'span 2'}:{}}>
+          <Reveal key={c.id} delay={i*0.06} className={i===0?'span2-mobile':''} style={i===0?{gridColumn:'span 2'}:{}}>
             <CatCard cat={c} go={go} wide={false}/>
           </Reveal>
         ))}
@@ -1223,7 +1229,7 @@ const HomePage=({go})=>(
     </section>
 
     {/* GALLERY STRIP */}
-    <section style={{padding:'0 var(--px) 80px',background:'var(--cream)'}}>
+    <section className="pad-bottom-only" style={{padding:'0 var(--px) 80px',background:'var(--cream)'}}>
       <Reveal>
         <div style={{display:'grid',gridTemplateColumns:'1.5fr 1fr 1fr',gap:'16px'}} className="grid-3">
           {HOME_GALLERY_IMAGES.map((item,i)=>(
@@ -1234,7 +1240,7 @@ const HomePage=({go})=>(
     </section>
 
     {/* WHY GT */}
-    <section style={{padding:'80px var(--px)',background:'var(--navy)',position:'relative',overflow:'hidden'}}>
+    <section className="pad-section" style={{background:'var(--navy)',position:'relative',overflow:'hidden'}}>
       <div style={{position:'absolute',inset:0,
         backgroundImage:'linear-gradient(rgba(201,168,76,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.03) 1px,transparent 1px)',
         backgroundSize:'50px 50px',pointerEvents:'none'}}/>
@@ -1259,7 +1265,7 @@ const HomePage=({go})=>(
     </section>
 
     {/* WHO WE SERVE */}
-    <section className="section-pad" style={{padding:'80px var(--px)',background:'var(--cream)'}}>
+    <section className="pad-section" style={{background:'var(--cream)'}}>
       <Reveal><div style={{textAlign:'center',marginBottom:'52px'}}>
         <span className="section-tag">Who We Serve</span>
         <h2 className="section-h">Our Ideal Partners</h2>
@@ -1300,17 +1306,17 @@ const HomePage=({go})=>(
     </section>
 
     {/* DUAL BRAND */}
-    <section style={{padding:'0 var(--px) 80px',background:'var(--cream)'}}>
+    <section className="pad-bottom-only" style={{padding:'0 var(--px) 80px',background:'var(--cream)'}}>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'20px'}} className="grid-2">
         {[
           {code:'GT',name:'Garg Trading Company',
            desc:'The flagship brand for hardware, adhesives, panels, paints, tools, and complete building solutions. Your single point of contact for any construction project.',
            addr:'Plot No. 1, Industrial Area Phase 1, Panchkula, Haryana 134109',
-           ph:'+91 92168 66671'},
+           ph:'+91 98140 33573'},
           {code:'GS',name:'Gujarat Tiles & Sanitary Depot',
            desc:'Specialized in premium tiles and sanitary ware. Designer tiles, bathroom solutions, and surface finishes curated for architects and discerning homeowners.',
            addr:'SCO 22-23, Phase 2, Industrial Area, Chandigarh',
-           ph:'+91 98140 33573'},
+           ph:'+91 92168 66671'},
         ].map((e,i)=>(
           <Reveal key={i} delay={i*0.1}>
             <div style={{
@@ -1340,8 +1346,7 @@ const HomePage=({go})=>(
     </section>
 
     {/* CTA STRIP */}
-    <section style={{
-      padding:'80px var(--px)',
+    <section className="pad-section" style={{
       background:'linear-gradient(135deg,var(--gold) 0%,var(--gold3) 55%,var(--gold) 100%)',
       textAlign:'center',position:'relative',overflow:'hidden',
     }}>
@@ -1359,7 +1364,7 @@ const HomePage=({go})=>(
             Visit our stores or call for a free consultation. We'll help you source everything your project needs.
           </p>
           <div style={{display:'flex',gap:'14px',justifyContent:'center',flexWrap:'wrap'}}>
-            <a href="tel:+919216866671" style={{
+            <a href="tel:+919814033573" style={{
               display:'inline-flex',alignItems:'center',gap:'9px',
               background:'var(--navy)',color:'var(--gold)',
               padding:'15px 38px',borderRadius:'6px',
@@ -1371,7 +1376,7 @@ const HomePage=({go})=>(
             onMouseLeave={e=>e.currentTarget.style.transform='none'}>
               📞 Call Now
             </a>
-            <a href="https://wa.me/919216866671" target="_blank" style={{
+            <a href="https://wa.me/919814033573" target="_blank" style={{
               display:'inline-flex',alignItems:'center',gap:'9px',
               background:'#25D366',color:'#ffffff',
               padding:'15px 38px',borderRadius:'6px',
@@ -1555,7 +1560,7 @@ const CategoryPage=({cat,go})=>(
         </div>
         <div style={{display:'flex',gap:'12px',flexWrap:'wrap'}}>
           <button onClick={()=>go('contact')} className="btn-gold">Get Quote</button>
-          <a href="https://wa.me/919216866671" target="_blank" style={{
+          <a href="https://wa.me/919814033573" target="_blank" style={{
             display:'inline-flex',alignItems:'center',gap:'10px',
             background:'#25D366',color:'#ffffff',border:'none',borderRadius:'6px',
             padding:'14px 28px',fontSize:'12px',fontWeight:'600',
@@ -1580,25 +1585,26 @@ const GALLERY_CATS=[
   {id:'pipes',label:'Pipes'},
 ];
 const GALLERY_ITEMS=[
-  {cat:'hardware',label:'Kitchen Fittings Display',span:2,src:'client/gt-fittings-display.jpg'},
+  {cat:'hardware',label:'Kitchen Fittings Display',span:2,src:'kitchen-fittings.jpg'},
   {cat:'hardware',label:'Hettich Drawer Systems',src:'hettich.jpg'},
   {cat:'hardware',label:'Door Hardware Range',src:'door.jpg'},
   {cat:'tiles',label:'Kajaria Tile Showroom',span:2,src:'client/gt-kajaria-facade.jpg'},
-  {cat:'tiles',label:'Bathroom Suite Display',src:'client/gt-sanitary-display.jpg'},
-  {cat:'tiles',label:'Designer Floor Tiles',src:'client/gujarat-tiles-signboard.jpg'},
+  {cat:'tiles',label:'Bathroom Suite Display',src:'bathroom.jpg'},
+  {cat:'tiles',label:'Gujarat Tiles Interior Display',src:'client/gujarat-tiles-interior-generated.png'},
   {cat:'paints',label:'Paints Design Studio',span:2,src:'generated-paints-showroom.png'},
   {cat:'paints',label:'Asian Paints Swatches',src:'asian-paints.jpg'},
   {cat:'paints',label:'Birla Opus Collection',src:'birla-opus.jpg'},
   {cat:'adhesives',label:'Fevicol Products',src:'fevicol.jpg'},
+  {cat:'adhesives',label:'Tile Adhesives & Construction Chemicals',src:'adhesives-showroom-generated.png'},
   {cat:'adhesives',label:'Dr. Fixit Waterproofing',src:'dr-fixit.jpg'},
   {cat:'panels',label:'Panels Showroom',span:2,src:'generated-panels-showroom.png'},
   {cat:'panels',label:'Gyproc Ceiling System',src:'gyproc.jpg'},
-  {cat:'panels',label:'Partition Wall Demo',src:'wall-demo.jpg'},
+  {cat:'panels',label:'Partition Wall System',src:'panels-wall-system-generated.png'},
   {cat:'tools',label:'Power Tools Showroom',span:2,src:'generated-tools-showroom.png'},
   {cat:'tools',label:'DeWalt Power Tools',src:'dewalt.jpg'},
   {cat:'tools',label:'CUMI Grinder Range',src:'cumi.jpg'},
   {cat:'pipes',label:'Pipes & Plumbing Display',span:2,src:'generated-pipes-showroom.png'},
-  {cat:'pipes',label:'CPVC Pipe Range',src:'cpvc.jpg'},
+  {cat:'pipes',label:'Prince CPVC & uPVC Pipe Range',src:'prince-pipes-display-generated.png'},
   {cat:'pipes',label:'Fittings & Valves',src:'fittings.jpg'},
 ];
 
@@ -1635,7 +1641,7 @@ const GalleryPage=()=>{
           gap:'16px',
         }} className="grid-3">
           {shown.map((item,i)=>(
-            <Reveal key={`${filter}-${i}`} delay={i*0.04} style={item.span===2?{gridColumn:'span 2'}:{}}>
+            <Reveal key={`${filter}-${i}`} delay={i*0.04} className={item.span===2?'span2-mobile':''} style={item.span===2?{gridColumn:'span 2'}:{}}>
               <div style={{
                 borderRadius:'16px',overflow:'hidden',
                 border:'1px solid var(--border)',
@@ -1680,7 +1686,7 @@ const GalleryPage=()=>{
               maxWidth:'480px',margin:'0 auto 32px'}}>
               We're uploading photos from real installations, showrooms, and completed projects. Check back soon.
             </p>
-            <a href="https://wa.me/919216866671?text=I'd like to see your product gallery" target="_blank" className="btn-gold">
+            <a href="https://wa.me/919814033573?text=I'd like to see your product gallery" target="_blank" className="btn-gold">
               WhatsApp for Photos
             </a>
           </div>
@@ -1777,7 +1783,7 @@ const TileCalculator=()=>{
         <div><label style={lbl}>Room Width (m)</label><input style={inp} type="number" placeholder="3.2" value={v.w} onChange={set('w')}/></div>
         <div><label style={lbl}>Tile Length (cm)</label><input style={inp} type="number" placeholder="60" value={v.tl} onChange={set('tl')}/></div>
         <div><label style={lbl}>Tile Width (cm)</label><input style={inp} type="number" placeholder="60" value={v.tw} onChange={set('tw')}/></div>
-        <div style={{gridColumn:'span 2'}}><label style={lbl}>Wastage %</label><input style={inp} type="number" placeholder="10" value={v.waste} onChange={set('waste')}/></div>
+        <div className="span2-mobile" style={{gridColumn:'span 2'}}><label style={lbl}>Wastage %</label><input style={inp} type="number" placeholder="10" value={v.waste} onChange={set('waste')}/></div>
       </div>
       <button onClick={calc} className="btn-gold" style={{width:'100%',justifyContent:'center',padding:'15px'}}>Calculate Tiles Needed</button>
       {res&&<div style={{marginTop:'20px',background:'var(--navy)',borderRadius:'14px',padding:'28px 24px'}}>
@@ -2033,7 +2039,7 @@ const ToolsPage=()=>{
               borderRadius:'14px',padding:'24px 22px',marginTop:'8px',textAlign:'center'}}>
               <div style={{fontSize:'13px',fontWeight:'700',color:'var(--navy)',marginBottom:'8px'}}>Need Expert Help?</div>
               <div style={{fontSize:'12px',color:'rgba(13,27,62,0.65)',lineHeight:'1.5',marginBottom:'14px'}}>Our team can verify your estimates.</div>
-              <a href="https://wa.me/919216866671" target="_blank" style={{
+              <a href="https://wa.me/919814033573" target="_blank" style={{
                 display:'block',background:'var(--navy)',color:'var(--gold)',
                 padding:'11px',borderRadius:'8px',fontWeight:'700',fontSize:'12px',
                 letterSpacing:'1px',textDecoration:'none',textTransform:'uppercase',
@@ -2069,7 +2075,7 @@ const ToolsPage=()=>{
             borderRadius:'14px',padding:'24px',marginTop:'16px',textAlign:'center'}}>
             <div style={{fontSize:'13px',fontWeight:'700',color:'var(--navy)',marginBottom:'8px'}}>Need Expert Help?</div>
             <div style={{fontSize:'12px',color:'rgba(13,27,62,0.65)',lineHeight:'1.5',marginBottom:'14px'}}>Our team can verify your estimates.</div>
-            <a href="https://wa.me/919216866671" target="_blank" style={{
+            <a href="https://wa.me/919814033573" target="_blank" style={{
               display:'block',background:'var(--navy)',color:'var(--gold)',
               padding:'11px',borderRadius:'8px',fontWeight:'700',fontSize:'12px',
               letterSpacing:'1px',textDecoration:'none',textTransform:'uppercase',
@@ -2108,7 +2114,7 @@ const AboutPage=()=>(
         <SiteImage src="client/gt-storefront-wide-1.jpg" alt="Our Store / Team Photo" h={360}/>
         <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'12px',marginTop:'12px'}}>
           <SiteImage src="client/gt-office-wall-logo-1.jpg" alt="Panchkula Store" h={180}/>
-          <SiteImage src="client/gujarat-tiles-signboard.jpg" alt="Chandigarh Store" h={180}/>
+          <SiteImage src="client/gujarat-tiles-interior-generated.png" alt="Chandigarh Store Interior" h={180}/>
         </div>
       </Reveal>
     </div>
@@ -2137,8 +2143,8 @@ const AboutPage=()=>(
       </div></Reveal>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'20px'}} className="grid-2">
         {[
-          {code:'GT',name:'Garg Trading Company',desc:'The flagship brand for hardware, adhesives, panels, paints, power tools, and complete building solutions.',addr:'Plot No. 1, Industrial Area Phase 1, Panchkula, Haryana 134109',ph:'+91 92168 66671'},
-          {code:'GS',name:'Gujarat Tiles & Sanitary Depot',desc:'Specialized in premium tiles and sanitary ware. From designer floor and wall tiles to complete bathroom solutions.',addr:'SCO 22-23, Phase 2, Industrial Area, Chandigarh',ph:'+91 98140 33573'},
+          {code:'GT',name:'Garg Trading Company',desc:'The flagship brand for hardware, adhesives, panels, paints, power tools, and complete building solutions.',addr:'Plot No. 1, Industrial Area Phase 1, Panchkula, Haryana 134109',ph:'+91 98140 33573'},
+          {code:'GS',name:'Gujarat Tiles & Sanitary Depot',desc:'Specialized in premium tiles and sanitary ware. From designer floor and wall tiles to complete bathroom solutions.',addr:'SCO 22-23, Phase 2, Industrial Area, Chandigarh',ph:'+91 92168 66671'},
         ].map((e,i)=>(
           <Reveal key={i} delay={i*0.1}>
             <div style={{background:'linear-gradient(140deg,var(--navy) 0%,var(--navy3) 100%)',borderRadius:'20px',padding:'52px 46px',position:'relative',overflow:'hidden'}}>
@@ -2187,7 +2193,7 @@ const ContactPage=()=>{
   const submit=e=>{
     e.preventDefault();
     const t=`Hello GT Building Solutions!%0A%0AName: ${form.name}%0APhone: ${form.phone}%0AEmail: ${form.email}%0ACategory: ${form.category}%0A%0A${form.message}`;
-    window.open(`https://wa.me/919216866671?text=${t}`,'_blank');
+    window.open(`https://wa.me/919814033573?text=${t}`,'_blank');
     setSent(true);
   };
   const lbl={fontSize:'10px',fontWeight:'600',letterSpacing:'1.5px',textTransform:'uppercase',color:'var(--navy)',display:'block',marginBottom:'8px'};
@@ -2197,8 +2203,8 @@ const ContactPage=()=>{
       <div style={{padding:'64px var(--px) 80px',display:'grid',gridTemplateColumns:'1fr 1.3fr',gap:'56px',alignItems:'start'}} className="grid-2">
         <div>
           {[
-            {tag:'Garg Trading Company',name:'Panchkula Store',addr:'Plot No. 1, Industrial Area Phase 1\nPanchkula, Haryana 134109',ph:'+91 92168 66671'},
-            {tag:'Gujarat Tiles & Sanitary Depot',name:'Chandigarh Store',addr:'SCO 22-23, Phase 2\nIndustrial Area, Chandigarh',ph:'+91 98140 33573'},
+            {tag:'Garg Trading Company',name:'Panchkula Store',addr:'Plot No. 1, Industrial Area Phase 1\nPanchkula, Haryana 134109',ph:'+91 98140 33573'},
+            {tag:'Gujarat Tiles & Sanitary Depot',name:'Chandigarh Store',addr:'SCO 22-23, Phase 2\nIndustrial Area, Chandigarh',ph:'+91 92168 66671'},
           ].map((l,i)=>(
             <div key={i} style={{background:'var(--white)',border:'1px solid var(--border)',borderRadius:'16px',padding:'34px 32px',marginBottom:'16px'}}>
               <div style={{fontSize:'10px',fontWeight:'600',letterSpacing:'2px',textTransform:'uppercase',color:'var(--gold)',marginBottom:'6px'}}>{l.tag}</div>
@@ -2210,8 +2216,8 @@ const ContactPage=()=>{
           <div style={{background:'var(--navy)',borderRadius:'16px',padding:'34px 32px'}}>
             <h3 style={{fontFamily:'Cormorant Garamond,serif',fontSize:'22px',fontWeight:'600',color:'#ffffff',marginBottom:'20px'}}>Quick Connect</h3>
             <div style={{display:'flex',flexDirection:'column',gap:'10px'}}>
-              <a href="https://wa.me/919216866671" target="_blank" style={{display:'flex',alignItems:'center',gap:'12px',background:'#25D366',color:'#ffffff',padding:'14px 20px',borderRadius:'10px',fontWeight:'600',fontSize:'14px',textDecoration:'none'}}>💬 WhatsApp — +91 92168 66671</a>
-              <a href="tel:+919814033573" style={{display:'flex',alignItems:'center',gap:'12px',background:'rgba(201,168,76,0.14)',color:'var(--gold)',padding:'14px 20px',borderRadius:'10px',fontWeight:'600',fontSize:'14px',textDecoration:'none'}}>📞 Call — +91 98140 33573</a>
+              <a href="https://wa.me/919814033573" target="_blank" style={{display:'flex',alignItems:'center',gap:'12px',background:'#25D366',color:'#ffffff',padding:'14px 20px',borderRadius:'10px',fontWeight:'600',fontSize:'14px',textDecoration:'none'}}>💬 WhatsApp — +91 98140 33573</a>
+              <a href="tel:+919216866671" style={{display:'flex',alignItems:'center',gap:'12px',background:'rgba(201,168,76,0.14)',color:'var(--gold)',padding:'14px 20px',borderRadius:'10px',fontWeight:'600',fontSize:'14px',textDecoration:'none'}}>📞 Call — +91 92168 66671</a>
             </div>
           </div>
           <div style={{marginTop:'16px'}}>
@@ -2259,7 +2265,7 @@ const SOCIAL_LINKS=[
     icon:<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M13.5 21v-7.7h2.6l.4-3h-3v-1.9c0-.87.24-1.46 1.5-1.46h1.6V4.14C15.94 4.1 15.06 4 14.02 4c-2.16 0-3.64 1.32-3.64 3.74V10.3H8v3h2.38V21h3.12z"/></svg>},
   {id:'instagram',label:'Instagram',href:'#',
     icon:<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.35" cy="6.65" r="1.1" fill="currentColor" stroke="none"/></svg>},
-  {id:'whatsapp',label:'WhatsApp',href:'https://wa.me/919216866671',
+  {id:'whatsapp',label:'WhatsApp',href:'https://wa.me/919814033573',
     icon:<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.45 1.33 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2Zm5.83 14.24c-.24.68-1.4 1.3-1.93 1.37-.5.07-1.13.1-1.82-.12-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.17-4.94-4.36-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.26-.29.58-.36.77-.36h.55c.18 0 .42-.07.65.5.24.58.82 2 .89 2.15.07.14.11.31.02.5-.09.19-.14.31-.28.47-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.72 1.19 1.55 1.93 1.07.95 1.96 1.25 2.24 1.39.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.18-.26.36-.22.6-.13.24.09 1.55.73 1.82.86.26.13.44.19.5.3.07.11.07.62-.17 1.3Z"/></svg>},
 ];
 
@@ -2312,12 +2318,12 @@ const Footer=({go})=>(
         <div style={{fontSize:'13px',marginBottom:'22px',color:'rgba(255,255,255,0.4)',lineHeight:'1.7'}}>
           <div style={{color:'var(--gold)',fontWeight:'600',marginBottom:'4px'}}>Panchkula</div>
           Plot No. 1, Industrial Area Phase 1,<br/>Panchkula, Haryana 134109<br/>
-          <a href="tel:+919216866671" style={{color:'var(--gold)',textDecoration:'none',fontWeight:'500'}}>+91 92168 66671</a>
+          <a href="tel:+919814033573" style={{color:'var(--gold)',textDecoration:'none',fontWeight:'500'}}>+91 98140 33573</a>
         </div>
         <div style={{fontSize:'13px',color:'rgba(255,255,255,0.4)',lineHeight:'1.7'}}>
           <div style={{color:'var(--gold)',fontWeight:'600',marginBottom:'4px'}}>Chandigarh</div>
           SCO 22-23, Phase 2,<br/>Industrial Area, Chandigarh<br/>
-          <a href="tel:+919814033573" style={{color:'var(--gold)',textDecoration:'none',fontWeight:'500'}}>+91 98140 33573</a>
+          <a href="tel:+919216866671" style={{color:'var(--gold)',textDecoration:'none',fontWeight:'500'}}>+91 92168 66671</a>
         </div>
       </div>
     </div>
@@ -2330,7 +2336,7 @@ const Footer=({go})=>(
 
 /* ─── WHATSAPP FAB ───────────────────────────────────────── */
 const WAB=()=>(
-  <a href="https://wa.me/919216866671?text=Hello%20GT%20Building%20Solutions!%20I%20need%20assistance."
+  <a href="https://wa.me/919814033573?text=Hello%20GT%20Building%20Solutions!%20I%20need%20assistance."
     target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp"
     style={{position:'fixed',bottom:'28px',right:'28px',zIndex:999,
       width:'58px',height:'58px',background:'#25D366',borderRadius:'50%',color:'#ffffff',
@@ -2367,9 +2373,16 @@ const App=()=>{
           .hero-panel{justify-self:start!important;max-width:640px!important}
         }
         @media(max-width:768px){
-          .hero-pad{padding-bottom:20px!important;align-items:flex-end!important}
+          .hero-pad{padding-bottom:20px!important;align-items:flex-start!important}
           .hero-content-copy{max-width:none!important}
           .hero-scroll{display:none!important}
+          .hero-panel{display:none!important}
+          .hero-mobile-stats{display:flex!important}
+          .hero-scrim-h{background:linear-gradient(180deg,rgba(6,12,28,0.32) 0%,rgba(6,12,28,0.22) 45%,rgba(6,12,28,0.3) 100%)!important}
+          .hero-scrim-v{background:linear-gradient(180deg,rgba(6,12,28,0.05) 0%,rgba(6,12,28,0.08) 30%,rgba(6,12,28,0.55) 100%)!important}
+          .pad-bottom-only{padding-bottom:48px!important}
+          .cats-pad{padding-top:24px!important;padding-bottom:56px!important}
+          .stats-pad{padding-top:24px!important;padding-bottom:48px!important}
         }
         @media(max-height:920px){
           .hero-proof{display:none!important}

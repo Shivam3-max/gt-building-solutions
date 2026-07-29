@@ -12,6 +12,10 @@ const BRANDS = [{
   cat: 'adhesives',
   abbr: 'FV'
 }, {
+  name: 'Gresbond',
+  cat: 'adhesives',
+  abbr: 'GB'
+}, {
   name: 'Birla Opus',
   cat: 'paints',
   abbr: 'BO'
@@ -108,6 +112,10 @@ const BRANDS = [{
   cat: 'hardware',
   abbr: 'SK'
 }, {
+  name: 'Tunes',
+  cat: 'hardware',
+  abbr: 'TU'
+}, {
   name: 'Kajaria',
   cat: 'tiles',
   abbr: 'KJ'
@@ -122,8 +130,8 @@ const CATS = [{
   icon: '⚙',
   desc: 'World-class hardware for kitchens, furniture, and doors.',
   longDesc: 'From precision-engineered drawer slides to elegant door handles, our hardware range covers every fitting need in your home or commercial space.',
-  brands: ['Hettich', 'Godrej', 'Eboo', 'Blaupunkt', 'Sleek Kitchens'],
-  products: ['Drawer Slides & Runners', 'Hinges & Soft-Close Mechanisms', 'Cabinet Handles & Knobs', 'Lift Systems & Flap Fittings', 'Door Closers & Locks', 'Pull-Out Baskets & Organizers', 'Modular Kitchen Fittings'],
+  brands: ['Hettich', 'Godrej', 'Tunes', 'Eboo', 'Blaupunkt', 'Sleek Kitchens'],
+  products: ['Drawer Slides & Runners', 'Hinges & Soft-Close Mechanisms', 'Cabinet Handles & Knobs', 'Lift Systems & Flap Fittings', 'Door Hardware & Security Locks', 'Pull-Out Baskets & Organizers', 'Modular Kitchen Fittings'],
   color: '#0D1B3E'
 }, {
   id: 'adhesives',
@@ -131,7 +139,7 @@ const CATS = [{
   icon: '◈',
   desc: 'Industrial-strength adhesives, waterproofing, tile grouts and surface treatments.',
   longDesc: 'Our adhesives and surface solutions range covers everything from construction-grade bonding to precision surface finishing.',
-  brands: ['Fevicol', 'Pidilite', 'Dr. Fixit', 'Roff', '3M'],
+  brands: ['Fevicol', 'Gresbond', 'Pidilite', 'Dr. Fixit', 'Roff', '3M'],
   products: ['Tile Adhesives & Grouts', 'Wood & Laminate Adhesives', 'Waterproofing Membranes', 'Sealants & Silicones', 'Wall Putty & Primers', 'Construction Chemicals', 'Floor Levelling Compounds'],
   color: '#1B3A5C'
 }, {
@@ -198,6 +206,7 @@ const HERO_VIDEOS = {
 };
 const BRAND_LOGOS = {
   'Fevicol': 'fevicol.jpeg',
+  'Gresbond': 'gresbond.jpg',
   'Birla Opus': 'birla-opus.jpeg',
   'Asian Paints': 'asian-paints.jpeg',
   '3M': '3m.jpeg',
@@ -222,6 +231,7 @@ const BRAND_LOGOS = {
   'CUMI': 'cumi.jpeg',
   'JB Plastering': 'jb-plastering.jpeg',
   'Sleek Kitchens': 'sleek-kitchens.jpeg',
+  'Tunes': 'tunes.jpg',
   'Kajaria': 'kajaria.jpeg',
   'Chetak': 'chetak.jpeg'
 };
@@ -252,6 +262,9 @@ const BRAND_LOGO_TWEAKS = {
   },
   'Fevicol': {
     scale: '84%'
+  },
+  'Gresbond': {
+    scale: '82%'
   },
   'Gyproc': {
     scale: '84%'
@@ -285,20 +298,23 @@ const BRAND_LOGO_TWEAKS = {
   },
   'Tata Agrico': {
     scale: '86%'
+  },
+  'Tunes': {
+    scale: '76%'
   }
 };
 const HOME_GALLERY_IMAGES = [{
   src: 'client/gt-storefront-wide-1.jpg',
   label: 'Showroom Exterior'
 }, {
-  src: 'client/gt-fittings-display.jpg',
-  label: 'Hardware Display'
+  src: 'kitchen-fittings.jpg',
+  label: 'Kitchen Hardware Display'
 }, {
-  src: 'client/gt-sanitary-display.jpg',
-  label: 'Tile Collection'
+  src: 'bathroom.jpg',
+  label: 'Bathroom Display'
 }];
 const CATEGORY_HERO_IMAGES = {
-  hardware: 'hettich.jpg',
+  hardware: 'kitchen-fittings.jpg',
   adhesives: 'fevicol.jpg',
   panels: 'generated-panels-showroom.png',
   tiles: 'client/gt-kajaria-facade.jpg',
@@ -308,8 +324,8 @@ const CATEGORY_HERO_IMAGES = {
 };
 const CATEGORY_GALLERY_IMAGES = {
   hardware: [{
-    src: 'client/gt-fittings-display.jpg',
-    label: 'Hardware Display'
+    src: 'kitchen-fittings.jpg',
+    label: 'Kitchen Hardware Display'
   }, {
     src: 'hettich.jpg',
     label: 'Hettich Systems'
@@ -321,11 +337,11 @@ const CATEGORY_GALLERY_IMAGES = {
     src: 'fevicol.jpg',
     label: 'Fevicol Range'
   }, {
+    src: 'adhesives-showroom-generated.png',
+    label: 'Gresbond & Tile Adhesives'
+  }, {
     src: 'dr-fixit.jpg',
     label: 'Dr. Fixit Solutions'
-  }, {
-    src: 'fittings.jpg',
-    label: 'Surface Solutions'
   }],
   panels: [{
     src: 'generated-panels-showroom.png',
@@ -334,18 +350,18 @@ const CATEGORY_GALLERY_IMAGES = {
     src: 'gyproc.jpg',
     label: 'Gyproc Boards'
   }, {
-    src: 'wall-demo.jpg',
-    label: 'Wall Demo'
+    src: 'panels-wall-system-generated.png',
+    label: 'Partition Wall System'
   }],
   tiles: [{
     src: 'client/gt-kajaria-facade.jpg',
     label: 'Kajaria Collection'
   }, {
-    src: 'client/gt-sanitary-display.jpg',
+    src: 'bathroom.jpg',
     label: 'Bathroom Display'
   }, {
-    src: 'client/gujarat-tiles-signboard.jpg',
-    label: 'Designer Tiles'
+    src: 'client/gujarat-tiles-interior-generated.png',
+    label: 'Gujarat Tiles Interior Display'
   }],
   paints: [{
     src: 'generated-paints-showroom.png',
@@ -371,8 +387,8 @@ const CATEGORY_GALLERY_IMAGES = {
     src: 'generated-pipes-showroom.png',
     label: 'Pipes Showroom'
   }, {
-    src: 'cpvc.jpg',
-    label: 'CPVC Pipes'
+    src: 'prince-pipes-display-generated.png',
+    label: 'Prince CPVC & uPVC Pipes'
   }, {
     src: 'fittings.jpg',
     label: 'Fittings & Valves'
@@ -445,7 +461,8 @@ const Reveal = ({
   children,
   delay = 0,
   dir = 'up',
-  style = {}
+  style = {},
+  className = ''
 }) => {
   const [ref, inView] = useInView(0.1);
   const transforms = {
@@ -456,6 +473,7 @@ const Reveal = ({
   };
   return /*#__PURE__*/React.createElement("div", {
     ref: ref,
+    className: className,
     style: {
       opacity: inView ? 1 : 0,
       transform: inView ? 'none' : transforms[dir] || transforms.up,
@@ -1447,12 +1465,14 @@ const Hero = ({
 const Stats = () => {
   const [ref, inView] = useInView(0.2);
   return /*#__PURE__*/React.createElement("section", {
+    className: "stats-pad",
     style: {
-      padding: '0 var(--px) 80px',
+      padding: '40px var(--px) 80px',
       background: 'var(--cream)'
     }
   }, /*#__PURE__*/React.createElement("div", {
     ref: ref,
+    className: "grid-4",
     style: {
       display: 'grid',
       gridTemplateColumns: 'repeat(4,1fr)',
@@ -1744,6 +1764,7 @@ const VideoHero = ({
     overflow: 'hidden'
   }
 }, /*#__PURE__*/React.createElement(HeroBackgroundVideo, null), /*#__PURE__*/React.createElement("div", {
+  className: "hero-scrim-h",
   style: {
     position: 'absolute',
     inset: 0,
@@ -1751,6 +1772,7 @@ const VideoHero = ({
     zIndex: 1
   }
 }), /*#__PURE__*/React.createElement("div", {
+  className: "hero-scrim-v",
   style: {
     position: 'absolute',
     inset: 0,
@@ -2097,7 +2119,7 @@ const HomePage = ({
     marginBottom: '12px'
   }
 }, "Trusted brand portfolio"), /*#__PURE__*/React.createElement(BrandMarquee, null))), /*#__PURE__*/React.createElement(Stats, null), /*#__PURE__*/React.createElement("section", {
-  className: "section-pad",
+  className: "cats-pad",
   style: {
     padding: '40px var(--px) 80px',
     background: 'var(--cream)'
@@ -2120,6 +2142,7 @@ const HomePage = ({
 }, CATS.map((c, i) => /*#__PURE__*/React.createElement(Reveal, {
   key: c.id,
   delay: i * 0.06,
+  className: i === 0 ? 'span2-mobile' : '',
   style: i === 0 ? {
     gridColumn: 'span 2'
   } : {}
@@ -2128,6 +2151,7 @@ const HomePage = ({
   go: go,
   wide: false
 }))))), /*#__PURE__*/React.createElement("section", {
+  className: "pad-bottom-only",
   style: {
     padding: '0 var(--px) 80px',
     background: 'var(--cream)'
@@ -2145,8 +2169,8 @@ const HomePage = ({
   alt: item.label,
   h: 320
 }))))), /*#__PURE__*/React.createElement("section", {
+  className: "pad-section",
   style: {
-    padding: '80px var(--px)',
     background: 'var(--navy)',
     position: 'relative',
     overflow: 'hidden'
@@ -2209,9 +2233,8 @@ const HomePage = ({
   item: item,
   i: i
 }))))), /*#__PURE__*/React.createElement("section", {
-  className: "section-pad",
+  className: "pad-section",
   style: {
-    padding: '80px var(--px)',
     background: 'var(--cream)'
   }
 }, /*#__PURE__*/React.createElement(Reveal, null, /*#__PURE__*/React.createElement("div", {
@@ -2293,6 +2316,7 @@ const HomePage = ({
     }
   }, p.desc)));
 }))), /*#__PURE__*/React.createElement("section", {
+  className: "pad-bottom-only",
   style: {
     padding: '0 var(--px) 80px',
     background: 'var(--cream)'
@@ -2309,13 +2333,13 @@ const HomePage = ({
   name: 'Garg Trading Company',
   desc: 'The flagship brand for hardware, adhesives, panels, paints, tools, and complete building solutions. Your single point of contact for any construction project.',
   addr: 'Plot No. 1, Industrial Area Phase 1, Panchkula, Haryana 134109',
-  ph: '+91 92168 66671'
+  ph: '+91 98140 33573'
 }, {
   code: 'GS',
   name: 'Gujarat Tiles & Sanitary Depot',
   desc: 'Specialized in premium tiles and sanitary ware. Designer tiles, bathroom solutions, and surface finishes curated for architects and discerning homeowners.',
   addr: 'SCO 22-23, Phase 2, Industrial Area, Chandigarh',
-  ph: '+91 98140 33573'
+  ph: '+91 92168 66671'
 }].map((e, i) => /*#__PURE__*/React.createElement(Reveal, {
   key: i,
   delay: i * 0.1
@@ -2389,8 +2413,8 @@ const HomePage = ({
     textDecoration: 'none'
   }
 }, "📞 ", e.ph))))))), /*#__PURE__*/React.createElement("section", {
+  className: "pad-section",
   style: {
-    padding: '80px var(--px)',
     background: 'linear-gradient(135deg,var(--gold) 0%,var(--gold3) 55%,var(--gold) 100%)',
     textAlign: 'center',
     position: 'relative',
@@ -2435,7 +2459,7 @@ const HomePage = ({
     flexWrap: 'wrap'
   }
 }, /*#__PURE__*/React.createElement("a", {
-  href: "tel:+919216866671",
+  href: "tel:+919814033573",
   style: {
     display: 'inline-flex',
     alignItems: 'center',
@@ -2454,7 +2478,7 @@ const HomePage = ({
   onMouseEnter: e => e.currentTarget.style.transform = 'translateY(-2px)',
   onMouseLeave: e => e.currentTarget.style.transform = 'none'
 }, "📞 Call Now"), /*#__PURE__*/React.createElement("a", {
-  href: "https://wa.me/919216866671",
+  href: "https://wa.me/919814033573",
   target: "_blank",
   style: {
     display: 'inline-flex',
@@ -2854,7 +2878,7 @@ const CategoryPage = ({
   onClick: () => go('contact'),
   className: "btn-gold"
 }, "Get Quote"), /*#__PURE__*/React.createElement("a", {
-  href: "https://wa.me/919216866671",
+  href: "https://wa.me/919814033573",
   target: "_blank",
   style: {
     display: 'inline-flex',
@@ -2905,7 +2929,7 @@ const GALLERY_ITEMS = [{
   cat: 'hardware',
   label: 'Kitchen Fittings Display',
   span: 2,
-  src: 'client/gt-fittings-display.jpg'
+  src: 'kitchen-fittings.jpg'
 }, {
   cat: 'hardware',
   label: 'Hettich Drawer Systems',
@@ -2922,11 +2946,11 @@ const GALLERY_ITEMS = [{
 }, {
   cat: 'tiles',
   label: 'Bathroom Suite Display',
-  src: 'client/gt-sanitary-display.jpg'
+  src: 'bathroom.jpg'
 }, {
   cat: 'tiles',
-  label: 'Designer Floor Tiles',
-  src: 'client/gujarat-tiles-signboard.jpg'
+  label: 'Gujarat Tiles Interior Display',
+  src: 'client/gujarat-tiles-interior-generated.png'
 }, {
   cat: 'paints',
   label: 'Paints Design Studio',
@@ -2946,6 +2970,10 @@ const GALLERY_ITEMS = [{
   src: 'fevicol.jpg'
 }, {
   cat: 'adhesives',
+  label: 'Tile Adhesives & Construction Chemicals',
+  src: 'adhesives-showroom-generated.png'
+}, {
+  cat: 'adhesives',
   label: 'Dr. Fixit Waterproofing',
   src: 'dr-fixit.jpg'
 }, {
@@ -2959,8 +2987,8 @@ const GALLERY_ITEMS = [{
   src: 'gyproc.jpg'
 }, {
   cat: 'panels',
-  label: 'Partition Wall Demo',
-  src: 'wall-demo.jpg'
+  label: 'Partition Wall System',
+  src: 'panels-wall-system-generated.png'
 }, {
   cat: 'tools',
   label: 'Power Tools Showroom',
@@ -2981,8 +3009,8 @@ const GALLERY_ITEMS = [{
   src: 'generated-pipes-showroom.png'
 }, {
   cat: 'pipes',
-  label: 'CPVC Pipe Range',
-  src: 'cpvc.jpg'
+  label: 'Prince CPVC & uPVC Pipe Range',
+  src: 'prince-pipes-display-generated.png'
 }, {
   cat: 'pipes',
   label: 'Fittings & Valves',
@@ -3040,6 +3068,7 @@ const GalleryPage = () => {
   }, shown.map((item, i) => /*#__PURE__*/React.createElement(Reveal, {
     key: `${filter}-${i}`,
     delay: i * 0.04,
+    className: item.span === 2 ? 'span2-mobile' : '',
     style: item.span === 2 ? {
       gridColumn: 'span 2'
     } : {}
@@ -3126,7 +3155,7 @@ const GalleryPage = () => {
       margin: '0 auto 32px'
     }
   }, "We're uploading photos from real installations, showrooms, and completed projects. Check back soon."), /*#__PURE__*/React.createElement("a", {
-    href: "https://wa.me/919216866671?text=I'd like to see your product gallery",
+    href: "https://wa.me/919814033573?text=I'd like to see your product gallery",
     target: "_blank",
     className: "btn-gold"
   }, "WhatsApp for Photos")))));
@@ -3349,6 +3378,7 @@ const TileCalculator = () => {
     value: v.tw,
     onChange: set('tw')
   })), /*#__PURE__*/React.createElement("div", {
+    className: "span2-mobile",
     style: {
       gridColumn: 'span 2'
     }
@@ -4169,7 +4199,7 @@ const ToolsPage = () => {
       marginBottom: '14px'
     }
   }, "Our team can verify your estimates."), /*#__PURE__*/React.createElement("a", {
-    href: "https://wa.me/919216866671",
+    href: "https://wa.me/919814033573",
     target: "_blank",
     style: {
       display: 'block',
@@ -4277,7 +4307,7 @@ const ToolsPage = () => {
       marginBottom: '14px'
     }
   }, "Our team can verify your estimates."), /*#__PURE__*/React.createElement("a", {
-    href: "https://wa.me/919216866671",
+    href: "https://wa.me/919814033573",
     target: "_blank",
     style: {
       display: 'block',
@@ -4362,8 +4392,8 @@ const AboutPage = () => /*#__PURE__*/React.createElement("div", {
   alt: "Panchkula Store",
   h: 180
 }), /*#__PURE__*/React.createElement(SiteImage, {
-  src: "client/gujarat-tiles-signboard.jpg",
-  alt: "Chandigarh Store",
+  src: "client/gujarat-tiles-interior-generated.png",
+  alt: "Chandigarh Store Interior",
   h: 180
 })))), /*#__PURE__*/React.createElement("div", {
   style: {
@@ -4437,13 +4467,13 @@ const AboutPage = () => /*#__PURE__*/React.createElement("div", {
   name: 'Garg Trading Company',
   desc: 'The flagship brand for hardware, adhesives, panels, paints, power tools, and complete building solutions.',
   addr: 'Plot No. 1, Industrial Area Phase 1, Panchkula, Haryana 134109',
-  ph: '+91 92168 66671'
+  ph: '+91 98140 33573'
 }, {
   code: 'GS',
   name: 'Gujarat Tiles & Sanitary Depot',
   desc: 'Specialized in premium tiles and sanitary ware. From designer floor and wall tiles to complete bathroom solutions.',
   addr: 'SCO 22-23, Phase 2, Industrial Area, Chandigarh',
-  ph: '+91 98140 33573'
+  ph: '+91 92168 66671'
 }].map((e, i) => /*#__PURE__*/React.createElement(Reveal, {
   key: i,
   delay: i * 0.1
@@ -4586,7 +4616,7 @@ const ContactPage = () => {
   const submit = e => {
     e.preventDefault();
     const t = `Hello GT Building Solutions!%0A%0AName: ${form.name}%0APhone: ${form.phone}%0AEmail: ${form.email}%0ACategory: ${form.category}%0A%0A${form.message}`;
-    window.open(`https://wa.me/919216866671?text=${t}`, '_blank');
+    window.open(`https://wa.me/919814033573?text=${t}`, '_blank');
     setSent(true);
   };
   const lbl = {
@@ -4619,12 +4649,12 @@ const ContactPage = () => {
     tag: 'Garg Trading Company',
     name: 'Panchkula Store',
     addr: 'Plot No. 1, Industrial Area Phase 1\nPanchkula, Haryana 134109',
-    ph: '+91 92168 66671'
+    ph: '+91 98140 33573'
   }, {
     tag: 'Gujarat Tiles & Sanitary Depot',
     name: 'Chandigarh Store',
     addr: 'SCO 22-23, Phase 2\nIndustrial Area, Chandigarh',
-    ph: '+91 98140 33573'
+    ph: '+91 92168 66671'
   }].map((l, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
     style: {
@@ -4688,7 +4718,7 @@ const ContactPage = () => {
       gap: '10px'
     }
   }, /*#__PURE__*/React.createElement("a", {
-    href: "https://wa.me/919216866671",
+    href: "https://wa.me/919814033573",
     target: "_blank",
     style: {
       display: 'flex',
@@ -4702,8 +4732,8 @@ const ContactPage = () => {
       fontSize: '14px',
       textDecoration: 'none'
     }
-  }, "💬 WhatsApp — +91 92168 66671"), /*#__PURE__*/React.createElement("a", {
-    href: "tel:+919814033573",
+  }, "💬 WhatsApp — +91 98140 33573"), /*#__PURE__*/React.createElement("a", {
+    href: "tel:+919216866671",
     style: {
       display: 'flex',
       alignItems: 'center',
@@ -4716,7 +4746,7 @@ const ContactPage = () => {
       fontSize: '14px',
       textDecoration: 'none'
     }
-  }, "📞 Call — +91 98140 33573"))), /*#__PURE__*/React.createElement("div", {
+  }, "📞 Call — +91 92168 66671"))), /*#__PURE__*/React.createElement("div", {
     style: {
       marginTop: '16px'
     }
@@ -4887,7 +4917,7 @@ const SOCIAL_LINKS = [{
 }, {
   id: 'whatsapp',
   label: 'WhatsApp',
-  href: 'https://wa.me/919216866671',
+  href: 'https://wa.me/919814033573',
   icon: /*#__PURE__*/React.createElement("svg", {
     viewBox: "0 0 24 24",
     width: "15",
@@ -5054,13 +5084,13 @@ const Footer = ({
     marginBottom: '4px'
   }
 }, "Panchkula"), "Plot No. 1, Industrial Area Phase 1,", /*#__PURE__*/React.createElement("br", null), "Panchkula, Haryana 134109", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("a", {
-  href: "tel:+919216866671",
+  href: "tel:+919814033573",
   style: {
     color: 'var(--gold)',
     textDecoration: 'none',
     fontWeight: '500'
   }
-}, "+91 92168 66671")), /*#__PURE__*/React.createElement("div", {
+}, "+91 98140 33573")), /*#__PURE__*/React.createElement("div", {
   style: {
     fontSize: '13px',
     color: 'rgba(255,255,255,0.4)',
@@ -5073,13 +5103,13 @@ const Footer = ({
     marginBottom: '4px'
   }
 }, "Chandigarh"), "SCO 22-23, Phase 2,", /*#__PURE__*/React.createElement("br", null), "Industrial Area, Chandigarh", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("a", {
-  href: "tel:+919814033573",
+  href: "tel:+919216866671",
   style: {
     color: 'var(--gold)',
     textDecoration: 'none',
     fontWeight: '500'
   }
-}, "+91 98140 33573")))), /*#__PURE__*/React.createElement("div", {
+}, "+91 92168 66671")))), /*#__PURE__*/React.createElement("div", {
   style: {
     borderTop: '1px solid rgba(201,168,76,0.1)',
     paddingTop: '24px',
@@ -5099,7 +5129,7 @@ const Footer = ({
 
 /* ─── WHATSAPP FAB ───────────────────────────────────────── */
 const WAB = () => /*#__PURE__*/React.createElement("a", {
-  href: "https://wa.me/919216866671?text=Hello%20GT%20Building%20Solutions!%20I%20need%20assistance.",
+  href: "https://wa.me/919814033573?text=Hello%20GT%20Building%20Solutions!%20I%20need%20assistance.",
   target: "_blank",
   rel: "noopener noreferrer",
   "aria-label": "Chat with us on WhatsApp",
@@ -5171,9 +5201,16 @@ const App = () => {
           .hero-panel{justify-self:start!important;max-width:640px!important}
         }
         @media(max-width:768px){
-          .hero-pad{padding-bottom:20px!important;align-items:flex-end!important}
+          .hero-pad{padding-bottom:20px!important;align-items:flex-start!important}
           .hero-content-copy{max-width:none!important}
           .hero-scroll{display:none!important}
+          .hero-panel{display:none!important}
+          .hero-mobile-stats{display:flex!important}
+          .hero-scrim-h{background:linear-gradient(180deg,rgba(6,12,28,0.32) 0%,rgba(6,12,28,0.22) 45%,rgba(6,12,28,0.3) 100%)!important}
+          .hero-scrim-v{background:linear-gradient(180deg,rgba(6,12,28,0.05) 0%,rgba(6,12,28,0.08) 30%,rgba(6,12,28,0.55) 100%)!important}
+          .pad-bottom-only{padding-bottom:48px!important}
+          .cats-pad{padding-top:24px!important;padding-bottom:56px!important}
+          .stats-pad{padding-top:24px!important;padding-bottom:48px!important}
         }
         @media(max-height:920px){
           .hero-proof{display:none!important}
