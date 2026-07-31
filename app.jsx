@@ -86,6 +86,7 @@ const catColorMap={
 
 const assetPath=(file)=>encodeURI(`/Public/${file}`);
 const brandLogoPath=(file)=>encodeURI(`/Public/brand logo/${file}`);
+const COMPANY_LOGO='Logo.png';
 const HERO_VIDEOS={
   desktop:'client/desktop.mp4',
   mobile:'client/phone.mp4',
@@ -345,6 +346,28 @@ const BrandLogo=({name,h=64,radius=14,style={}})=>{
           objectFit:'contain',
           filter:'drop-shadow(0 1px 1px rgba(13,27,62,0.05))',
         }}
+      />
+    </div>
+  );
+};
+
+const CompanyLogo=({size=52,bgSize,ringColor='rgba(13,27,62,0.12)',shadow='0 10px 24px rgba(7,13,28,0.14)',style={}})=>{
+  const outer=bgSize||size;
+  const inner=Math.round(outer*0.64);
+  return(
+    <div style={{
+      width:outer,height:outer,borderRadius:'50%',
+      background:'#ffffff',
+      border:`1px solid ${ringColor}`,
+      boxShadow:shadow,
+      display:'flex',alignItems:'center',justifyContent:'center',
+      flexShrink:0,
+      ...style,
+    }}>
+      <img
+        src={assetPath(COMPANY_LOGO)}
+        alt="Garg Trading Company logo"
+        style={{width:inner,height:inner,objectFit:'contain',display:'block'}}
       />
     </div>
   );
@@ -665,15 +688,12 @@ const Nav=({page,go})=>{
 
       <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
         <div onClick={()=>nav('home')} style={{display:'flex',alignItems:'center',gap:'12px',cursor:'pointer'}}>
-          <div style={{
-            width:'42px',height:'42px',
-            background:'linear-gradient(140deg,var(--navy) 0%,var(--navy3) 100%)',
-            borderRadius:'8px',display:'flex',alignItems:'center',justifyContent:'center',
-            fontFamily:'Cormorant Garamond,serif',fontSize:'17px',fontWeight:'700',
-            color:'var(--gold)',flexShrink:0,transition:'transform 0.2s',
-          }}
-          onMouseEnter={e=>e.currentTarget.style.transform='scale(1.06)'}
-          onMouseLeave={e=>e.currentTarget.style.transform='scale(1)'}>GT</div>
+          <CompanyLogo
+            size={44}
+            ringColor={sc||mOpen?'rgba(13,27,62,0.14)':'rgba(255,255,255,0.24)'}
+            shadow={sc||mOpen?'0 10px 20px rgba(7,13,28,0.12)':'0 10px 24px rgba(7,13,28,0.22)'}
+            style={{transition:'transform 0.2s'}}
+          />
           <div>
             <div style={{fontFamily:'Cormorant Garamond,serif',fontSize:'15px',fontWeight:'700',
               color:sc||mOpen?'var(--navy)':'#ffffff',lineHeight:'1.1',letterSpacing:'0.5px',transition:'color 0.3s'}}>
@@ -2275,9 +2295,11 @@ const Footer=({go})=>(
     <div style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1.5fr',gap:'48px',marginBottom:'48px'}} className="grid-2">
       <div>
         <div style={{display:'flex',alignItems:'center',gap:'12px',marginBottom:'20px'}}>
-          <div style={{width:'42px',height:'42px',background:'linear-gradient(135deg,var(--gold) 0%,var(--gold3) 100%)',
-            borderRadius:'8px',display:'flex',alignItems:'center',justifyContent:'center',
-            fontFamily:'Cormorant Garamond,serif',fontSize:'17px',fontWeight:'700',color:'var(--navy)'}}>GT</div>
+          <CompanyLogo
+            size={48}
+            ringColor="rgba(201,168,76,0.32)"
+            shadow="0 12px 28px rgba(0,0,0,0.24)"
+          />
           <div>
             <div style={{color:'#ffffff',fontFamily:'Cormorant Garamond,serif',fontSize:'15px',fontWeight:'700'}}>Garg Trading Company</div>
             <div style={{fontSize:'9px',letterSpacing:'2.5px',color:'var(--gold)',textTransform:'uppercase'}}>Building Solutions</div>
