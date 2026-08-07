@@ -5,6 +5,7 @@ export const CATEGORIES = [
     id: 'hardware',
     slug: 'hardware',
     label: 'Kitchen, Furniture & Door Hardware',
+    shortLabel: 'Hardware',
     icon: '⚙',
     desc: 'World-class hardware for kitchens, furniture, and doors.',
     longDesc:
@@ -36,6 +37,7 @@ export const CATEGORIES = [
     id: 'adhesives',
     slug: 'adhesives',
     label: 'Adhesives & Surface Solutions',
+    shortLabel: 'Adhesives',
     icon: '◈',
     desc: 'Industrial-strength adhesives, waterproofing, tile grouts and surface treatments.',
     longDesc:
@@ -67,6 +69,7 @@ export const CATEGORIES = [
     id: 'panels',
     slug: 'panels',
     label: 'Panels & Gypsum Boards',
+    shortLabel: 'Panels',
     icon: '▣',
     desc: 'Premium ceiling systems, partition panels, and gypsum solutions.',
     longDesc:
@@ -98,6 +101,7 @@ export const CATEGORIES = [
     id: 'tiles',
     slug: 'tiles',
     label: 'Tiles & Sanitary',
+    shortLabel: 'Tiles & Sanitary',
     icon: '◼',
     desc: "Designer tiles and complete bathroom solutions from India's most trusted brands.",
     longDesc:
@@ -130,6 +134,7 @@ export const CATEGORIES = [
     id: 'paints',
     slug: 'paints',
     label: 'Paints & Coatings',
+    shortLabel: 'Paints',
     icon: '🎨',
     desc: 'Premium interior and exterior paints, wood finishes and protective coatings.',
     longDesc:
@@ -161,6 +166,7 @@ export const CATEGORIES = [
     id: 'tools',
     slug: 'power-tools',
     label: 'Power Tools & Equipment',
+    shortLabel: 'Power Tools',
     icon: '🔧',
     desc: 'Professional-grade power tools and construction equipment.',
     longDesc:
@@ -192,6 +198,7 @@ export const CATEGORIES = [
     id: 'pipes',
     slug: 'pipes-plumbing',
     label: 'Pipes & Plumbing',
+    shortLabel: 'Pipes & Plumbing',
     icon: '🔩',
     desc: 'Complete piping solutions — CPVC, uPVC, and specialty pipes.',
     longDesc:

@@ -58,7 +58,7 @@ export default function Footer() {
         <div>
           <div className="text-white text-[11px] font-semibold tracking-[2px] uppercase mb-5">Categories</div>
           {CATEGORIES.map((c) => (
-            <Link key={c.id} href={`/${c.slug}`} className="block text-[13px] mb-3 text-white/40 hover:text-gold transition-colors">{c.label.split(' ')[0]}</Link>
+            <Link key={c.id} href={`/${c.slug}`} className="block text-[13px] mb-3 text-white/40 hover:text-gold transition-colors">{c.shortLabel}</Link>
           ))}
         </div>
         <div>
