@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+/*
+ * This whole file (aside from @theme) is legacy global CSS ported from the
+ * pre-Tailwind site. It must live inside Tailwind's `base` layer, not as
+ * unlayered CSS — per the CSS Cascade Layers spec, unlayered rules always
+ * win over layered ones regardless of specificity, so an unlayered
+ * `* { padding: 0 }` here was silently overriding every Tailwind spacing
+ * utility (px-*, py-*, p-*, m-*) sitewide, which is why the Tailwind-based
+ * Nav/Footer had zero padding despite their px-5/py-3/etc classes.
+ */
+
 @theme {
   --color-cream: #FAF8F3;
   --color-cream2: #F3EFE4;
@@ -17,6 +27,8 @@
   --font-serif: 'Cormorant Garamond', serif;
   --font-sans: 'DM Sans', sans-serif;
 }
+
+@layer base {
 
 :root {
   --cream: #FAF8F3;
@@ -176,4 +188,6 @@ input:focus, select:focus, textarea:focus { border-color: var(--gold); }
   .hero-mobile-stats { display: flex !important; }
   .hero-pad { padding-bottom: 16px !important; }
   .hero-scroll { display: none !important; }
+}
+
 }
