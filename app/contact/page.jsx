@@ -11,8 +11,8 @@ export const metadata = {
 
 export default function ContactPage() {
   const stores = [
-    { tag: STORES.panchkula.tag, name: `${STORES.panchkula.city} Store`, addr: `${STORES.panchkula.street}\n${STORES.panchkula.city}, ${STORES.panchkula.region} ${STORES.panchkula.postalCode}`, ph: STORES.panchkula.phone, href: STORES.panchkula.phoneHref },
-    { tag: STORES.chandigarh.tag, name: `${STORES.chandigarh.city} Store`, addr: `${STORES.chandigarh.street}\n${STORES.chandigarh.city}`, ph: STORES.chandigarh.phone, href: STORES.chandigarh.phoneHref },
+    { tag: STORES.panchkula.tag, name: `${STORES.panchkula.city} Store`, addr: `${STORES.panchkula.street}\n${STORES.panchkula.city}, ${STORES.panchkula.region} ${STORES.panchkula.postalCode}`, ph: STORES.panchkula.phone, href: STORES.panchkula.phoneHref, mapQuery: STORES.panchkula.fullAddress },
+    { tag: STORES.chandigarh.tag, name: `${STORES.chandigarh.city} Store`, addr: `${STORES.chandigarh.street}\n${STORES.chandigarh.city}`, ph: STORES.chandigarh.phone, href: STORES.chandigarh.phoneHref, mapQuery: STORES.chandigarh.fullAddress },
   ];
 
   return (
@@ -25,7 +25,18 @@ export default function ContactPage() {
               <div style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '6px' }}>{l.tag}</div>
               <h2 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: '22px', fontWeight: '600', color: 'var(--navy)', marginBottom: '12px' }}>{l.name}</h2>
               <p style={{ fontSize: '13px', color: 'var(--txt2)', lineHeight: '1.6', marginBottom: '14px', whiteSpace: 'pre-line' }}>📍 {l.addr}</p>
-              <a href={l.href} style={{ fontSize: '15px', fontWeight: '600', color: 'var(--navy)', textDecoration: 'none' }}>📞 {l.ph}</a>
+              <a href={l.href} style={{ fontSize: '15px', fontWeight: '600', color: 'var(--navy)', textDecoration: 'none', display: 'block', marginBottom: '18px' }}>📞 {l.ph}</a>
+              <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)', height: '220px' }}>
+                <iframe
+                  title={`Map of ${l.name}`}
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(l.mapQuery)}&output=embed`}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
             </div>
           ))}
           <div style={{ background: 'var(--navy)', borderRadius: '16px', padding: '34px 32px' }}>
