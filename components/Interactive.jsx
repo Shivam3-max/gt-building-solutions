@@ -59,20 +59,27 @@ export const Reveal = ({ children, delay = 0, dir = 'up', style = {}, className 
   );
 };
 
-export const SiteImage = ({ src, alt, h = 280, radius = 16, fit = 'cover', style = {} }) => {
+const webpPath = (file) => assetPath(file.replace(/\.(jpe?g|png)$/i, '.webp'));
+
+export const SiteImage = ({ src, alt, h = 280, radius = 16, fit = 'cover', style = {}, priority = false }) => {
   const [broken, setBroken] = useState(false);
   if (!src || broken) return <ImgPlaceholder h={h} label={alt} radius={radius} />;
+  const imgStyle = {
+    display: 'block', width: '100%', height: `${h}px`, objectFit: fit,
+    borderRadius: `${radius}px`, background: '#e8e4dc', ...style,
+  };
   return (
-    <img
-      src={assetPath(src)}
-      alt={alt}
-      loading="lazy"
-      onError={() => setBroken(true)}
-      style={{
-        display: 'block', width: '100%', height: `${h}px`, objectFit: fit,
-        borderRadius: `${radius}px`, background: '#e8e4dc', ...style,
-      }}
-    />
+    <picture>
+      <source srcSet={webpPath(src)} type="image/webp" />
+      <img
+        src={assetPath(src)}
+        alt={alt}
+        loading={priority ? 'eager' : 'lazy'}
+        fetchPriority={priority ? 'high' : 'auto'}
+        onError={() => setBroken(true)}
+        style={imgStyle}
+      />
+    </picture>
   );
 };
 
@@ -101,16 +108,19 @@ export const BrandLogo = ({ name, h = 64, radius = 14, style = {} }) => {
       display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
       ...style,
     }}>
-      <img
-        src={brandLogoPath(brand.logo)}
-        alt={`${name} logo`}
-        loading="lazy"
-        onError={() => setBroken(true)}
-        style={{
-          display: 'block', width: brand.logoScale || '82%', height: '72%',
-          objectFit: 'contain', filter: 'drop-shadow(0 1px 1px rgba(13,27,62,0.05))',
-        }}
-      />
+      <picture>
+        <source srcSet={brandLogoPath(brand.logo.replace(/\.(jpe?g|png)$/i, '.webp'))} type="image/webp" />
+        <img
+          src={brandLogoPath(brand.logo)}
+          alt={`${name} logo`}
+          loading="lazy"
+          onError={() => setBroken(true)}
+          style={{
+            display: 'block', width: brand.logoScale || '82%', height: '72%',
+            objectFit: 'contain', filter: 'drop-shadow(0 1px 1px rgba(13,27,62,0.05))',
+          }}
+        />
+      </picture>
     </div>
   );
 };
@@ -313,6 +323,7 @@ export const HeroBackgroundVideo = () => {
         <video
           key={src}
           autoPlay muted loop playsInline preload="metadata"
+          fetchPriority="high"
           poster={assetPath(HERO_VIDEOS.fallback)}
           onCanPlay={() => setReady(true)}
           style={{
