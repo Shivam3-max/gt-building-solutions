@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
-const ROOT = path.join(__dirname, '..', 'Public', 'Public');
+const ROOT = path.join(__dirname, '..', 'public', 'Public');
 const SIZE_THRESHOLD = 150 * 1024; // 150KB
 const LOGO_MAX_WIDTH = 500;
 const HERO_MAX_WIDTH = 1600;
@@ -41,7 +41,7 @@ async function run() {
       // still ensure a webp sibling exists for consistency
       const webpPath = file.replace(/\.(jpe?g|png)$/i, '.webp');
       if (!fs.existsSync(webpPath)) {
-        await sharp(file).webp({ quality: 80 }).toFile(webpPath);
+        await sharp(file).rotate().webp({ quality: 80 }).toFile(webpPath);
       }
       totalAfter += beforeBytes;
       continue;
@@ -65,7 +65,7 @@ async function run() {
       fs.writeFileSync(file, outputBuffer);
     } // else keep original bytes on disk (resize/recompress didn't help)
 
-    const webpBuffer = await sharp(inputBuffer).resize({ width: maxW, withoutEnlargement: true }).webp({ quality: 80 }).toBuffer();
+    const webpBuffer = await sharp(inputBuffer).rotate().resize({ width: maxW, withoutEnlargement: true }).webp({ quality: 80 }).toBuffer();
     const webpPath = file.replace(/\.(jpe?g|png)$/i, '.webp');
     fs.writeFileSync(webpPath, webpBuffer);
 
