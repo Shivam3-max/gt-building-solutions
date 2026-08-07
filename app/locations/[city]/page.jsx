@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { PageHero } from '@/components/Presentational';
 import JsonLd from '@/components/JsonLd';
+import TrackedLink from '@/components/TrackedLink';
 import { LOCALITIES, getLocalityBySlug } from '@/data/localities';
 import { WHATSAPP_LINK } from '@/lib/site';
 import { breadcrumbSchema, storeNode, serviceAreaNode, graph } from '@/lib/schema';
@@ -76,20 +77,20 @@ export default async function LocalityPage({ params }) {
               <span style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)' }}>{l.storeName}</span>
               <h2 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: '26px', fontWeight: '600', color: '#ffffff', margin: '10px 0 20px' }}>Visit Our {l.city} Showroom</h2>
               <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', lineHeight: '1.6', marginBottom: '10px' }}>📍 {l.address}</p>
-              <a href={`tel:${l.phone.replace(/\s/g, '')}`} style={{ display: 'block', color: 'var(--gold)', fontSize: '16px', fontWeight: '600', textDecoration: 'none', marginBottom: '24px' }}>📞 {l.phone}</a>
+              <TrackedLink href={`tel:${l.phone.replace(/\s/g, '')}`} event="phone_click" eventParams={{ location: `locality_page_${l.slug}` }} style={{ display: 'block', color: 'var(--gold)', fontSize: '16px', fontWeight: '600', textDecoration: 'none', marginBottom: '24px' }}>📞 {l.phone}</TrackedLink>
             </>
           ) : (
             <>
               <span style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)' }}>Nearest Showrooms</span>
               <h2 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: '26px', fontWeight: '600', color: '#ffffff', margin: '10px 0 20px' }}>We Deliver to {l.city}</h2>
               <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', lineHeight: '1.6', marginBottom: '4px' }}>📍 Garg Trading Company, Panchkula</p>
-              <a href="tel:+919814033573" style={{ display: 'block', color: 'var(--gold)', fontSize: '15px', fontWeight: '600', textDecoration: 'none', marginBottom: '16px' }}>📞 +91 98140 33573</a>
+              <TrackedLink href="tel:+919814033573" event="phone_click" eventParams={{ location: `locality_page_${l.slug}` }} style={{ display: 'block', color: 'var(--gold)', fontSize: '15px', fontWeight: '600', textDecoration: 'none', marginBottom: '16px' }}>📞 +91 98140 33573</TrackedLink>
               <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.6)', lineHeight: '1.6', marginBottom: '4px' }}>📍 Gujarat Tiles & Sanitary Depot, Chandigarh</p>
-              <a href="tel:+919216866671" style={{ display: 'block', color: 'var(--gold)', fontSize: '15px', fontWeight: '600', textDecoration: 'none', marginBottom: '24px' }}>📞 +91 92168 66671</a>
+              <TrackedLink href="tel:+919216866671" event="phone_click" eventParams={{ location: `locality_page_${l.slug}` }} style={{ display: 'block', color: 'var(--gold)', fontSize: '15px', fontWeight: '600', textDecoration: 'none', marginBottom: '24px' }}>📞 +91 92168 66671</TrackedLink>
             </>
           )}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#25D366', color: '#ffffff', padding: '14px 20px', borderRadius: '10px', fontWeight: '600', fontSize: '14px', textDecoration: 'none' }}>💬 WhatsApp Us</a>
+            <TrackedLink href={WHATSAPP_LINK} event="whatsapp_click" eventParams={{ location: `locality_page_${l.slug}` }} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#25D366', color: '#ffffff', padding: '14px 20px', borderRadius: '10px', fontWeight: '600', fontSize: '14px', textDecoration: 'none' }}>💬 WhatsApp Us</TrackedLink>
             <Link href="/contact" className="btn-gold" style={{ justifyContent: 'center' }}>Get a Quote</Link>
           </div>
         </div>

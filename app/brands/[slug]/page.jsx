@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { BrandLogo } from '@/components/Interactive';
 import { GoldLine } from '@/components/Presentational';
 import JsonLd from '@/components/JsonLd';
+import TrackedLink from '@/components/TrackedLink';
 import { BRANDS, getBrandBySlug } from '@/data/brands';
 import { getCategoryById } from '@/data/categories';
 import { WHATSAPP_LINK, STORES } from '@/lib/site';
@@ -90,8 +91,8 @@ export default async function BrandPage({ params }) {
             Call, WhatsApp, or visit our showroom for current stock and pricing on {brand.name}.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '26px' }}>
-            <a href={STORES.panchkula.phoneHref} style={{ display: 'flex', alignItems: 'center', gap: '12px', background: 'rgba(201,168,76,0.14)', color: 'var(--gold)', padding: '14px 20px', borderRadius: '10px', fontWeight: '600', fontSize: '14px', textDecoration: 'none' }}>📞 Call — {STORES.panchkula.phone}</a>
-            <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#25D366', color: '#ffffff', padding: '14px 20px', borderRadius: '10px', fontWeight: '600', fontSize: '14px', textDecoration: 'none' }}>💬 WhatsApp Us</a>
+            <TrackedLink href={STORES.panchkula.phoneHref} event="phone_click" eventParams={{ location: `brand_page_${brand.slug}` }} style={{ display: 'flex', alignItems: 'center', gap: '12px', background: 'rgba(201,168,76,0.14)', color: 'var(--gold)', padding: '14px 20px', borderRadius: '10px', fontWeight: '600', fontSize: '14px', textDecoration: 'none' }}>📞 Call — {STORES.panchkula.phone}</TrackedLink>
+            <TrackedLink href={WHATSAPP_LINK} event="whatsapp_click" eventParams={{ location: `brand_page_${brand.slug}` }} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#25D366', color: '#ffffff', padding: '14px 20px', borderRadius: '10px', fontWeight: '600', fontSize: '14px', textDecoration: 'none' }}>💬 WhatsApp Us</TrackedLink>
           </div>
           <GoldLine my={0} />
           <div style={{ paddingTop: '20px' }}>

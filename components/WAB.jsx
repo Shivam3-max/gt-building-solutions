@@ -1,4 +1,6 @@
+'use client';
 import { WHATSAPP_LINK } from '@/lib/site';
+import { trackEvent } from '@/lib/analytics';
 
 export default function WAB() {
   return (
@@ -6,6 +8,7 @@ export default function WAB() {
       href={`${WHATSAPP_LINK}?text=Hello%20GT%20Building%20Solutions!%20I%20need%20assistance.`}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackEvent('whatsapp_click', { location: 'floating_button' })}
       aria-label="Chat with us on WhatsApp"
       className="fixed bottom-7 right-7 z-[999] w-[58px] h-[58px] bg-[#25D366] rounded-full text-white flex items-center justify-center no-underline hover:scale-110 transition-transform"
       style={{ animation: 'pulse 2.2s ease-in-out infinite' }}

@@ -4,6 +4,7 @@ import {
 } from '@/components/Interactive';
 import FAQSection from '@/components/FAQSection';
 import JsonLd from '@/components/JsonLd';
+import TrackedLink from '@/components/TrackedLink';
 import { CATEGORIES } from '@/data/categories';
 import { HOME_FAQS } from '@/data/faqs';
 import { STORES, WHATSAPP_LINK } from '@/lib/site';
@@ -233,7 +234,7 @@ export default function HomePage() {
                 <div style={{ height: '1px', background: 'linear-gradient(90deg,transparent,var(--gold),transparent)' }} />
                 <div style={{ paddingTop: '24px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.5)', lineHeight: '1.55' }}>📍 {e.addr}</div>
-                  <a href={e.href} style={{ color: 'var(--gold)', fontSize: '15px', fontWeight: '600', textDecoration: 'none' }}>📞 {e.ph}</a>
+                  <TrackedLink href={e.href} event="phone_click" eventParams={{ location: `dual_brand_${e.code}` }} style={{ color: 'var(--gold)', fontSize: '15px', fontWeight: '600', textDecoration: 'none' }}>📞 {e.ph}</TrackedLink>
                 </div>
               </div>
             </Reveal>
@@ -256,12 +257,12 @@ export default function HomePage() {
               Visit our stores or call for a free consultation. We&rsquo;ll help you source everything your project needs.
             </p>
             <div style={{ display: 'flex', gap: '14px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <a href={STORES.panchkula.phoneHref} style={{ display: 'inline-flex', alignItems: 'center', gap: '9px', background: 'var(--navy)', color: 'var(--gold)', padding: '15px 38px', borderRadius: '6px', fontWeight: '600', fontSize: '12px', letterSpacing: '1.2px', textDecoration: 'none', textTransform: 'uppercase' }}>
+              <TrackedLink href={STORES.panchkula.phoneHref} event="phone_click" eventParams={{ location: 'home_cta_strip' }} style={{ display: 'inline-flex', alignItems: 'center', gap: '9px', background: 'var(--navy)', color: 'var(--gold)', padding: '15px 38px', borderRadius: '6px', fontWeight: '600', fontSize: '12px', letterSpacing: '1.2px', textDecoration: 'none', textTransform: 'uppercase' }}>
                 📞 Call Now
-              </a>
-              <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '9px', background: '#25D366', color: '#ffffff', padding: '15px 38px', borderRadius: '6px', fontWeight: '600', fontSize: '12px', letterSpacing: '1.2px', textDecoration: 'none', textTransform: 'uppercase' }}>
+              </TrackedLink>
+              <TrackedLink href={WHATSAPP_LINK} event="whatsapp_click" eventParams={{ location: 'home_cta_strip' }} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '9px', background: '#25D366', color: '#ffffff', padding: '15px 38px', borderRadius: '6px', fontWeight: '600', fontSize: '12px', letterSpacing: '1.2px', textDecoration: 'none', textTransform: 'uppercase' }}>
                 💬 WhatsApp Us
-              </a>
+              </TrackedLink>
             </div>
           </div>
         </Reveal>

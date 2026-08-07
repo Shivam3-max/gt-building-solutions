@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { CompanyLogo } from './Presentational';
+import TrackedLink from './TrackedLink';
 import { CATEGORIES } from '@/data/categories';
 import { LOCALITIES } from '@/data/localities';
 import { STORES, WHATSAPP_LINK, SOCIAL_LINKS } from '@/lib/site';
@@ -65,12 +66,12 @@ export default function Footer() {
           <div className="text-[13px] mb-5 text-white/40 leading-relaxed">
             <div className="text-gold font-semibold mb-1">{STORES.panchkula.city}</div>
             {STORES.panchkula.street},<br />{STORES.panchkula.city}, {STORES.panchkula.region} {STORES.panchkula.postalCode}<br />
-            <a href={STORES.panchkula.phoneHref} className="text-gold no-underline font-medium">{STORES.panchkula.phone}</a>
+            <TrackedLink href={STORES.panchkula.phoneHref} event="phone_click" eventParams={{ location: 'footer_panchkula' }} className="text-gold no-underline font-medium">{STORES.panchkula.phone}</TrackedLink>
           </div>
           <div className="text-[13px] text-white/40 leading-relaxed">
             <div className="text-gold font-semibold mb-1">{STORES.chandigarh.city}</div>
             {STORES.chandigarh.street},<br />{STORES.chandigarh.city}<br />
-            <a href={STORES.chandigarh.phoneHref} className="text-gold no-underline font-medium">{STORES.chandigarh.phone}</a>
+            <TrackedLink href={STORES.chandigarh.phoneHref} event="phone_click" eventParams={{ location: 'footer_chandigarh' }} className="text-gold no-underline font-medium">{STORES.chandigarh.phone}</TrackedLink>
           </div>
         </div>
       </div>

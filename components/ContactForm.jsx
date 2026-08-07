@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { CATEGORIES } from '@/data/categories';
 import { WHATSAPP_NUMBER } from '@/lib/site';
+import { trackEvent } from '@/lib/analytics';
 
 // Free form-to-email delivery via Web3Forms. Get a free access key at
 // https://web3forms.com and paste it below — no backend/server required.
@@ -30,6 +31,7 @@ export default function ContactForm() {
         }),
       }).catch(() => {});
     }
+    trackEvent('contact_form_submit', { category: form.category });
     const t = `Hello GT Building Solutions!%0A%0AName: ${form.name}%0APhone: ${form.phone}%0AEmail: ${form.email}%0ACategory: ${form.category}%0A%0A${form.message}`;
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${t}`, '_blank');
     setSent(true);

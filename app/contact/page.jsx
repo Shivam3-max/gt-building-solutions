@@ -1,6 +1,7 @@
 import { PageHero } from '@/components/Presentational';
 import { SiteImage } from '@/components/Interactive';
 import ContactForm from '@/components/ContactForm';
+import TrackedLink from '@/components/TrackedLink';
 import { STORES, WHATSAPP_LINK } from '@/lib/site';
 
 export const metadata = {
@@ -25,7 +26,7 @@ export default function ContactPage() {
               <div style={{ fontSize: '10px', fontWeight: '600', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '6px' }}>{l.tag}</div>
               <h2 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: '22px', fontWeight: '600', color: 'var(--navy)', marginBottom: '12px' }}>{l.name}</h2>
               <p style={{ fontSize: '13px', color: 'var(--txt2)', lineHeight: '1.6', marginBottom: '14px', whiteSpace: 'pre-line' }}>📍 {l.addr}</p>
-              <a href={l.href} style={{ fontSize: '15px', fontWeight: '600', color: 'var(--navy)', textDecoration: 'none', display: 'block', marginBottom: '18px' }}>📞 {l.ph}</a>
+              <TrackedLink href={l.href} event="phone_click" eventParams={{ location: `contact_page_${l.tag}` }} style={{ fontSize: '15px', fontWeight: '600', color: 'var(--navy)', textDecoration: 'none', display: 'block', marginBottom: '18px' }}>📞 {l.ph}</TrackedLink>
               <div style={{ borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)', height: '220px' }}>
                 <iframe
                   title={`Map of ${l.name}`}
@@ -42,8 +43,8 @@ export default function ContactPage() {
           <div style={{ background: 'var(--navy)', borderRadius: '16px', padding: '34px 32px' }}>
             <h2 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: '22px', fontWeight: '600', color: '#ffffff', marginBottom: '20px' }}>Quick Connect</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#25D366', color: '#ffffff', padding: '14px 20px', borderRadius: '10px', fontWeight: '600', fontSize: '14px', textDecoration: 'none' }}>💬 WhatsApp — {STORES.panchkula.phone}</a>
-              <a href={STORES.chandigarh.phoneHref} style={{ display: 'flex', alignItems: 'center', gap: '12px', background: 'rgba(201,168,76,0.14)', color: 'var(--gold)', padding: '14px 20px', borderRadius: '10px', fontWeight: '600', fontSize: '14px', textDecoration: 'none' }}>📞 Call — {STORES.chandigarh.phone}</a>
+              <TrackedLink href={WHATSAPP_LINK} event="whatsapp_click" eventParams={{ location: 'contact_page_quick_connect' }} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#25D366', color: '#ffffff', padding: '14px 20px', borderRadius: '10px', fontWeight: '600', fontSize: '14px', textDecoration: 'none' }}>💬 WhatsApp — {STORES.panchkula.phone}</TrackedLink>
+              <TrackedLink href={STORES.chandigarh.phoneHref} event="phone_click" eventParams={{ location: 'contact_page_quick_connect' }} style={{ display: 'flex', alignItems: 'center', gap: '12px', background: 'rgba(201,168,76,0.14)', color: 'var(--gold)', padding: '14px 20px', borderRadius: '10px', fontWeight: '600', fontSize: '14px', textDecoration: 'none' }}>📞 Call — {STORES.chandigarh.phone}</TrackedLink>
             </div>
           </div>
           <div style={{ marginTop: '16px' }}>
