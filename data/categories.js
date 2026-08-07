@@ -1,0 +1,191 @@
+// Category data for GT Building Solutions. `id` is the internal key used to
+// cross-reference brands (see data/brands.js); `slug` is the public URL segment.
+export const CATEGORIES = [
+  {
+    id: 'hardware',
+    slug: 'hardware',
+    label: 'Kitchen, Furniture & Door Hardware',
+    icon: '⚙',
+    desc: 'World-class hardware for kitchens, furniture, and doors.',
+    longDesc:
+      "GT Building Solutions stocks a complete range of kitchen, furniture, and door hardware for homes, offices, and commercial fit-outs across Panchkula and Chandigarh. Whether you're fitting out a modular kitchen, building custom furniture, or specifying doors for a new project, our hardware range covers the full spectrum of fittings — from precision-engineered drawer slides and soft-close hinge systems to elegant cabinet handles, lift-up mechanisms, and security-grade door locks. We carry hardware from Hettich, Godrej, Tunes, Eboo, Blaupunkt, and Sleek Kitchens — brands trusted by carpenters, modular kitchen fabricators, and interior designers for consistent quality and long-term durability. Soft-close and push-to-open mechanisms have become the default expectation in modern kitchens and wardrobes, and we keep the fast-moving sizes and finishes in stock so your carpenter or fabricator isn't waiting on materials. Beyond kitchens, our hardware counter also serves furniture makers looking for pull-out baskets, wardrobe organizers, and flap-lift systems, plus builders and facility managers who need reliable door hardware and locking systems for new construction or renovation. Buying hardware from GT means genuine products (no grey-market substitutes), knowledgeable staff who can help you match fittings to your carpenter's design, and the convenience of picking up hardware alongside the tiles, paints, and adhesives for the same project — all from one Panchkula–Chandigarh supplier.",
+    brands: ['Hettich', 'Godrej', 'Tunes', 'Eboo', 'Blaupunkt', 'Sleek Kitchens'],
+    products: [
+      'Drawer Slides & Runners',
+      'Hinges & Soft-Close Mechanisms',
+      'Cabinet Handles & Knobs',
+      'Lift Systems & Flap Fittings',
+      'Door Hardware & Security Locks',
+      'Pull-Out Baskets & Organizers',
+      'Modular Kitchen Fittings',
+    ],
+    color: '#0D1B3E',
+    heroImage: 'kitchen-fittings.jpg',
+    galleryImages: [
+      { src: 'kitchen-fittings.jpg', label: 'Kitchen Hardware Display' },
+      { src: 'hettich.jpg', label: 'Hettich Systems' },
+      { src: 'door.jpg', label: 'Door Hardware' },
+    ],
+  },
+  {
+    id: 'adhesives',
+    slug: 'adhesives',
+    label: 'Adhesives & Surface Solutions',
+    icon: '◈',
+    desc: 'Industrial-strength adhesives, waterproofing, tile grouts and surface treatments.',
+    longDesc:
+      "Adhesives and surface solutions are the invisible backbone of every construction and renovation project, and GT Building Solutions carries the brands that contractors and homeowners in Panchkula and Chandigarh already trust: Fevicol, Gresbond, Pidilite, Dr. Fixit, Roff, and 3M. This category covers everything from carpentry-grade wood adhesives and laminate bonding solutions to tile fixing adhesives, grouts, and construction chemicals used in structural and finishing work. A large part of what we stock is waterproofing — membranes, sealants, and coatings from Dr. Fixit that protect terraces, bathrooms, basements, and external walls from water damage, one of the most common and expensive problems in North Indian construction. We also stock wall putty and primers that prepare surfaces before painting, floor-levelling compounds for uneven substrates, and silicone sealants for gaps around windows, sanitaryware, and kitchen counters. Getting the adhesive or waterproofing product wrong — using the wrong grade of tile adhesive on vitrified tiles, for instance, or skipping waterproofing membrane before tiling a wet area — leads to expensive rework months or years later, so our team helps customers match the right product to the surface and application rather than just selling whatever is in stock. Whether you're a contractor sourcing tile adhesive by the pallet or a homeowner fixing a leaking bathroom, this is a category where genuine, correctly-specified product matters more than price alone.",
+    brands: ['Fevicol', 'Gresbond', 'Pidilite', 'Dr. Fixit', 'Roff', '3M'],
+    products: [
+      'Tile Adhesives & Grouts',
+      'Wood & Laminate Adhesives',
+      'Waterproofing Membranes',
+      'Sealants & Silicones',
+      'Wall Putty & Primers',
+      'Construction Chemicals',
+      'Floor Levelling Compounds',
+    ],
+    color: '#1B3A5C',
+    heroImage: 'fevicol.jpg',
+    galleryImages: [
+      { src: 'fevicol.jpg', label: 'Fevicol Range' },
+      { src: 'adhesives-showroom-generated.png', label: 'Gresbond & Tile Adhesives' },
+      { src: 'dr-fixit.jpg', label: 'Dr. Fixit Solutions' },
+    ],
+  },
+  {
+    id: 'panels',
+    slug: 'panels',
+    label: 'Panels & Gypsum Boards',
+    icon: '▣',
+    desc: 'Premium ceiling systems, partition panels, and gypsum solutions.',
+    longDesc:
+      "Gypsum boards and panel systems have become central to modern interiors — false ceilings, partition walls, and acoustic treatments are now standard in homes, offices, and retail fit-outs across the Panchkula and Chandigarh tri-city area. GT Building Solutions stocks gypsum boards, metal framing, and plastering compounds from Gyproc (Saint-Gobain), JB Plastering, and Chetak, giving contractors and interior fit-out teams everything needed to execute a ceiling or partition job without chasing multiple suppliers. Our panels range includes standard and moisture-resistant gypsum boards, plasterboards, and fire-rated panels for commercial applications, along with the metal framing channels and drywall screws needed to install them correctly. We also carry acoustic ceiling tiles for offices and commercial spaces where sound control matters, cornice and coving profiles for a finished look at wall-ceiling junctions, and thermal insulation panels for spaces that need better temperature control. For contractors running false-ceiling or partition work, having framing, boards, compounds, and fasteners available from one counter cuts down on job-site delays waiting for a missing item. Homeowners renovating a living room or bedroom to add a false ceiling, or shopkeepers fitting out a new store, will find our team can advise on board thickness, framing spacing, and finish options based on the specific application — residential, commercial, or wet-area — rather than a one-size-fits-all recommendation.",
+    brands: ['Gyproc', 'JB Plastering', 'Chetak'],
+    products: [
+      'Gypsum Boards & Plasterboards',
+      'Metal Framing Systems',
+      'Acoustic Ceiling Tiles',
+      'Partition Wall Systems',
+      'Cornice & Coving',
+      'Drywall Screws & Compounds',
+      'Thermal Insulation Panels',
+    ],
+    color: '#2D5080',
+    heroImage: 'generated-panels-showroom.png',
+    galleryImages: [
+      { src: 'generated-panels-showroom.png', label: 'Panels Showroom' },
+      { src: 'gyproc.jpg', label: 'Gyproc Boards' },
+      { src: 'panels-wall-system-generated.png', label: 'Partition Wall System' },
+    ],
+  },
+  {
+    id: 'tiles',
+    slug: 'tiles',
+    label: 'Tiles & Sanitary',
+    icon: '◼',
+    desc: "Designer tiles and complete bathroom solutions from India's most trusted brands.",
+    longDesc:
+      "Tiles and sanitaryware are usually the single biggest visible material decision in any home or commercial build, and GT Building Solutions — through our Gujarat Tiles & Sanitary Depot showroom in Chandigarh — stocks a wide range from Kajaria, Hindware, and Kerovit. Kajaria is India's largest tile manufacturer and our floor and wall tile range spans vitrified tiles for living areas, ceramic wall tiles for kitchens and bathrooms, anti-skid and outdoor tiles for terraces and driveways, and designer collections for feature walls. On the sanitary side, Hindware and Kerovit give us a complete bathroom offering — WCs, wash basins, shower systems, cubicles, faucets, and bathroom accessories — spanning everyday functional ranges through to premium designer suites. Because tiling and bathroom fitting are difficult and costly to redo once installed, we spend time with customers on tile size and finish selection (large-format vitrified tiles read very differently from smaller ceramic tiles in a given room), slip-resistance ratings for wet areas and outdoor spaces, and matching sanitaryware finishes across a full bathroom suite. Architects and interior designers working on Panchkula, Chandigarh, Zirakpur, and Mohali projects use our showroom to see tile and sanitaryware samples in person before finalizing specifications, and we support both single-bathroom homeowner purchases and full-project bulk orders for builders with consistent stock and project pricing.",
+    brands: ['Kajaria', 'Hindware', 'Kerovit'],
+    products: [
+      'Vitrified Floor Tiles',
+      'Ceramic Wall Tiles',
+      'Designer Bathroom Suites',
+      'WCs & Washbasins',
+      'Shower Systems & Cubicles',
+      'Bathroom Accessories',
+      'Anti-skid & Outdoor Tiles',
+    ],
+    color: '#8B6520',
+    heroImage: 'client/gt-kajaria-facade.jpg',
+    galleryImages: [
+      { src: 'client/gt-kajaria-facade.jpg', label: 'Kajaria Collection' },
+      { src: 'bathroom.jpg', label: 'Bathroom Display' },
+      { src: 'client/gujarat-tiles-interior-generated.png', label: 'Gujarat Tiles Interior Display' },
+    ],
+  },
+  {
+    id: 'paints',
+    slug: 'paints',
+    label: 'Paints & Coatings',
+    icon: '🎨',
+    desc: 'Premium interior and exterior paints, wood finishes and protective coatings.',
+    longDesc:
+      "Paint is the finishing touch that defines how a space actually looks and feels, and GT Building Solutions stocks the full range from Asian Paints, Birla Opus, Nippon Paint, Birla White, and ICA — covering interior emulsions, exterior weatherproof coatings, wood finishes, and specialty textures. Interior paints today go well beyond flat colour: washable and stain-resistant emulsions, low-odour and low-VOC formulations for occupied homes, and texture or designer finishes for feature walls are all part of what customers ask for, and we keep popular shades and finishes from each brand in stock so painters aren't waiting on special orders mid-job. Exterior coatings need to survive North Indian summers, monsoon humidity, and winter cold without cracking, peeling, or fading, so we stock weatherproof exterior emulsions and primers built for that climate, along with Birla White's wall putty and white cement products that are the standard surface-prep step before painting almost any wall in this region. We also carry wood stains, enamels, and floor or deck coatings for furniture, doors, and grillwork, plus industrial and metal coatings for gates, railings, and structural steel. Whether you're a painting contractor buying in bulk for a project, an architect specifying a colour scheme, or a homeowner repainting a single room, our team can help you calculate quantity (see our free paint calculator), match primer to top-coat, and choose between brands based on finish, budget, and durability.",
+    brands: ['Asian Paints', 'Birla Opus', 'Nippon Paint', 'Birla White', 'ICA'],
+    products: [
+      'Interior Emulsion Paints',
+      'Exterior Weatherproof Coatings',
+      'Wood Stains & Finishes',
+      'Wall Putty & Primer',
+      'Floor & Deck Coatings',
+      'Texture & Designer Finishes',
+      'Industrial & Metal Coatings',
+    ],
+    color: '#6A4010',
+    heroImage: 'generated-paints-showroom.png',
+    galleryImages: [
+      { src: 'generated-paints-showroom.png', label: 'Paints Showroom' },
+      { src: 'asian-paints.jpg', label: 'Asian Paints' },
+      { src: 'birla-opus.jpg', label: 'Birla Opus' },
+    ],
+  },
+  {
+    id: 'tools',
+    slug: 'power-tools',
+    label: 'Power Tools & Equipment',
+    icon: '🔧',
+    desc: 'Professional-grade power tools and construction equipment.',
+    longDesc:
+      "Every construction site and serious workshop runs on power tools, and GT Building Solutions stocks professional-grade equipment from DeWalt, CUMI, and Havells to keep contractor crews and DIY homeowners equipped. Our range covers drills and impact drivers for everyday fixing work, angle grinders and polishers for cutting and surface finishing, circular and jig saws for wood and board work, and sanders and finishers for a clean final surface. For site-level and civil work, we also stock concrete mixers and vibrators, along with measuring and levelling tools — spirit levels, tape measures, and laser levels — that are essential for accurate tile, panel, and structural work. CUMI's abrasives and grinding wheels are a frequent companion purchase alongside grinders for anyone doing tile-cutting, metal fabrication, or surface grinding, and Havells rounds out the category with reliable electrical and power accessories. Because power tools are a repeat-use investment rather than a one-time consumable, we focus on genuine stock with proper warranty backing rather than unbranded alternatives, and our staff can advise contractors on which tool class (professional vs. semi-professional) actually fits their daily usage pattern. Bulk buyers — construction companies equipping multiple crews — get project pricing and can combine power tool orders with tiles, adhesives, and other materials from the same site visit.",
+    brands: ['DeWalt', 'CUMI', 'Havells'],
+    products: [
+      'Drills & Impact Drivers',
+      'Angle Grinders & Polishers',
+      'Circular & Jig Saws',
+      'Sanders & Finishers',
+      'Concrete Mixers & Vibrators',
+      'Measuring & Levelling Tools',
+      'Electrical & Power Accessories',
+    ],
+    color: '#4A2010',
+    heroImage: 'generated-tools-showroom.png',
+    galleryImages: [
+      { src: 'generated-tools-showroom.png', label: 'Tools Showroom' },
+      { src: 'dewalt.jpg', label: 'DeWalt Tools' },
+      { src: 'cumi.jpg', label: 'CUMI Range' },
+    ],
+  },
+  {
+    id: 'pipes',
+    slug: 'pipes-plumbing',
+    label: 'Pipes & Plumbing',
+    icon: '🔩',
+    desc: 'Complete piping solutions — CPVC, uPVC, and specialty pipes.',
+    longDesc:
+      "Plumbing is infrastructure work — mistakes are expensive to fix once walls and floors are closed up — and GT Building Solutions stocks a complete pipes and plumbing range from Prince Piping, Tata Agrico, and Birla HiL to get it right the first time. Our range covers CPVC pipes and fittings for hot and cold water supply lines, uPVC pipes for drainage and waste systems, and specialty pipes for agricultural and irrigation use through Tata Agrico. Alongside pipes themselves, we stock the fittings and connectors, ball valves and gate valves, and water storage tanks that complete a plumbing system, plus the plumbing tools and accessories installers need on site. CPVC has become the standard choice for concealed water lines in this region because of its resistance to scaling and corrosion compared to older GI piping, and we keep the common diameters and fitting types in stock so plumbers aren't making multiple trips mid-installation. For drainage, correct uPVC pipe grade and slope matter for long-term performance, and our team can guide first-time renovators through what's needed for a bathroom or kitchen re-plumb versus a full-building system. Builders and plumbing contractors working on new construction in Panchkula, Chandigarh, Zirakpur, or Mohali can order in bulk with consistent stock availability, while homeowners handling a single bathroom leak or upgrade can buy exactly the fittings they need without a minimum order.",
+    brands: ['Prince Piping', 'Tata Agrico', 'Birla HiL'],
+    products: [
+      'CPVC Hot & Cold Water Pipes',
+      'uPVC Drainage Pipes',
+      'Agricultural & Irrigation Pipes',
+      'Pipe Fittings & Connectors',
+      'Ball Valves & Gate Valves',
+      'Water Storage Tanks',
+      'Plumbing Tools & Accessories',
+    ],
+    color: '#0E3A22',
+    heroImage: 'generated-pipes-showroom.png',
+    galleryImages: [
+      { src: 'generated-pipes-showroom.png', label: 'Pipes Showroom' },
+      { src: 'prince-pipes-display-generated.png', label: 'Prince CPVC & uPVC Pipe Range' },
+      { src: 'fittings.jpg', label: 'Fittings & Valves' },
+    ],
+  },
+];
+
+export const catColorMap = Object.fromEntries(CATEGORIES.map((c) => [c.id, c.color]));
+
+export const getCategoryBySlug = (slug) => CATEGORIES.find((c) => c.slug === slug);
+export const getCategoryById = (id) => CATEGORIES.find((c) => c.id === id);

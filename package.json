@@ -1,23 +1,25 @@
 {
   "name": "gt-building-solutions",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "GT Building Solutions (Garg Trading Company) marketing website",
+  "private": true,
   "scripts": {
-    "build": "babel app.jsx --out-file app.js --config-file ./.babel-classic.json --no-babelrc",
-    "start": "serve -s . -p 3000 -l",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "lint": "next lint"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "devDependencies": {
-    "@babel/cli": "^8.0.1",
-    "@babel/core": "^8.0.1",
-    "@babel/preset-react": "^8.0.1"
+    "@tailwindcss/postcss": "^4.3.3",
+    "autoprefixer": "^10.5.4",
+    "postcss": "^8.5.26",
+    "tailwindcss": "^4.3.3"
   },
   "dependencies": {
-    "serve": "^6.5.8"
+    "next": "^16.3.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   }
 }
