@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { label: 'Locations', href: '/locations' },
   { label: 'Gallery', href: '/gallery' },
   { label: 'Calculators', href: '/calculators' },
+  { label: 'Blog', href: '/blog' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ];

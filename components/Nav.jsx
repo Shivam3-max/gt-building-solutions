@@ -13,6 +13,7 @@ const LINKS = [
   { label: 'Locations', href: '/locations', dropdown: LOCALITIES.map((l) => ({ label: l.city, href: `/locations/${l.slug}` })) },
   { label: 'Gallery', href: '/gallery' },
   { label: 'Calculators', href: '/calculators' },
+  { label: 'Blog', href: '/blog' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ];

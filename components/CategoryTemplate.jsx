@@ -4,11 +4,13 @@ import { GoldLine } from '@/components/Presentational';
 import FAQSection from '@/components/FAQSection';
 import JsonLd from '@/components/JsonLd';
 import { getBrandsByCategory } from '@/data/brands';
+import { getPostsByCategory } from '@/lib/blog';
 import { WHATSAPP_LINK } from '@/lib/site';
 import { breadcrumbSchema, faqPageSchema, graph } from '@/lib/schema';
 
-export default function CategoryTemplate({ cat }) {
+export default async function CategoryTemplate({ cat }) {
   const brands = getBrandsByCategory(cat.id);
+  const posts = (await getPostsByCategory(cat.slug)).slice(0, 3);
   const schema = graph(
     breadcrumbSchema([
       { name: 'Home', path: '/' },
@@ -93,6 +95,25 @@ export default function CategoryTemplate({ cat }) {
           ))}
         </div>
       </div>
+
+      {posts.length > 0 && (
+        <div style={{ padding: '0 var(--px) 80px' }}>
+          <span className="section-tag">From the Blog</span>
+          <h2 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: '32px', fontWeight: '600', color: 'var(--navy)', marginBottom: '24px' }}>Guides for {cat.label}</h2>
+          <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '18px' }}>
+            {posts.map((p) => (
+              <Link key={p.slug} href={`/blog/${p.slug}`} style={{ textDecoration: 'none' }}>
+                <div className="card-hover" style={{ borderRadius: '16px', overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--white)' }}>
+                  <SiteImage src={p.featuredImage} alt={p.title} h={160} radius={0} />
+                  <div style={{ padding: '18px 20px' }}>
+                    <h3 style={{ fontFamily: 'Cormorant Garamond,serif', fontSize: '17px', fontWeight: '600', color: 'var(--navy)', lineHeight: '1.3' }}>{p.title}</h3>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
 
       <FAQSection faqs={cat.faqs} title={`${cat.label} — Frequently Asked Questions`} />
 

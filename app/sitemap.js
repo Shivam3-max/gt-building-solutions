@@ -2,6 +2,7 @@ import { SITE_URL } from '@/lib/site';
 import { CATEGORIES } from '@/data/categories';
 import { BRANDS } from '@/data/brands';
 import { LOCALITIES } from '@/data/localities';
+import { getAllPosts } from '@/lib/blog';
 
 export const dynamic = 'force-static';
 
@@ -14,10 +15,12 @@ const STATIC_ROUTES = [
   { path: 'locations', priority: 0.8, changeFrequency: 'monthly' },
   { path: 'gallery', priority: 0.5, changeFrequency: 'monthly' },
   { path: 'calculators', priority: 0.6, changeFrequency: 'monthly' },
+  { path: 'blog', priority: 0.8, changeFrequency: 'weekly' },
 ];
 
-export default function sitemap() {
+export default async function sitemap() {
   const now = new Date();
+  const posts = await getAllPosts();
 
   const staticEntries = STATIC_ROUTES.map(({ path, priority, changeFrequency }) => ({
     url: `${SITE_URL}/${path}`.replace(/\/$/, '') + '/',
@@ -47,5 +50,12 @@ export default function sitemap() {
     priority: 0.8,
   }));
 
-  return [...staticEntries, ...categoryEntries, ...brandEntries, ...localityEntries];
+  const postEntries = posts.map((post) => ({
+    url: `${SITE_URL}/blog/${post.slug}/`,
+    lastModified: new Date(post.updatedDate),
+    changeFrequency: 'monthly',
+    priority: 0.6,
+  }));
+
+  return [...staticEntries, ...categoryEntries, ...brandEntries, ...localityEntries, ...postEntries];
 }
