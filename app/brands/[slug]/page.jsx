@@ -2,9 +2,11 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { BrandLogo } from '@/components/Interactive';
 import { GoldLine } from '@/components/Presentational';
+import JsonLd from '@/components/JsonLd';
 import { BRANDS, getBrandBySlug } from '@/data/brands';
 import { getCategoryById } from '@/data/categories';
 import { WHATSAPP_LINK, STORES } from '@/lib/site';
+import { breadcrumbSchema, brandSchema, graph } from '@/lib/schema';
 
 export function generateStaticParams() {
   return BRANDS.map((b) => ({ slug: b.slug }));
@@ -27,9 +29,18 @@ export default async function BrandPage({ params }) {
   const brand = getBrandBySlug(slug);
   if (!brand) notFound();
   const cat = getCategoryById(brand.cat);
+  const schema = graph(
+    breadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: cat.label, path: `/${cat.slug}` },
+      { name: brand.name, path: `/brands/${brand.slug}` },
+    ]),
+    brandSchema(brand),
+  );
 
   return (
     <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
+      <JsonLd data={schema} />
       <div style={{ background: 'linear-gradient(158deg,#080F22 0%,#0D1B3E 60%,#162347 100%)', padding: '100px var(--px) 70px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px)', backgroundSize: '50px 50px', pointerEvents: 'none' }} />
         <nav aria-label="Breadcrumb" style={{ position: 'relative', zIndex: 2, marginBottom: '28px', fontSize: '12px', color: 'rgba(255,255,255,0.55)' }}>

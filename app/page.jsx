@@ -2,12 +2,23 @@ import Link from 'next/link';
 import {
   Reveal, SiteImage, HeroTicker, HeroBackgroundVideo, ScrollIndicator, BrandMarquee, CatCard, WhyCard, WhoWeServeCard,
 } from '@/components/Interactive';
+import FAQSection from '@/components/FAQSection';
+import JsonLd from '@/components/JsonLd';
 import { CATEGORIES } from '@/data/categories';
+import { HOME_FAQS } from '@/data/faqs';
 import { STORES, WHATSAPP_LINK } from '@/lib/site';
+import { organizationNode, storeNode, faqPageSchema, graph } from '@/lib/schema';
 
 export const metadata = {
   alternates: { canonical: '/' },
 };
+
+const homeSchema = graph(
+  organizationNode(),
+  storeNode('panchkula'),
+  storeNode('chandigarh'),
+  faqPageSchema(HOME_FAQS),
+);
 
 const HOME_GALLERY_IMAGES = [
   { src: 'client/gt-storefront-wide-1.jpg', label: 'Showroom Exterior' },
@@ -35,6 +46,7 @@ const WHO_WE_SERVE = [
 export default function HomePage() {
   return (
     <div>
+      <JsonLd data={homeSchema} />
       {/* VIDEO HERO */}
       <section style={{
         minHeight: '100svh', height: '100svh', background: '#060C1C',
@@ -228,6 +240,9 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* FAQ */}
+      <FAQSection faqs={HOME_FAQS} title="Frequently Asked Questions" />
 
       {/* CTA STRIP */}
       <section className="pad-section" style={{ background: 'linear-gradient(135deg,var(--gold) 0%,var(--gold3) 55%,var(--gold) 100%)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>

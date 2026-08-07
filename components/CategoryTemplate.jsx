@@ -1,13 +1,25 @@
 import Link from 'next/link';
 import { Reveal, SiteImage, BrandLogo } from '@/components/Interactive';
 import { GoldLine } from '@/components/Presentational';
+import FAQSection from '@/components/FAQSection';
+import JsonLd from '@/components/JsonLd';
 import { getBrandsByCategory } from '@/data/brands';
 import { WHATSAPP_LINK } from '@/lib/site';
+import { breadcrumbSchema, faqPageSchema, graph } from '@/lib/schema';
 
 export default function CategoryTemplate({ cat }) {
   const brands = getBrandsByCategory(cat.id);
+  const schema = graph(
+    breadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Products', path: '/products' },
+      { name: cat.label, path: `/${cat.slug}` },
+    ]),
+    ...(cat.faqs && cat.faqs.length ? [faqPageSchema(cat.faqs)] : []),
+  );
   return (
     <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
+      <JsonLd data={schema} />
       <div style={{ background: `linear-gradient(158deg,${cat.color}ee 0%,${cat.color} 60%,${cat.color}dd 100%)`, padding: '100px var(--px) 80px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px)', backgroundSize: '50px 50px', pointerEvents: 'none' }} />
         <nav aria-label="Breadcrumb" style={{ position: 'relative', zIndex: 2, marginBottom: '24px', fontSize: '12px', color: 'rgba(255,255,255,0.55)' }}>
@@ -81,6 +93,8 @@ export default function CategoryTemplate({ cat }) {
           ))}
         </div>
       </div>
+
+      <FAQSection faqs={cat.faqs} title={`${cat.label} — Frequently Asked Questions`} />
 
       <div style={{ padding: '0 var(--px) 80px' }}>
         <div style={{ background: 'linear-gradient(135deg,var(--navy) 0%,var(--navy3) 100%)', borderRadius: '20px', padding: '52px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '24px' }}>

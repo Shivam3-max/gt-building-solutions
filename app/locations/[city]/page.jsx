@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { PageHero } from '@/components/Presentational';
+import JsonLd from '@/components/JsonLd';
 import { LOCALITIES, getLocalityBySlug } from '@/data/localities';
 import { WHATSAPP_LINK } from '@/lib/site';
+import { breadcrumbSchema, storeNode, serviceAreaNode, graph } from '@/lib/schema';
 
 export function generateStaticParams() {
   return LOCALITIES.map((l) => ({ city: l.slug }));
@@ -26,9 +28,18 @@ export default async function LocalityPage({ params }) {
   const l = getLocalityBySlug(city);
   if (!l) notFound();
   const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(l.mapQuery || l.city + ', India')}&output=embed`;
+  const schema = graph(
+    breadcrumbSchema([
+      { name: 'Home', path: '/' },
+      { name: 'Locations', path: '/locations' },
+      { name: l.city, path: `/locations/${l.slug}` },
+    ]),
+    l.isStore ? storeNode(l.slug) : serviceAreaNode(l.city, l.slug),
+  );
 
   return (
     <div style={{ background: 'var(--cream)', minHeight: '100vh' }}>
+      <JsonLd data={schema} />
       <PageHero tag={l.isStore ? 'Our Showroom' : 'Service Area'} title={`Building Materials\nin ${l.city}.`} sub={l.intro} />
 
       <div style={{ padding: '56px var(--px) 0' }}>

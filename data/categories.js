@@ -26,6 +26,11 @@ export const CATEGORIES = [
       { src: 'hettich.jpg', label: 'Hettich Systems' },
       { src: 'door.jpg', label: 'Door Hardware' },
     ],
+    faqs: [
+      { q: 'Does GT Building Solutions stock Hettich hardware?', a: 'Yes, Hettich is one of our core hardware brands, alongside Godrej, Tunes, Eboo, Blaupunkt, and Sleek Kitchens, available at our Panchkula showroom.' },
+      { q: 'Can I buy soft-close hinges and drawer slides for a modular kitchen?', a: 'Yes, we stock soft-close hinges, drawer slides and lift systems for modular kitchens and wardrobes from Hettich and our other hardware brands.' },
+      { q: 'Do you sell door locks and security hardware?', a: 'Yes, we stock door hardware and security locks, including Godrej locking systems, alongside our furniture and kitchen hardware range.' },
+    ],
   },
   {
     id: 'adhesives',
@@ -51,6 +56,11 @@ export const CATEGORIES = [
       { src: 'fevicol.jpg', label: 'Fevicol Range' },
       { src: 'adhesives-showroom-generated.png', label: 'Gresbond & Tile Adhesives' },
       { src: 'dr-fixit.jpg', label: 'Dr. Fixit Solutions' },
+    ],
+    faqs: [
+      { q: 'Does GT Building Solutions stock Dr. Fixit waterproofing products?', a: 'Yes, we stock the full Dr. Fixit range of waterproofing membranes, coatings, and sealants for terraces, bathrooms, basements, and external walls.' },
+      { q: 'What tile adhesive brands do you carry?', a: 'We stock Roff and Gresbond tile adhesives and grouts, suited to ceramic, vitrified, and natural stone tiling.' },
+      { q: 'Do you sell Fevicol wood adhesives?', a: 'Yes, Fevicol is one of our core adhesive brands for carpentry, laminate bonding, and general woodworking.' },
     ],
   },
   {
@@ -78,6 +88,11 @@ export const CATEGORIES = [
       { src: 'gyproc.jpg', label: 'Gyproc Boards' },
       { src: 'panels-wall-system-generated.png', label: 'Partition Wall System' },
     ],
+    faqs: [
+      { q: 'Does GT Building Solutions stock Gyproc false ceiling systems?', a: 'Yes, Gyproc (Saint-Gobain) gypsum boards, metal framing, and ceiling systems are the core of our panels category at our Panchkula showroom.' },
+      { q: 'Do you carry moisture-resistant gypsum boards?', a: 'Yes, we stock both standard and moisture-resistant gypsum board variants suited to residential and commercial applications.' },
+      { q: 'Can I get materials for a partition wall or false ceiling project in bulk?', a: 'Yes, we support bulk and project orders for gypsum boards, framing, and plastering compounds for contractors and fit-out teams.' },
+    ],
   },
   {
     id: 'tiles',
@@ -103,6 +118,12 @@ export const CATEGORIES = [
       { src: 'client/gt-kajaria-facade.jpg', label: 'Kajaria Collection' },
       { src: 'bathroom.jpg', label: 'Bathroom Display' },
       { src: 'client/gujarat-tiles-interior-generated.png', label: 'Gujarat Tiles Interior Display' },
+    ],
+    faqs: [
+      { q: 'Does GT Building Solutions stock Kajaria tiles in Panchkula and Chandigarh?', a: "Yes, Kajaria is our flagship tile brand, on display at our Gujarat Tiles & Sanitary Depot showroom in Chandigarh, and available to customers across Panchkula, Chandigarh, Zirakpur, and Mohali." },
+      { q: 'What tile brands does GT carry?', a: 'We stock Kajaria vitrified and ceramic tiles, plus Hindware and Kerovit sanitaryware, at our Chandigarh tiles showroom.' },
+      { q: 'Do you sell bathroom sanitaryware as well as tiles?', a: 'Yes, alongside tiles we stock complete bathroom suites — WCs, wash basins, shower systems, and accessories — from Hindware and Kerovit.' },
+      { q: 'Do you have anti-skid tiles for outdoor and terrace areas?', a: 'Yes, our Kajaria range includes anti-skid and outdoor tiles suited to terraces, driveways, and other outdoor areas.' },
     ],
   },
   {
@@ -130,6 +151,11 @@ export const CATEGORIES = [
       { src: 'asian-paints.jpg', label: 'Asian Paints' },
       { src: 'birla-opus.jpg', label: 'Birla Opus' },
     ],
+    faqs: [
+      { q: 'Does GT Building Solutions stock Asian Paints and Birla Opus?', a: 'Yes, we stock both Asian Paints and Birla Opus, alongside Nippon Paint, Birla White, and ICA, at our Panchkula showroom.' },
+      { q: 'Do you sell exterior weatherproof paints for North Indian weather?', a: 'Yes, we stock exterior weatherproof coatings from Asian Paints, Birla Opus, and Nippon Paint built to handle North Indian summers, monsoons, and winters.' },
+      { q: 'Do you also stock wall putty and primers?', a: "Yes, we stock Birla White wall putty and primers, the standard surface-prep step before painting, alongside our paint brands." },
+    ],
   },
   {
     id: 'tools',
@@ -156,6 +182,11 @@ export const CATEGORIES = [
       { src: 'dewalt.jpg', label: 'DeWalt Tools' },
       { src: 'cumi.jpg', label: 'CUMI Range' },
     ],
+    faqs: [
+      { q: 'Does GT Building Solutions stock DeWalt power tools?', a: 'Yes, DeWalt drills, grinders, saws, and sanders are the backbone of our power tools range at our Panchkula showroom.' },
+      { q: 'Do you sell Havells electrical and power equipment?', a: 'Yes, we stock Havells electrical and power accessories alongside DeWalt and CUMI in this category.' },
+      { q: 'Do you carry grinding wheels and abrasives?', a: 'Yes, we stock CUMI grinding wheels and abrasives, a common companion purchase alongside angle grinders for tile-cutting and metal work.' },
+    ],
   },
   {
     id: 'pipes',
@@ -181,6 +212,11 @@ export const CATEGORIES = [
       { src: 'generated-pipes-showroom.png', label: 'Pipes Showroom' },
       { src: 'prince-pipes-display-generated.png', label: 'Prince CPVC & uPVC Pipe Range' },
       { src: 'fittings.jpg', label: 'Fittings & Valves' },
+    ],
+    faqs: [
+      { q: 'Does GT Building Solutions stock Prince CPVC pipes?', a: 'Yes, Prince Piping CPVC and uPVC pipes and fittings are the core of our plumbing range at our Panchkula showroom.' },
+      { q: 'Do you sell pipes for agricultural or irrigation use?', a: 'Yes, we stock Tata Agrico pipes for agricultural and irrigation water-supply applications, alongside our residential and commercial plumbing range.' },
+      { q: 'Can plumbers source fittings, valves, and tanks from GT as well as pipes?', a: 'Yes, alongside CPVC and uPVC pipes we stock fittings, connectors, ball and gate valves, and water storage tanks.' },
     ],
   },
 ];
