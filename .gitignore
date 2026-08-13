@@ -14,3 +14,7 @@ pnpm-debug.log*
 
 # temporary build helpers
 .tmp-*
+
+# local env vars (secrets / IDs)
+.env*.local
+.env

@@ -126,6 +126,11 @@ input:focus, select:focus, textarea:focus { border-color: var(--gold); }
 .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
 .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; }
 .grid-5 { display: grid; grid-template-columns: repeat(5,1fr); gap: 14px; }
+/* Grid items default to min-width:auto, which sizes to their content's
+   intrinsic minimum — a wide un-wrapped child (e.g. a blog-body table)
+   would otherwise force the whole grid, and the page, wider than the
+   viewport instead of scrolling internally. */
+.grid-2 > *, .grid-3 > *, .grid-4 > *, .grid-5 > * { min-width: 0; }
 
 .pad-x { padding-left: var(--px); padding-right: var(--px); }
 .pad-section { padding: 80px var(--px); }
@@ -206,5 +211,12 @@ input:focus, select:focus, textarea:focus { border-color: var(--gold); }
 .blog-body a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
 .blog-body strong { color: var(--navy); font-weight: 600; }
 .blog-body > *:first-child { margin-top: 0; }
+.blog-body table {
+  display: block; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  width: 100%; max-width: 100%; border-collapse: collapse;
+  margin-bottom: 20px; font-size: 14px; white-space: nowrap;
+}
+.blog-body th, .blog-body td { padding: 10px 16px; border: 1px solid var(--border); text-align: left; }
+.blog-body th { background: var(--cream2); color: var(--navy); font-weight: 600; white-space: nowrap; }
 
 }
