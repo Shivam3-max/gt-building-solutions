@@ -1,0 +1,97 @@
+[
+  {
+    "category": "Adhesives & Surface Solutions",
+    "image": "group-adhesives-application.jpg",
+    "usedFor": "all adhesive, sealant, tile-adhesive, waterproofing, and showroom/help posts"
+  },
+  {
+    "category": "Kitchen, Furniture & Door Hardware",
+    "image": "group-hardware-cabinet-product.jpg",
+    "usedFor": "cabinet hardware dealer, product, price-guide, and trends posts"
+  },
+  {
+    "category": "Kitchen, Furniture & Door Hardware",
+    "image": "group-hardware-cabinet-compare.jpg",
+    "usedFor": "cabinet hardware comparison posts"
+  },
+  {
+    "category": "Kitchen, Furniture & Door Hardware",
+    "image": "group-hardware-locks-showroom.jpg",
+    "usedFor": "Godrej dealer posts"
+  },
+  {
+    "category": "Kitchen, Furniture & Door Hardware",
+    "image": "group-hardware-locks-product.jpg",
+    "usedFor": "Godrej product, pricing, and comparison posts"
+  },
+  {
+    "category": "Paints & Coatings",
+    "image": "group-paints-display.jpg",
+    "usedFor": "general paint, colour-guide, dealer, and trend posts"
+  },
+  {
+    "category": "Paints & Coatings",
+    "image": "group-paints-wall-putty.jpg",
+    "usedFor": "Birla White, wall putty, and white cement prep posts"
+  },
+  {
+    "category": "Paints & Coatings",
+    "image": "group-paints-wood-finish.jpg",
+    "usedFor": "ICA and wood-finish posts"
+  },
+  {
+    "category": "Panels & Gypsum Boards",
+    "image": "group-panels-boards.jpg",
+    "usedFor": "panel-board dealer, price-guide, and stock-focused posts"
+  },
+  {
+    "category": "Panels & Gypsum Boards",
+    "image": "group-panels-interior.jpg",
+    "usedFor": "partitions, false-ceiling, applications, best-of, and interior solution posts"
+  },
+  {
+    "category": "Panels & Gypsum Boards",
+    "image": "group-panels-plaster.jpg",
+    "usedFor": "plastering and gypsum-plaster posts"
+  },
+  {
+    "category": "Pipes & Plumbing",
+    "image": "group-plumbing-product.jpg",
+    "usedFor": "residential/commercial plumbing product, buying, and comparison posts"
+  },
+  {
+    "category": "Pipes & Plumbing",
+    "image": "group-plumbing-showroom.jpg",
+    "usedFor": "plumbing dealer and showroom posts"
+  },
+  {
+    "category": "Pipes & Plumbing",
+    "image": "group-plumbing-irrigation.jpg",
+    "usedFor": "Tata Agrico, irrigation, farm, and nursery water-supply posts"
+  },
+  {
+    "category": "Power Tools & Equipment",
+    "image": "group-power-tools-showroom.jpg",
+    "usedFor": "general power-tool dealer, buying, comparison, and trends posts"
+  },
+  {
+    "category": "Power Tools & Equipment",
+    "image": "group-power-tools-abrasives.jpg",
+    "usedFor": "CUMI, abrasives, cutting-disc, and fabrication posts"
+  },
+  {
+    "category": "Tiles & Sanitary",
+    "image": "group-tiles-design.jpg",
+    "usedFor": "tile design, Kajaria, tile buying, and tile trend posts"
+  },
+  {
+    "category": "Tiles & Sanitary",
+    "image": "group-tiles-sanitary-showroom.jpg",
+    "usedFor": "sanitaryware dealer and showroom posts"
+  },
+  {
+    "category": "Tiles & Sanitary",
+    "image": "group-tiles-sanitary-product.jpg",
+    "usedFor": "sanitaryware product, pricing, and bathroom comparison posts"
+  }
+]
