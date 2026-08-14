@@ -3,6 +3,7 @@ import { CATEGORIES } from '@/data/categories';
 import { BRANDS } from '@/data/brands';
 import { LOCALITIES } from '@/data/localities';
 import { getAllPosts } from '@/lib/blog';
+import { archiveCategories, categoryPosts, pageCount } from '@/lib/blog-archive';
 
 export const dynamic = 'force-static';
 
@@ -57,5 +58,27 @@ export default async function sitemap() {
     priority: 0.6,
   }));
 
-  return [...staticEntries, ...categoryEntries, ...brandEntries, ...localityEntries, ...postEntries];
+  const blogPageEntries = Array.from({ length: Math.max(0, pageCount(posts) - 1) }, (_, index) => ({
+    url: `${SITE_URL}/blog/page/${index + 2}/`,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.5,
+  }));
+
+  const blogCategoryEntries = archiveCategories(posts).flatMap((category) => {
+    if (!category.slug) return [];
+    const totalPages = pageCount(categoryPosts(posts, category.slug));
+    return Array.from({ length: totalPages }, (_, index) => {
+      const page = index + 1;
+      const suffix = page === 1 ? '' : `/page/${page}`;
+      return {
+        url: `${SITE_URL}/blog/category/${category.slug}${suffix}/`,
+        lastModified: now,
+        changeFrequency: 'weekly',
+        priority: page === 1 ? 0.7 : 0.5,
+      };
+    });
+  });
+
+  return [...staticEntries, ...categoryEntries, ...brandEntries, ...localityEntries, ...blogPageEntries, ...blogCategoryEntries, ...postEntries];
 }
