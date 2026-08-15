@@ -60,11 +60,25 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 @keyframes marqueeL { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 @keyframes marqueeR { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 @keyframes pulse { 0%, 100% { box-shadow: 0 6px 28px rgba(37,211,102,0.38); } 50% { box-shadow: 0 6px 44px rgba(37,211,102,0.65); } }
+@keyframes pulseLocation { 0%, 100% { box-shadow: 0 6px 28px rgba(200,58,47,0.38); } 50% { box-shadow: 0 6px 44px rgba(200,58,47,0.62); } }
+@keyframes floatButton { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-6px) scale(1.03); } }
+@keyframes iconBob { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-1px) rotate(-4deg); } }
+@keyframes iconPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
 @keyframes scrollDot { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }
 @keyframes mobileMenuIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
 .marqueeL { animation: marqueeL 38s linear infinite; }
 .marqueeR { animation: marqueeR 44s linear infinite; }
+.floating-cta {
+  transition: transform 0.25s ease;
+  will-change: transform, box-shadow;
+}
+.floating-cta:hover { transform: scale(1.1); }
+.floating-cta--location { animation: pulseLocation 2.2s ease-in-out infinite, floatButton 2.8s ease-in-out infinite; }
+.floating-cta--whatsapp { animation: pulse 2.2s ease-in-out infinite, floatButton 2.8s ease-in-out infinite 0.35s; }
+.floating-cta__icon { display: inline-flex; will-change: transform; }
+.floating-cta--location .floating-cta__icon { animation: iconBob 2.8s ease-in-out infinite; }
+.floating-cta--whatsapp .floating-cta__icon { animation: iconPulse 2.2s ease-in-out infinite; }
 
 .card-hover { transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease; }
 .card-hover:hover { transform: translateY(-6px); box-shadow: 0 24px 56px rgba(13,27,62,0.10); border-color: var(--gold) !important; }

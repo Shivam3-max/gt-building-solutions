@@ -46,7 +46,7 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         {GTM_ID && (
           <Script
             id="gtm-script"
